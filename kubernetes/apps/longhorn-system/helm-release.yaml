@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.4.1
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 3
+    defaultSettings:
+      defaultReplicaCount: 3
+      nodeDownPodDeletionPolicy: delete-both-stateful-and-deployment-pod
+      concurrentAutomaticEngineUpgradePerNodeLimit: 1
+      defaultLonghornStaticStorageClass: longhorn
+      orphanAutoDeletion: true
+      backupTarget: nfs://192.168.1.4:/mnt/Main_Pool/Backups/Longhorn
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      host: longhorn.${SECRET_DOMAIN}
+      tls: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        hajimari.io/enable: "true"
+        hajimari.io/icon: cow
+        hajimari.io/appName: longhorn
