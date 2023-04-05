@@ -5,7 +5,7 @@ metadata:
   name: home-kubernetes
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 15m
   ref:
     branch: main
   url: "https://github.com/smbonn2005/HomeOps"
@@ -21,7 +21,7 @@ metadata:
   name: cluster
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 15m
   path: ./kubernetes/flux
   prune: true
   wait: false
