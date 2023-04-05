@@ -18,6 +18,7 @@ spec:
   values:
     persistence:
       defaultClass: true
+      defaultFsType: ext4
       defaultClassReplicaCount: 3
     defaultSettings:
       defaultReplicaCount: 3
@@ -31,6 +32,8 @@ spec:
       ingressClassName: "nginx"
       host: longhorn.${SECRET_DOMAIN}
       tls: true
+      tlsSecret: longhorn.tls
+      path: /
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
         hajimari.io/enable: "true"
