@@ -26,7 +26,7 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       defaultLonghornStaticStorageClass: longhorn
       orphanAutoDeletion: true
-      backupTarget: nfs://192.168.1.4:/mnt/Main_Pool/Backups/Longhorn
+      backupTarget: nfs://${SECRET_NFS_SERVER}:${SECRET_NFS_BACKUP_LH:}
     ingress:
       enabled: true
       ingressClassName: "nginx"
