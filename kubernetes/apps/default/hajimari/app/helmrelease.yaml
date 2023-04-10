@@ -27,19 +27,24 @@ spec:
     keepHistory: false
   values:
     hajimari:
+      name: smbonn2005
       title: Apps
       darkTheme: espresso
       alwaysTargetBlank: true
-      showGreeting: false
-      showAppGroups: false
-      showAppStatus: false
-      showBookmarkGroups: false
+      showGreeting: true
+      showAppGroups: true
+      showAppStatus: true
+      showBookmarkGroups: true
       showGlobalBookmarks: false
       showAppUrls: false
       defaultEnable: true
       namespaceSelector:
         matchNames:
           - default
+          - media
+          - longhorn-system
+          - monitoring
+          - networking
     ingress:
       main:
         enabled: true
