@@ -33,8 +33,8 @@ spec:
       tag: 1.31.3.6868-28fc46b27@sha256:6be3a2110e0fa96edb16bb9adf406e3636b7b14e991db834d5e37fd327da1781
     env:
       TZ: America/New_York
-      ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}:443"
-      PLEX_CLAIM: "${SECRET_PLEX_TOKEN:}"
+      # ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}:443"
+      PLEX_CLAIM: ${SECRET_PLEX_TOKEN}
     service:
       main:
         ports:
