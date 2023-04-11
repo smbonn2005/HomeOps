@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: radarr
+  name: sonarr
   namespace: media
 spec:
   interval: 15m
@@ -31,15 +31,14 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/onedr0p/radarr-develop
-      tag: 4.4.2.6956@sha256:9144561f5b701ea67c8352eb416ab57c6a8630d2b61651475ae37d00874915f4
+      repository: ghcr.io/onedr0p/sonarr-develop
+      tag: 4.0.0.433@sha256:db6ae4892b6bb7cd44b9b4cd5ab5c347f8117e2892c0e0f8fd24ba9901d0dc69
     env:
       TZ: America/New_York
-      RADARR__INSTANCE_NAME: Radarr
-      RADARR__PORT: &port 80
-      RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-      RADARR__LOG_LEVEL: info
-      RADARR__API_KEY: ${SECRET_RADARR_KEY}
+      SONARR__INSTANCE_NAME: Sonarr
+      SONARR__PORT: &port 80
+      SONARR__LOG_LEVEL: info
+      # SONARR__API_KEY:
     service:
       main:
         ports:
@@ -85,7 +84,7 @@ spec:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 15Gi
+        size: 10Gi
         storageClass: longhorn
     persistence:
       media:
