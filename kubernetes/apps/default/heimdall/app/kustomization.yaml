@@ -4,3 +4,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/name: heimdall
+      app.kubernetes.io/instance: heimdall

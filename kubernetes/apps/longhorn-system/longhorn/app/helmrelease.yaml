@@ -36,6 +36,3 @@ spec:
       path: /
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
-        hajimari.io/enable: "true"
-        hajimari.io/icon: cow
-        hajimari.io/appName: longhorn

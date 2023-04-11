@@ -6,3 +6,4 @@ resources:
   - ./plex/ks.yaml
   # - ./sonarr/ks.yaml
   # - ./radarr/ks.yaml
+  # - ./tautulli/ks.yaml
