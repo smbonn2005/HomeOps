@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./heimdall/ks.yaml
+  - ./qbittorrent/ks.yaml

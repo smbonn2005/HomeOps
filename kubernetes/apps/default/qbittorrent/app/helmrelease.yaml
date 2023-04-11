@@ -2,8 +2,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sonarr
-  namespace: media
+  name: qbittorrent
+  namespace: default
 spec:
   interval: 15m
   chart:
@@ -31,44 +31,41 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.433@sha256:db6ae4892b6bb7cd44b9b4cd5ab5c347f8117e2892c0e0f8fd24ba9901d0dc69
+      repository: ghcr.io/onedr0p/qbittorrent
+      tag: 4.5.2@sha256:621c2e012820a2f5d4a4e37ca6bf8aec40ebd0183f6f7d274808a7ac45a135d0
     env:
       TZ: America/New_York
-      SONARR__INSTANCE_NAME: Sonarr
-      SONARR__PORT: &port 80
-      SONARR__LOG_LEVEL: info
-      SONARR__AUTHENTICATION_METHOD: External
-      SONARR__API_KEY: ${SECRET_SONARR_KEY}
+      QBITTORRENT__PORT: &port 80
+      QBITTORRENT__BT_PORT: &port-bt 50413
     service:
       main:
         ports:
           http:
             port: *port
-    probes:
-      liveness: &probes
+      bittorrent:
         enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ping
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
+        type: LoadBalancer
+        externalIPs: ["192.168.1.222"]
+        ports:
+          bittorrent:
+            enabled: true
+            port: *port-bt
+            protocol: TCP
+            targetPort: *port-bt
+        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true
         ingressClassName: nginx
         annotations:
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_hide_header "x-webkit-csp";
+            proxy_hide_header "content-security-policy";
+            proxy_hide_header "X-Frame-Options";
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host qb.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
@@ -85,7 +82,7 @@ spec:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 10Gi
+        size: 1Gi
         storageClass: longhorn
     persistence:
       media:
@@ -94,9 +91,12 @@ spec:
         server: ${SECRET_NFS_SERVER}
         path: ${SECRET_NFS_MEDIA}
         mountPath: /media
+      incomplete:
+        enabled: true
+        type: emptyDir
     resources:
       requests:
         cpu: 10m
         memory: 250Mi
       limits:
-        memory: 2000Mi
+        memory: 6000Mi
