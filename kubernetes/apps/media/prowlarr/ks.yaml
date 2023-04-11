@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  path: ./kubernetes/apps/media/rprowlarr/app
+  path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:
     kind: GitRepository
