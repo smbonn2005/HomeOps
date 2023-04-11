@@ -35,6 +35,13 @@ spec:
       TZ: America/New_York
       PUID: 1000
       PGID: 1000
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+          https:
+            port: 443
     ingress:
       main:
         enabled: true
