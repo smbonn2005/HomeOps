@@ -38,6 +38,7 @@ spec:
       SONARR__INSTANCE_NAME: Sonarr
       SONARR__PORT: &port 80
       SONARR__LOG_LEVEL: info
+      SONARR__AUTHENTICATION_METHOD: External
       # SONARR__API_KEY:
     service:
       main:
