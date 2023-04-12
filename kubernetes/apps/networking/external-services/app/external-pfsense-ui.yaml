@@ -7,8 +7,8 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 443
-      targetPort: 443
+      port: 80
+      targetPort: 80
 ---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
@@ -19,10 +19,10 @@ metadata:
     kubernetes.io/service-name: pfsense-ui
 addressType: IPv4
 ports:
-  - name: https
-    appProtocol: https
+  - name: http
+    appProtocol: http
     protocol: TCP
-    port: 443
+    port: 80
 endpoints:
   - addresses:
       - "${SECRET_PFSENSE_IP}"
@@ -41,7 +41,7 @@ metadata:
 spec:
   rules:
     - host: pfsense.${SECRET_DOMAIN}
-      https:
+      http:
         paths:
           - path: /
             pathType: Prefix
@@ -49,4 +49,4 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 443
+                  number: 80
