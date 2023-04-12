@@ -35,6 +35,12 @@ spec:
       SONARR__API: ${SECRET_SONARR_KEY}
       RADARR__API: ${SECRET_RADARR_KEY}
       DISCORD__TOKEN: ${SECRET_DOPLARR_TOKEN}
+    service:
+      main:
+        enabled: false
+    ingress:
+      main:
+        enabled: false
     volumeClaimTemplates:
       - name: config
         mountPath: /config
