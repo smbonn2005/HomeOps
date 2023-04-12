@@ -6,3 +6,4 @@ resources:
   - ./external-xen-ui.yaml
   - ./external-pihole-ui.yaml
   - ./external-pfsense-ui.yaml
+  # - ./external-wings-ui.yaml
