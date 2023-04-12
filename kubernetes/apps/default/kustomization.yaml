@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./heimdall/ks.yaml
   - ./qbittorrent/ks.yaml
+  # - ./pterodactyl/ks.yaml
