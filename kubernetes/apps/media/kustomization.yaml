@@ -8,4 +8,4 @@ resources:
   - ./radarr/ks.yaml
   - ./tautulli/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./doplarr/ks.yaml
+  # - ./doplarr/ks.yaml
