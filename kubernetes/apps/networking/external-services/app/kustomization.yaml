@@ -5,5 +5,5 @@ resources:
   - ./external-nas-ui.yaml
   - ./external-xen-ui.yaml
   - ./external-pihole-ui.yaml
-  # - ./external-pfsense-ui.yaml
+  - ./external-pfsense-ui.yaml
   # - ./external-wings-ui.yaml
