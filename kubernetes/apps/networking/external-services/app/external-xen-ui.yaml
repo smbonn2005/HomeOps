@@ -16,7 +16,7 @@ metadata:
   name: xen-ui
   namespace: networking
   labels:
-    kubernetes.io/service-name: nas-ui
+    kubernetes.io/service-name: xen-ui
 addressType: IPv4
 ports:
   - name: http
