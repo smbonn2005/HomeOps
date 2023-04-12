@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./external-nas-ui.yaml
   - ./external-xen-ui.yaml
+  - ./external-pihole-ui.yaml
