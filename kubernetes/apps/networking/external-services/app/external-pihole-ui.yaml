@@ -43,7 +43,7 @@ spec:
     - host: pi-hole.${SECRET_DOMAIN}
       http:
         paths:
-          - path: /admin
+          - path: /
             pathType: Prefix
             backend:
               service:
