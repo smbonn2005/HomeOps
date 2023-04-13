@@ -26,8 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      nameOverride: *app
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: louislam/uptime-kuma
       tag: 1.21.2@sha256:1f6c768a6bd346cb94ad0252b1477128ad54d68ac5ca4381180a82bdfda0afb8
