@@ -27,17 +27,6 @@ spec:
   values:
     global:
       storageClass: longhorn
-    primary:
-      readinessProbe:
-        initialDelaySeconds: 1500
-        periodSeconds: 45
-        failureThreshold: 60
-      livenessProbe:
-        initialDelaySeconds: 1500
-        periodSeconds: 30
-        failureThreshold: 40
-    image:
-      debug:
     auth:
       rootPassword: "${MARIADB_ROOT_PASSWORD}"
     resources:
@@ -46,6 +35,10 @@ spec:
         memory: 256Mi
       limits:
         memory: 512Mi
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     initdbScripts:
       create-pterodactyl.sql: |
         CREATE DATABASE IF NOT EXISTS panel;
