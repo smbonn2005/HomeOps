@@ -48,6 +48,6 @@ spec:
         memory: 512Mi
     initdbScripts:
       create-pterodactyl.sql: |
-        CREATE DATABASE IF NOT EXISTS pterodactyl-panel;
+        CREATE DATABASE IF NOT EXISTS 'pterodactyl-panel';
         CREATE USER IF NOT EXISTS 'pterodactyl'@'%' IDENTIFIED BY '${PTERODACTYL_MARIADB_PASSWORD}';
-        GRANT ALL PRIVILEGES ON pterodactyl-panel.* to 'pterodactyl'@'%';
+        GRANT ALL PRIVILEGES ON 'pterodactyl-panel'.* to 'pterodactyl'@'%';
