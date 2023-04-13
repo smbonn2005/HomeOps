@@ -6,3 +6,4 @@ resources:
   - ./heimdall/ks.yaml
   - ./qbittorrent/ks.yaml
   # - ./pterodactyl/ks.yaml
+  - ./uptime/ks.yaml
