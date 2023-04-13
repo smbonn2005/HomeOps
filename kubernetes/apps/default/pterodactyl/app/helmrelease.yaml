@@ -32,7 +32,7 @@ spec:
       repository: ghcr.io/pterodactyl/panel
       tag: v1.11.3@sha256:540b9ced418428bdc2a214e23f0739fb3510960c92e5ad3447254446e40509cc
     env:
-      DB_PASSWORD: ${SECRET_MARIADB_PASSWORD}
+      DB_PASSWORD: ${PTERODACTYL_MARIADB_PASSWORD}
       DB_DATABASE: "pterodactyl-panel"
       APP_ENV: "production"
       APP_ENVIRONMENT_ONLY: "false"
@@ -40,12 +40,12 @@ spec:
       SESSION_DRIVER: "redis"
       QUEUE_DRIVER: "redis"
       REDIS_HOST: ${SECRET_REDIS_URL}
-      REDIS_PASSWORD: ${SECRET_REDIS_PASSWORD}
+      # REDIS_PASSWORD: ${SECRET_REDIS_PASSWORD}
       DB_HOST: ${SECRET_MARIADB_URL}
       DB_PORT: ${SECRET_MARIADB_PORT}
       APP_URL: "https://pterodactyl.${SECRET_DOMAIN}"
       APP_TIMEZONE: America/New_York
-      APP_SERVICE_AUTHOR: ${SECRET_APP_EMAIL}
+      APP_SERVICE_AUTHOR: ${PTERODACTYL_APP_EMAIL}
       TRUSTED_PROXIES: "*"
     service:
       main:
