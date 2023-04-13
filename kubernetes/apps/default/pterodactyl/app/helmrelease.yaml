@@ -1,1 +1,97 @@
 ---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pterodactyl
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/pterodactyl/panel
+      tag: v1.11.3@sha256:540b9ced418428bdc2a214e23f0739fb3510960c92e5ad3447254446e40509cc
+    env:
+      DB_PASSWORD:
+      DB_DATABASE: "pterodactyl-panel"
+      APP_ENV: "production"
+      APP_ENVIRONMENT_ONLY: "false"
+      CACHE_DRIVER: "redis"
+      SESSION_DRIVER: "redis"
+      QUEUE_DRIVER: "redis"
+      REDIS_HOST: ${SECRET_REDIS_URL}
+      REDIS_PASSWORD:
+      DB_HOST: ${SECRET_MARIADB_URL}
+      DB_PORT: ${SECRET_MARIADB_PORT}
+      APP_URL: "https://pterodactyl.${SECRET_DOMAIN}"
+      APP_TIMEZONE: America/New_York
+      APP_SERVICE_AUTHOR: ${SECRET_APP_EMAIL}
+      TRUSTED_PROXIES: "*"
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+        hosts:
+          - host: &host "pterodactyl.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    volumeClaimTemplates:
+      - name: pterodactyl-app
+        mountPath: /app/var/
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+      - name: pterodactyl-nginx
+        mountPath: /etc/nginx/http.d/
+        accessMode: ReadWriteOnce
+        size: 500Mi
+        storageClass: longhorn
+      - name: pterodactyl-le
+        mountPath: /etc/letsencrypt/
+        accessMode: ReadWriteOnce
+        size: 100Mi
+        storageClass: longhorn
+      - name: pterodactyl-logs
+        mountPath: /app/storage/logs/
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+    resources:
+      requests:
+        cpu: 300m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
