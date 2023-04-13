@@ -28,8 +28,6 @@ spec:
     global:
       storageClass: longhorn
     primary:
-      extraEnvVars:
-        TZ: "America/New_York"
       readinessProbe:
         initialDelaySeconds: 1500
         periodSeconds: 45
