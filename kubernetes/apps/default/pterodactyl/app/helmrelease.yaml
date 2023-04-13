@@ -33,7 +33,7 @@ spec:
       tag: v1.11.3@sha256:540b9ced418428bdc2a214e23f0739fb3510960c92e5ad3447254446e40509cc
     env:
       DB_PASSWORD: ${PTERODACTYL_MARIADB_PASSWORD}
-      DB_DATABASE: "pterodactyl-panel"
+      DB_DATABASE: "panel"
       APP_ENV: "production"
       APP_ENVIRONMENT_ONLY: "false"
       CACHE_DRIVER: "redis"
