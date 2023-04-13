@@ -31,8 +31,6 @@ spec:
     auth:
       enabled: false
       sentinel: false
-    master:
-    replica:
     sentinel:
       enabled: true
       masterSet: redis-master
