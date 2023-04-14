@@ -42,7 +42,7 @@ spec:
       CACHE_DRIVER: "redis"
       SESSION_DRIVER: "redis"
       QUEUE_DRIVER: "redis"
-      APP_URL: "http://pterodactyl.${SECRET_DOMAIN}"
+      APP_URL: "https://pterodactyl.${SECRET_DOMAIN}"
       APP_ENV: "production"
       APP_ENVIRONMENT_ONLY: "false"
       APP_TIMEZONE: America/New_York
@@ -53,6 +53,8 @@ spec:
         ports:
           http:
             port: 80
+          https:
+            port: 443
     ingress:
       main:
         enabled: true
