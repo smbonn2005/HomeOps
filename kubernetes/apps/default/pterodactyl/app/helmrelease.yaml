@@ -66,10 +66,6 @@ spec:
           nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
           nginx.ingress.kubernetes.io/cors-allow-headers: "*"
           nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-          nginx.ingress.kubernetes.io/cors-max-age: "100"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            more_set_headers "X-Forwarded-Proto: https";
-            add_headers "X-Forwarded-Proto: https";
         hosts:
           - host: &host "pterodactyl.${SECRET_DOMAIN}"
             paths:
