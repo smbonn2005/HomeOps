@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: redis
-      version: 17.9.3
+      chart: app-template
+      version: 1.4.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bjw-s
         namespace: flux-system
   maxHistory: 3
   install:
@@ -26,19 +26,22 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      storageClass: longhorn
-    auth:
-      enabled: false
-      sentinel: false
-    sentinel:
-      enabled: true
-      masterSet: redis-master
-      getMasterTimeout: 10
-      startupProbe:
-        failureThreshold: 2
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        interval: 1m
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: public.ecr.aws/docker/library/redis
+      tag: 7.0.10
+    env:
+      REDIS_REPLICATION_MODE: master
+    service:
+      main:
+        ports:
+          http:
+            port: 6379
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+      limits:
+        memory: 100Mi
