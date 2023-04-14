@@ -17,3 +17,4 @@ resources:
   - ./longhorn-charts.yaml
   - ./intel.yaml
   - ./node-feature-discovery.yaml
+  - ./prometheus-community.yaml
