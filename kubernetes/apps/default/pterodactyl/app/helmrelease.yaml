@@ -67,7 +67,7 @@ spec:
           nginx.ingress.kubernetes.io/cors-max-age: 100
           nginx.ingress.kubernetes.io/configuration-snippet: |
             add_header X-Forwarded-Proto "https";
-            more_set_header X-Forwarded-Proto "https";
+            more_set_headers X-Forwarded-Proto "https";
         hosts:
           - host: &host "pterodactyl.${SECRET_DOMAIN}"
             paths:
