@@ -30,6 +30,43 @@ spec:
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
+      config:
+        receivers:
+          - name: heartbeat
+            webhook_configs:
+              - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
+                send_resolved: true
+          - name: "null" # quote
+          - name: discord
+            webhook_configs:
+              - url: "http://alertmanager-discord:9094"
+                send_resolved: true
+        route:
+          group_by: ["alertname", "job"]
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: discord
+          routes:
+            - receiver: heartbeat
+              group_wait: 0s
+              group_interval: 5m
+              repeat_interval: 1h
+              matchers:
+                - alertname =~ "Watchdog"
+            - receiver: "null"
+              matchers:
+                - alertname =~ "InfoInhibitor"
+            - receiver: discord
+              matchers:
+                - severity = "critical"
+              continue: true
+        inhibit_rules:
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal: ["alertname", "namespace"]
       ingress:
         enabled: true
         annotations:
@@ -45,6 +82,8 @@ spec:
           - hosts:
               - *host-alert-manager
       alertManagerSpec:
+        replicas: 2
+        podAffinity: hard
         storage:
           volumeClaimTemplate:
             spec:
@@ -52,6 +91,13 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -166,6 +212,19 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
+        resources:
+          requests:
+            cpu: 150m
+            memory: 2000Mi
+        # limits:
+          #   memory: 7000Mi
+    prometheusOperator:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 384Mi
         additionalScrapeConfigs:
           - job_name: coredns
             scrape_interval: 1m
