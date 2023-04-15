@@ -7,3 +7,4 @@ resources:
   - ./qbittorrent/ks.yaml
   - ./pterodactyl/ks.yaml
   - ./uptime/ks.yaml
+  - ./speedtest/ks.yaml
