@@ -9,4 +9,4 @@ resources:
   - ./tautulli/ks.yaml
   - ./prowlarr/ks.yaml
   - ./doplarr/ks.yaml
-  - ./readrarr/ks.yaml
+  - ./readarr/ks.yaml
