@@ -43,7 +43,8 @@ spec:
     - host: wings.${SECRET_DOMAIN}
       http:
         paths:
-          - path:
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: *app
