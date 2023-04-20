@@ -19,8 +19,8 @@ metadata:
     kubernetes.io/service-name: wings
 addressType: IPv4
 ports:
-  - name: https
-    appProtocol: https
+  - name: http
+    appProtocol: http
     protocol: TCP
     port: 8443
 endpoints:
