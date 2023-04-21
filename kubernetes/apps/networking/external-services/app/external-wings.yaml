@@ -10,22 +10,33 @@ spec:
       port: 80
       targetPort: 8443
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+# apiVersion: discovery.k8s.io/v1
+# kind: EndpointSlice
+# metadata:
+#   name: wings
+#   namespace: networking
+#   labels:
+#     kubernetes.io/service-name: wings
+# addressType: IPv4
+# ports:
+#   - name: http
+#     appProtocol: http
+#     protocol: TCP
+#     port: 8443
+# endpoints:
+#   - addresses:
+#       - "${SECRET_WINGS_IP}"
+apiVersion: v1
+kind: Endpoints
 metadata:
   name: wings
   namespace: networking
-  labels:
-    kubernetes.io/service-name: wings
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: http
-    protocol: TCP
-    port: 8443
-endpoints:
+subsets:
   - addresses:
-      - "${SECRET_WINGS_IP}"
+      - ip: ${SECRET_WINGS_IP}
+    ports:
+      - port: 8443
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
