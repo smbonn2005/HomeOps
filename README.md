@@ -37,7 +37,7 @@ There is a template over at [onedr0p/flux-cluster-template](https://github.com/o
 
 My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Ubuntu Server 22.04.2 using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a semi hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage.
 
-🔸 _[Click here](./provision/kubernetes/servers/) to see my Ansible playbooks and roles._
+🔸 _[Click here](./ansible) to see my Ansible playbooks and roles._
 
 ### Core Components
 
@@ -126,17 +126,9 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 | Service                                         | Use                                                               | Cost           |
 |-------------------------------------------------|-------------------------------------------------------------------|----------------|
 | [1Password](https://1password.com/)             | Secrets with [External Secrets](https://external-secrets.io/)     | ~$65/yr        |
-<!-- | [B2 Storage](https://www.backblaze.com/b2)      | Offsite application backups                                       | ~$5/mo         | -->
 | [Cloudflare](https://www.cloudflare.com/)       | Domain, DNS and proxy management                                  | ~$30/yr        |
-<!-- | [Fastmail](https://fastmail.com/)               | Email hosting                                                     | ~$90/yr        |
-| [GCP](https://cloud.google.com/)                | Voice interactions with Home Assistant over Google Assistant      | Free           | -->
 | [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
-<!-- | [Newsgroup Ninja](https://www.newsgroup.ninja/) | Usenet access                                                     | ~70/yr         |
-| [NextDNS](https://nextdns.io/)                  | My routers DNS server which includes AdBlocking                   | ~20/yr         |
-| [Pushover](https://pushover.net/)               | Kubernetes Alerts and application notifications                   | Free           |
-| [Terraform Cloud](https://www.terraform.io/)    | Storing Terraform state                                           | Free           |
-| [UptimeRobot](https://uptimerobot.com/)         | Monitoring internet connectivity and external facing applications | ~$60/yr        | -->
-|                                                 |                                                                   | Total: ~$8/mo |
+|                                                 |                                                                   | Total: ~$8/mo  |
 
 ---
 
