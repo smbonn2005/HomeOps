@@ -18,3 +18,4 @@ resources:
   - ./intel.yaml
   - ./node-feature-discovery.yaml
   - ./prometheus-community.yaml
+  - ./external-secrets.yaml
