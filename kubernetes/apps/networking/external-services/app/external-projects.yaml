@@ -44,7 +44,7 @@ spec:
     - host: projects.${SECRET_DOMAIN}
       http:
         paths:
-          - path: /hook/
+          - path: /hooks/
             pathType: Prefix
             backend:
               service:
