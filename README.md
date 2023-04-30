@@ -158,7 +158,7 @@ My `pfSense` router is utilizing the `pfBlockerNG` plugin which allows me to fil
 
 [external-dns](https://github.com/kubernetes-sigs/external-dns) is deployed in my cluster and configure to sync DNS records to [Cloudflare](https://www.cloudflare.com/). The only ingresses `external-dns` looks at to gather DNS records to put in `Cloudflare` are ones that have an annotation of `external-dns.alpha.kubernetes.io/target`
 
-🔸 _[Click here](./teraform/cloudflare) to see how else I manage Cloudflare with Terraform._
+🔸 _[Click here](./terraform/cloudflare) to see how else I manage Cloudflare with Terraform._
 
 ---
 
