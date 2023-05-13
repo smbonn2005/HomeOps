@@ -8,7 +8,8 @@
       "automergeType": "branch",
       "ignoreTests": true,
       "matchUpdateTypes": ["minor", "patch", "digest"]
-    },{
+    },
+    {
       "description": "Auto merge container digests",
       "matchDatasources": ["docker"],
       "automerge": true,
