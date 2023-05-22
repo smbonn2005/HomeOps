@@ -7,6 +7,6 @@ resources:
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
   - ./tautulli/ks.yaml
-  # - ./prowlarr/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./doplarr/ks.yaml
   - ./readarr/ks.yaml
