@@ -5,6 +5,6 @@ resources:
   - ./namespace.yaml
   # - ./heimdall/ks.yaml
   # - ./qbittorrent/ks.yaml
-  # - ./pterodactyl/ks.yaml
+  - ./pterodactyl/ks.yaml
   # - ./uptime/ks.yaml
   # - ./speedtest/ks.yaml
