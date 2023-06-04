@@ -45,7 +45,7 @@ My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Ubuntu Serve
 ### Core Components
 
 - [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
-- [calico](https://github.com/projectcalico/calico): Internal Kubernetes networking plugin.
+- [cilium](https://cilium.io/): Internal Kubernetes networking plugin.
 - [cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
 - [external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
 - [external-secrets](https://github.com/external-secrets/external-secrets/): Managed Kubernetes secrets using [1Password Connect](https://github.com/1Password/connect).

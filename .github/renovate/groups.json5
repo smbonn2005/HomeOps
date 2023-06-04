@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "description": "Flux images and tags",
+      "description": "Flux Group",
       "groupName": "Flux",
       "matchPackagePatterns": ["flux"],
       "matchDatasources": ["docker", "github-tags"],
