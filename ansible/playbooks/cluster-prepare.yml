@@ -85,6 +85,10 @@
             enabled: false
             masked: true
             state: stopped
+          register: stop_service
+          failed_when:
+            - stop_service.failed == true
+            - '"Could not find the requested service" not in stop_service.msg'
           when: ansible_facts['distribution'] == 'Ubuntu'
         - name: System Configuration (1) | Enable fstrim
           ansible.builtin.systemd:
