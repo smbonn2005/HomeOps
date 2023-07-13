@@ -26,7 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: local-path-provisioner
+    - name: longhorn
       namespace: kube-system
     - name: ingress-nginx
       namespace: networking
@@ -95,6 +95,6 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: local-path
+      storageClassName: longhorn
     testFramework:
       enabled: false
