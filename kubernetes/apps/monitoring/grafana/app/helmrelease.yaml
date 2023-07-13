@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: longhorn
-      namespace: kube-system
+      namespace: longhorn-system
     - name: ingress-nginx
       namespace: networking
   values:
