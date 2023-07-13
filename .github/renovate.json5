@@ -64,7 +64,7 @@
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
     }
-  ]
+  ],
   "packageRules": [
     {
       "description": "Loose versioning for non-semver packages",
