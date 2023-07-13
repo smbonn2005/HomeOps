@@ -1,5 +1,5 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: home-kubernetes
@@ -8,7 +8,7 @@ spec:
   interval: 30m
   ref:
     branch: main
-  url: "https://github.com/smbonn2005/HomeOps"
+  url: "https://github.com/smbonn2005/HomeOps.git"
   ignore: |
     # exclude all
     /*

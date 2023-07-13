@@ -5,7 +5,7 @@ metadata:
   name: ingress-nginx
   namespace: networking
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: ingress-nginx
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,6 +25,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: cloudflared
+      namespace: networking
   values:
     controller:
       extraEnvs:
@@ -32,9 +35,9 @@ spec:
           value: "${TIMEZONE}"
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "ipv4.${SECRET_DOMAIN}"
-        loadBalancerIP: "${METALLB_INGRESS_ADDR}"
-        externalTrafficPolicy: Local
+          external-dns.alpha.kubernetes.io/hostname: "ingress.${SECRET_DOMAIN}"
+          io.cilium/lb-ipam-ips: "192.168.1.221"
+        externalTrafficPolicy: Cluster
       publishService:
         enabled: true
       ingressClassResource:
@@ -57,7 +60,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-staging-tls"
       resources:
         requests:
           cpu: 10m
@@ -66,4 +69,3 @@ spec:
           memory: 500Mi
     defaultBackend:
       enabled: false
-  
