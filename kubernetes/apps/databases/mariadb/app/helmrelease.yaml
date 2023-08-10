@@ -37,8 +37,6 @@ spec:
         memory: 512Mi
     metrics:
       enabled: true
-      image:            # temp fix for https://github.com/bitnami/charts/issues/17994
-        tag: 0.14.0-debian-11-r55
       serviceMonitor:
         enabled: true
     initdbScripts:
