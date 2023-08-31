@@ -32,7 +32,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/alexjustesen/speedtest-tracker
-      tag: v0.11.17@sha256:c15a34d0f8b69dda5028fbd500e44bf7d89bc5eb026fc269fe50f84ad1f63ae8
+      tag: v0.11.20@sha256:5b8de70ff76418e86d8b7776e4d4a1bbcc72813d7057f75e2f5aa917a0ad529d
     env:
       PUID: 1000
       PGID: 1000
