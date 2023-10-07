@@ -30,7 +30,7 @@ spec:
       type: statefulset
     image:
       repository: ghcr.io/onedr0p/plex
-      tag: 1.32.6.7557-1cf77d501@sha256:0d5a12bddc5ab41e0f055254335cbe09374972d04c147209321060e59f2cd506
+      tag: 1.32.6.7557-1cf77d501@sha256:4dc9b6a3890d83b7a3a775c1249e4f28db2810086180feccc07629eb7df70c79
     env:
       TZ: America/New_York
       ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
