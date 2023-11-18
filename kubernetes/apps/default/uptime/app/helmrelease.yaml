@@ -32,7 +32,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: louislam/uptime-kuma
-      tag: 1.23.4@sha256:786ec92a089f0ea67ea912983e30f1869a2eba4b5ee880e1f013966b7eb09112
+      tag: 1.23.6@sha256:ee1841f70126912f67896225a6d78d1bbd35d0e40911dc80c4d7746788d2fab2
     service:
       main:
         ports:
