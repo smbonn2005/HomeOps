@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: linuxserver/heimdall
-              tag: v2.5.8
+              tag: 2.5.8
             env:
               TZ: America/New_York
               PUID: 1000
