@@ -23,44 +23,60 @@ spec:
     remediation:
       retries: 3
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: 'true'
-    image:
-      repository: ghcr.io/onedr0p/readarr-develop
-      tag: 0.3.11.2319@sha256:a14419cd9a77438f48df48537d8fc1a02cc9c89321d60ceaec3870850f87b31b
-    env:
-      TZ: America/New_York
-      READARR__INSTANCE_NAME: Readarr
-      READARR__PORT: &port 80
-      READARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-      READARR__LOG_LEVEL: info
-      READARR__API_KEY: ${SECRET_READARR_KEY}
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/readarr-develop
+              tag: 0.3.11.2319@sha256:a14419cd9a77438f48df48537d8fc1a02cc9c89321d60ceaec3870850f87b31b
+            env:
+              TZ: America/New_York
+              READARR__INSTANCE_NAME: Readarr
+              READARR__PORT: &port 80
+              READARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              READARR__LOG_LEVEL: info
+              READARR__API_KEY: ${SECRET_READARR_KEY}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2000Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
       main:
         ports:
           http:
             port: *port
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ping
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         enabled: true
-        ingressClassName: 'nginx'
+        className: 'nginx'
         annotations:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
@@ -69,15 +85,12 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups: [10000]
     volumeClaimTemplates:
       - name: config
         mountPath: /config
@@ -91,9 +104,3 @@ spec:
         server: ${SECRET_NFS_SERVER}
         path: ${SECRET_NFS_MEDIA}
         mountPath: /media
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 2000Mi

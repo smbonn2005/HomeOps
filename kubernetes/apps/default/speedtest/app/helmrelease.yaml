@@ -26,23 +26,32 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/alexjustesen/speedtest-tracker
-      tag: v0.14.0@sha256:6e3c632ce30842a91f6756fb515b592788d8eaea0a32bee821eca565b0bb7efe
-    env:
-      PUID: 1000
-      PGID: 1000
-      APP_KEY: base64:5fvnoTrDbGf1hUkOCL59bcmrNV5sxQiD6OBvRF4295M=
-      DB_CONNECTION: mysql
-      DB_HOST: ${SECRET_MARIADB_URL}
-      DB_PORT: 3306
-      DB_DATABASE: "speedtest_tracker"
-      DB_USERNAME: "speedtest"
-      DB_PASSWORD: ${SPEEDTEST_MARIADB_PASSWORD}
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/alexjustesen/speedtest-tracker
+              tag: v0.14.0@sha256:6e3c632ce30842a91f6756fb515b592788d8eaea0a32bee821eca565b0bb7efe
+            env:
+              PUID: 1000
+              PGID: 1000
+              APP_KEY: base64:5fvnoTrDbGf1hUkOCL59bcmrNV5sxQiD6OBvRF4295M=
+              DB_CONNECTION: mysql
+              DB_HOST: ${SECRET_MARIADB_URL}
+              DB_PORT: 3306
+              DB_DATABASE: "speedtest_tracker"
+              DB_USERNAME: "speedtest"
+              DB_PASSWORD: ${SPEEDTEST_MARIADB_PASSWORD}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 256Mi
     service:
       main:
         ports:
@@ -60,6 +69,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -69,9 +81,3 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 256Mi

@@ -26,11 +26,28 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: daemonset
-    image:
-      repository: ghcr.io/onedr0p/intel-gpu-exporter
-      tag: rolling@sha256:0e81f2f7cbf40fa804802075b0292dde7f2bd9da23934e3cb19a9ce7373378c3
+    controllers:
+      main:
+        type: daemonset
+        strategy: RollingUpdate
+        pod:
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/intel-gpu-exporter
+              tag: rolling@sha256:0e81f2f7cbf40fa804802075b0292dde7f2bd9da23934e3cb19a9ce7373378c3
+            securityContext:
+              privileged: true
+            resources:
+              requests:
+                gpu.intel.com/i915_monitoring: 1
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                gpu.intel.com/i915_monitoring: 1
+                memory: 500Mi
     service:
       main:
         ports:
@@ -48,15 +65,3 @@ spec:
             relabelings:
               - sourceLabels: [__meta_kubernetes_pod_node_name]
                 targetLabel: node
-    securityContext:
-      privileged: true
-    nodeSelector:
-      intel.feature.node.kubernetes.io/gpu: "true"
-    resources:
-      requests:
-        gpu.intel.com/i915: 1
-        cpu: 100m
-        memory: 100Mi
-      limits:
-        gpu.intel.com/i915: 1
-        memory: 500Mi

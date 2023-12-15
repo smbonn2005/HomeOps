@@ -26,26 +26,29 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: ghcr.io/kiranshila/doplarr
-      tag: v3.6.2@sha256:7fbd2250cc871787150a3d33be4f5d168c8eb1436c1c064c0a9533ebb7a9098a
-    env:
-      SONARR__URL: ${SECRET_SONARR_URL}
-      RADARR__URL: ${SECRET_RADARR_URL}
-      SONARR__API: ${SECRET_SONARR_KEY}
-      RADARR__API: ${SECRET_RADARR_KEY}
-      DISCORD__TOKEN: ${SECRET_DOPLARR_TOKEN}
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: ghcr.io/kiranshila/doplarr
+              tag: v3.6.2@sha256:7fbd2250cc871787150a3d33be4f5d168c8eb1436c1c064c0a9533ebb7a9098a
+            env:
+              SONARR__URL: ${SECRET_SONARR_URL}
+              RADARR__URL: ${SECRET_RADARR_URL}
+              SONARR__API: ${SECRET_SONARR_KEY}
+              RADARR__API: ${SECRET_RADARR_KEY}
+              DISCORD__TOKEN: ${SECRET_DOPLARR_TOKEN}
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 500Mi
     service:
       main:
         enabled: false
     ingress:
       main:
         enabled: false
-    resources:
-      requests:
-        cpu: 50m
-        memory: 128Mi
-      limits:
-        memory: 500Mi

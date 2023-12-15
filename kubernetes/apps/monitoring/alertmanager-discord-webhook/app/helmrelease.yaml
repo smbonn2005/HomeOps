@@ -26,12 +26,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: benjojo/alertmanager-discord
-      tag: latest@sha256:7d27cd8494b269fe592cf6a9d7f6bdf14ac628bba34c381dc43cf533eaa95158
-    env:
-      TZ: America/New_York
-      DISCORD_WEBHOOK: ${ALERTMANAGER_DISCORD_WEBHOOK}
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: benjojo/alertmanager-discord
+              tag: latest@sha256:7d27cd8494b269fe592cf6a9d7f6bdf14ac628bba34c381dc43cf533eaa95158
+            env:
+              TZ: America/New_York
+              DISCORD_WEBHOOK: ${ALERTMANAGER_DISCORD_WEBHOOK}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 64Mi
+              limits:
+                cpu: 250m
+                memory: 128Mi
     service:
       main:
         ports:
@@ -40,10 +51,3 @@ spec:
     ingress:
       main:
         enabled: false
-    resources:
-      requests:
-        cpu: 100m
-        memory: 64Mi
-      limits:
-        cpu: 250m
-        memory: 128Mi

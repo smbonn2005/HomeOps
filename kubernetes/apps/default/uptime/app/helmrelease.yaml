@@ -26,13 +26,22 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: louislam/uptime-kuma
-      tag: 1.23.10@sha256:f5737fcdd3946fd025bf23a15ee2e9cd676a803d100d9181c78c26b6adf165ed
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: louislam/uptime-kuma
+              tag: 1.23.10@sha256:f5737fcdd3946fd025bf23a15ee2e9cd676a803d100d9181c78c26b6adf165ed
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
     service:
       main:
         ports:
@@ -50,6 +59,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -59,9 +71,3 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 500Mi
