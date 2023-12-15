@@ -51,3 +51,6 @@ spec:
           redis:
             enabled: true
             port: 6379
+    ingress:
+      main:
+        enabled: false
