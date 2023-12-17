@@ -17,10 +17,17 @@ _... managed with Flux, Renovate and GitHub Actions_ 🤖
 [![GitHub stars](https://img.shields.io/github/stars/smbonn2005/HomeOps?color=green&style=for-the-badge)](https://github.com/smbonn2005/HomeOps/stargazers 'This repo star count')
 [![Renovate](https://img.shields.io/github/actions/workflow/status/smbonn2005/HomeOps/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/smbonn2005/HomeOps/actions/workflows/renovate.yaml)
 
-<!-- [![Home-Internet](https://img.shields.io/uptimerobot/status/m793494864-dfc695db066960233ac70f45?color=brightgreeen&label=Home%20Internet&style=for-the-badge&logo=v&logoColor=white)](https://uptimerobot.com)
-[![Plex](https://img.shields.io/uptimerobot/status/m784591338-cbf3205bc18109108eb0ea8e?logo=plex&logoColor=white&color=brightgreeen&label=Plex&style=for-the-badge)](CUSTOM SHORT LINK HERE)
-[![Home-Assistant](https://img.shields.io/uptimerobot/status/m786203807-32ce99612d7b2d01b89c4315?logo=homeassistant&logoColor=white&color=brightgreeen&label=Home%20Assistant&style=for-the-badge)](CUSTOM SHORT LINK HERE)
-[![Grafana](https://img.shields.io/uptimerobot/status/m792427620-04fcdd7089a84863ec9f398d?logo=grafana&logoColor=white&color=brightgreeen&label=Grafana&style=for-the-badge)](CUSTOM SHORT LINK HERE) -->
+</div>
+
+<div align="center">
+
+[![Age-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_age_days&style=flat-square&label=Age)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
+[![Uptime-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_uptime_days&style=flat-square&label=Uptime)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
+[![Node-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_node_count&style=flat-square&label=Nodes)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
+[![Pod-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_pod_count&style=flat-square&label=Pods)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
+[![CPU-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_cpu_usage&style=flat-square&label=CPU)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
+[![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_memory_usage&style=flat-square&label=Memory)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
+[![Power-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_power_usage&style=flat-square&label=Power)](https://github.com/kashalls/kromgo/)
 
 </div>
 
@@ -94,28 +101,6 @@ GitRepository :: home-ops-kubernetes
                 DependsOn:
                     Kustomization :: cluster-apps-cloudnative-pg
                 Cluster :: postgres
-```
-
-<!-- ### Networking
-
-<details>
-  <summary>Click to see a high level network diagram</summary>
-
-  <img src="https://raw.githubusercontent.com/onedr0p/home-ops/main/docs/src/assets/networks.png" align="center" width="600px" alt="dns"/>
-</details>
-
-
-| Name                                          | CIDR              |
-|-----------------------------------------------|-------------------|
-| Management VLAN                               | `192.168.1.0/24`  |
-| Kubernetes Nodes VLAN                         | `192.168.42.0/24` |
-| Kubernetes external services (Calico w/ BGP)  | `192.168.69.0/24` |
-| Kubernetes pods (Calico w/ BGP)               | `10.42.0.0/16`    |
-| Kubernetes services (Calico w/ BGP)           | `10.43.0.0/16`    |
-
-- HAProxy is configured on my `VyOS` router for the Kubernetes Control Plane Load Balancer.
-- Calico is configured with `externalIPs` to expose Kubernetes services with their own IP over BGP which is configured on my router. -->
-
 ---
 
 ## ☁️ Cloud Dependencies
