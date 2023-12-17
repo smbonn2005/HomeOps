@@ -31,6 +31,32 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: pterodactyl-app
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /app/var/
+            - name: pterodactyl-nginx
+              accessMode: ReadWriteOnce
+              size: 500Mi
+              storageClass: longhorn
+              globalMounts:
+                - path: /etc/nginx/http.d/
+            - name: pterodactyl-le
+              accessMode: ReadWriteOnce
+              size: 100Mi
+              storageClass: longhorn
+              globalMounts:
+                - path: /etc/letsencrypt/
+            - name: pterodactyl-logs
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /app/storage/logs/
         containers:
           main:
             image:
@@ -91,24 +117,3 @@ spec:
         tls:
           - hosts:
               - *host
-    volumeClaimTemplates:
-      - name: pterodactyl-app
-        mountPath: /app/var/
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
-      - name: pterodactyl-nginx
-        mountPath: /etc/nginx/http.d/
-        accessMode: ReadWriteOnce
-        size: 500Mi
-        storageClass: longhorn
-      - name: pterodactyl-le
-        mountPath: /etc/letsencrypt/
-        accessMode: ReadWriteOnce
-        size: 100Mi
-        storageClass: longhorn
-      - name: pterodactyl-logs
-        mountPath: /app/storage/logs/
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
