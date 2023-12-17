@@ -28,13 +28,6 @@ spec:
   values:
     controllers:
       main:
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [10000]
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
@@ -53,6 +46,13 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 6000Mi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
       main:
         ports:
