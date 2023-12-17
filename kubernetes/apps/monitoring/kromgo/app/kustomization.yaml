@@ -4,3 +4,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: kromgo-configmap
+    files:
+      - config.yaml=./config/config.yaml
