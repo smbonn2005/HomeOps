@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/gethomepage/homepage
               tag: v0.8.4
             env:
-              TZ: "${TIMEZONE}"
+              TZ: America/New_York
             envFrom:
               - secretRef:
                   name: homepage-secret

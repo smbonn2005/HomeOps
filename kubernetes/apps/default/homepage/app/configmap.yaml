@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: homepage
 data:
   bookmarks.yaml: |
-    - Communitcate:
+    - Communicate:
         - Discord:
             - icon: discord.png # https://github.com/walkxcode/dashboard-icons
               href: 'https://discord.com/app'
