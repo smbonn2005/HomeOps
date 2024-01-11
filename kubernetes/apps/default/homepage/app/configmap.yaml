@@ -68,6 +68,23 @@ data:
     - greeting:
         text_size: xl
         text: "Welcome!"
+    - kubernetes:
+        cluster:
+          cpu: true
+          label: cluster
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+    - longhorn:
+        expanded: false
+        total: true
+        labels: true
+        nodes: false
     - datetime:
         text_size: l
         format:
