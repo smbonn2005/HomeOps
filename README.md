@@ -101,6 +101,8 @@ GitRepository :: home-ops-kubernetes
                 DependsOn:
                     Kustomization :: cluster-apps-cloudnative-pg
                 Cluster :: postgres
+```
+
 ---
 
 ## ☁️ Cloud Dependencies
