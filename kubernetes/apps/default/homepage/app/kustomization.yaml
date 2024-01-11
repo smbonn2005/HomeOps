@@ -6,6 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./configmap.yaml
   - ./secret.sops.yaml
+  - ./rbac.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: homepage
