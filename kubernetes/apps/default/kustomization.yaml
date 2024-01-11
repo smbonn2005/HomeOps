@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./heimdall/ks.yaml
-  # - ./homepage/ks.yaml
+  - ./homepage/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./pterodactyl/ks.yaml
   - ./uptime/ks.yaml
