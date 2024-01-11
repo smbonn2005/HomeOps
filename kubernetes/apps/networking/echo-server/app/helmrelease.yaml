@@ -69,7 +69,10 @@ spec:
         className: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
-          hajimari.io/icon: video-input-antenna
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Network
+          gethomepage.dev/name: Echo Server
+          gethomepage.dev/icon: mdi-video-input-antenna
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
