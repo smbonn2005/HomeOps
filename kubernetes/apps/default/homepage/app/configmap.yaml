@@ -56,11 +56,11 @@ data:
         style: column
         icon: mdi-chart-line
   widgets.yaml: |
-    - resources:
-        backend: kubernetes
-        cpu: true
-        expanded: true
-        memory: true
+    # - resources:
+    #     backend: kubernetes
+    #     cpu: true
+    #     expanded: true
+    #     memory: true
     - search:
         provider: [google]
         focus: false
