@@ -22,7 +22,7 @@ data:
         - kubesearch:
             - icon: kubernetes-dashboard.png
               href: 'https://kubesearch.dev/'
-        - HomeOps
+        - HomeOps:
             - icon: github.png
               href: 'https://github.com/smbonn2005/homeops'
         - flux-cluster-template:
