@@ -85,6 +85,7 @@ data:
         total: true
         labels: true
         nodes: false
+        url: http://longhorn-frontend.longhorn-system
     - datetime:
         text_size: l
         format:
