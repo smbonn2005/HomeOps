@@ -46,7 +46,7 @@ data:
     headerStyle: clean
     providers:
       longhorn:
-        url: https://longhorn-frontend.longhorn-system
+        url: https://longhorn.smbonn.me
     layout:
       Home:
         style: column
