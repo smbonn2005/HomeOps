@@ -44,6 +44,9 @@ data:
     theme: dark
     color: slate
     headerStyle: clean
+    providers:
+      longhorn:
+        url: https://longhorn-frontend.longhorn-system
     layout:
       Home:
         style: column
@@ -85,7 +88,6 @@ data:
         total: true
         labels: true
         nodes: false
-        url: http://longhorn-frontend.longhorn-system.svc.cluster.local
     - datetime:
         text_size: l
         format:
