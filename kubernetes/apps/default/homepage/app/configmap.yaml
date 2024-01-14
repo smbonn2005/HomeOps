@@ -127,7 +127,7 @@ data:
     background:
       image: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/moon.jpg
       opacity: 50
-    cardBlur: sm
+    cardBlur: md
     color: slate
     headerStyle: clean
     layout:
