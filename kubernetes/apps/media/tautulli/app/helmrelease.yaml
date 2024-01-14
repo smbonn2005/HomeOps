@@ -72,8 +72,8 @@ spec:
           gethomepage.dev/name: Tautulli
           gethomepage.dev/group: Media
           gethomepage.dev/widget.type: tautulli
-          gethomepage.dev/widget.url: http://tautulli.media:8181
-          gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_TAUTULLI_KEY}}'
+          gethomepage.dev/widget.url: http://tautulli.media
+          gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_TAUTULLI_KEY}}'
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
