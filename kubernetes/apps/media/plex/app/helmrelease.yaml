@@ -92,6 +92,13 @@ spec:
           external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           cert-manager.io/cluster-issuer: letsencrypt-production
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: plex.png
+          gethomepage.dev/name: Plex
+          gethomepage.dev/group: Media
+          gethomepage.dev/widget.type: plex
+          gethomepage.dev/widget.url: http://plex.media
+          gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_PLEX_KEY}}`}}'
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

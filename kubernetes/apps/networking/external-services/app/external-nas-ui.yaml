@@ -37,6 +37,13 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     kubernetes.io/ingress.class: nginx
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: truenas.png
+    gethomepage.dev/name: TrueNAS
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/widget.type: truenas
+    gethomepage.dev/widget.url: http://fs01.smbonn.me
+    gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_FS01_KEY}}`}}'
     #  ingress.home.arpa/type: "internal"
 spec:
   rules:

@@ -91,6 +91,13 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: sonarr.png
+          gethomepage.dev/name: Sonarr
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/widget.type: sonarr
+          gethomepage.dev/widget.url: http://sonarr.media
+          gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_SONARR_KEY}}`}}'
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

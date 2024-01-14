@@ -88,6 +88,13 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: readarr.png
+          gethomepage.dev/name: Readarr
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/widget.type: readarr
+          gethomepage.dev/widget.url: http://readarr.media
+          gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_READARR_KEY}}`}}'
         hosts:
           - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:

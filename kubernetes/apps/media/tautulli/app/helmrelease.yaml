@@ -67,6 +67,13 @@ spec:
         className: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: tautulli.png
+          gethomepage.dev/name: Tautulli
+          gethomepage.dev/group: Media
+          gethomepage.dev/widget.type: tautulli
+          gethomepage.dev/widget.url: http://tautulli.media:8181
+          gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_TAUTULLI_KEY}}`}}'
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
