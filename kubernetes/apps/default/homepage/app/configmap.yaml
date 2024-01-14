@@ -155,7 +155,7 @@ data:
     #     expanded: true
     #     memory: true
     - logo:
-        icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/lds-transparent.png
+        icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/smb.jpg
     - search:
         provider: [google]
         focus: false
