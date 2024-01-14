@@ -62,6 +62,13 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: uptime.png
+          gethomepage.dev/name: Uptime Kuma
+          gethomepage.dev/group: Infrastructure
+          gethomepage.dev/widget.type: uptimekuma
+          gethomepage.dev/widget.url: http://uptime.default
+          gethomepage.dev/widget.slug: lab
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

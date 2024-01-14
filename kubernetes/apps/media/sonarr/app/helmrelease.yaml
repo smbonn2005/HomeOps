@@ -97,7 +97,7 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: sonarr
           gethomepage.dev/widget.url: http://sonarr.media
-          gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_SONARR_KEY}}`}}'
+          gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_SONARR_KEY}}'
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

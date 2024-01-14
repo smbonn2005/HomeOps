@@ -112,7 +112,7 @@ spec:
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/widget.type: pterodactyl
           gethomepage.dev/widget.url: http://pterodactyl.default
-          gethomepage.dev/widget.key: `{{HOMEPAGE_VAR_PTERODACTYL_KEY}}`
+          gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_PTERODACTYL_KEY}}'
         hosts:
           - host: &host "pterodactyl.${SECRET_DOMAIN}"
             paths:
