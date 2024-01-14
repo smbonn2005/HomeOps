@@ -75,7 +75,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/speedtest.png
           gethomepage.dev/name: Speedtest
-          gethomepage.dev/group: Infrastructure
+          gethomepage.dev/group: Observability
           gethomepage.dev/widget.type: speedtest
           gethomepage.dev/widget.url: http://speedtest.default
         hosts:

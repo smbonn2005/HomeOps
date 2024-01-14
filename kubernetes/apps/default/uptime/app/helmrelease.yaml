@@ -65,7 +65,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/uptime.png
           gethomepage.dev/name: Uptime Kuma
-          gethomepage.dev/group: Infrastructure
+          gethomepage.dev/group: Observability
           gethomepage.dev/widget.type: uptimekuma
           gethomepage.dev/widget.url: http://uptime.default:3001
           gethomepage.dev/widget.slug: lab
