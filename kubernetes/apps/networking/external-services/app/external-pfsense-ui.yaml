@@ -41,9 +41,9 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: pfSense
     gethomepage.dev/group: Infrastructure
-    gethomepage.dev/url: pfsense.${SECRET_DOMAIN}
     gethomepage.dev/icon: pfsense.png
     gethomepage.dev/widget.type: pfsense
+    gethomepage.dev/widget.url: pfsense.${SECRET_DOMAIN}
     gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_PFSENSE_USERNAME}}'
     gethomepage.dev/widget.password: '{{HOMEPAGE_VAR_PFSENSE_PASSWORD}}'
     gethomepage.dev/widget.wan: igb0
