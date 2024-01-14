@@ -14,7 +14,7 @@ data:
         - Hotmail:
             - icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/outlook.png
               href: 'http://hotmail.com'
-    - Media:
+    - Content:
         - YouTube:
             - icon: youtube.png
               href: 'https://youtube.com/feed/subscriptions'
