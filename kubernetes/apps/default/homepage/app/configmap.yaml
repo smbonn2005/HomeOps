@@ -79,8 +79,8 @@ data:
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
         - Xen Orchestra
-            href: https://xen.smbonn.me
-            icon: xen.png
+            href: https://xen.smbonn.me/
+            icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/xen.png
             description: XCP-NG Host
             siteMonitor: https://xen.smbonn.me
         # - Unifi:
