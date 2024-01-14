@@ -130,12 +130,15 @@ data:
       Calendar:
         style: column
         icon: mdi-calendar
-      Media:
-        style: column
-        icon: mdi-play-circle
       Infrastructure:
         style: column
         icon: mdi-server
+      Observability:
+        style: column
+        icon: mdi-chart-line
+      Media:
+        style: column
+        icon: mdi-play-circle
       Storage:
         style: row
         columns: 2
@@ -143,9 +146,6 @@ data:
       Home:
         style: column
         icon: mdi-home-analytics
-      Observability:
-        style: column
-        icon: mdi-chart-line
       Minecraft:
         style: row
         columns: 3
