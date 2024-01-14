@@ -134,8 +134,7 @@ data:
         style: column
         icon: mdi-play-circle
       Infrastructure:
-        style: row
-        columns: 3
+        style: column
         icon: mdi-server
       Storage:
         style: row
