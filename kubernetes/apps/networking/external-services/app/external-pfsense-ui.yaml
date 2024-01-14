@@ -40,6 +40,8 @@ metadata:
     #  ingress.home.arpa/type: "internal"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: pfSense
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/url: 192.168.1.1
     gethomepage.dev/icon: pfsense.png
     gethomepage.dev/widget.type: pfsense
     gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_PFSENSE_USERNAME}}'
