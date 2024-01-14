@@ -43,7 +43,7 @@ metadata:
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/icon: pfsense.png
     gethomepage.dev/widget.type: pfsense
-    gethomepage.dev/widget.url: pfsense.${SECRET_DOMAIN}
+    gethomepage.dev/widget.url: http://pfsense.smbonn.me
     gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_PFSENSE_USERNAME}}'
     gethomepage.dev/widget.password: '{{HOMEPAGE_VAR_PFSENSE_PASSWORD}}'
     gethomepage.dev/widget.wan: igb0
