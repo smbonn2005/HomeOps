@@ -120,14 +120,6 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 
 ---
 
-<!-- ## 🌐 DNS
-
-<details>
-  <summary>Click to see a diagram of how I conquer DNS!</summary>
-
-  <img src="https://raw.githubusercontent.com/onedr0p/home-ops/main/docs/src/assets/dns.png" align="center" width="600px" alt="dns"/>
-</details> -->
-
 ### Ingress Controller
 
 Over WAN, I have port forwarded ports `80` and `443` to the load balancer IP of my ingress controller that's running in my Kubernetes cluster.
