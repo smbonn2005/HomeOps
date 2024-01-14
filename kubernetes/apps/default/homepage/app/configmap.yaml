@@ -78,7 +78,7 @@ data:
               accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
-        - Xen Orchestra
+        - Xen Orchestra:
             href: https://xen.smbonn.me/
             icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/xen.png
             description: XCP-NG Host
