@@ -83,6 +83,11 @@ data:
             icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/xen.png
             description: XCP-NG Host
             siteMonitor: https://xen.smbonn.me
+        - Longhorn:
+            href: https://longhorn.smbonn.me
+            icon: longhorn.png
+            description: K3S Cluster Storage
+            siteMonitor: http://longhorn-frontend.longhorn-system
         # - Unifi:
         #     href: https://unifi.ui.com
         #     icon: unifi.png
@@ -186,11 +191,11 @@ data:
         longitude: ${LONGITUDE}
         units: imperial
         cache: 5
-    # - longhorn:
-    #     expanded: false
-    #     total: true
-    #     labels: true
-    #     nodes: false
+    - longhorn:
+        expanded: false
+        total: true
+        labels: true
+        nodes: false
     - datetime:
         text_size: l
         format:
