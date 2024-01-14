@@ -179,7 +179,7 @@ data:
         label: Home
         latitude: ${LATITUDE}
         longitude: ${LONGITUDE}
-        units: metric
+        units: imperial
         cache: 5
     - longhorn:
         expanded: false
