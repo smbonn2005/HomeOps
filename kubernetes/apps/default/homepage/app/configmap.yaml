@@ -36,7 +36,7 @@ data:
   kubernetes.yaml: |
     mode: cluster
   services.yaml: |
-    - Calendar:
+    # - Calendar:
         # - Calendar:
         #     widget:
         #       type: calendar
