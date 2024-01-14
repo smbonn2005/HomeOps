@@ -36,3 +36,9 @@ spec:
       path: /
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/icon: longhorn.png
+        gethomepage.dev/name: Longhorn
+        gethomepage.dev/group: Infrastructure
+        gethomepage.dev/widget.type: longhorn
+        gethomepage.dev/widget.url: http://longhorn-frontend.longhorn-system
