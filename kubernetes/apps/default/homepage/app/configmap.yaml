@@ -122,7 +122,7 @@ data:
     #           url: udp://${NAS_IP}:25567
   settings.yaml: |
     title: Dashboard
-    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    favicon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/heimdall.png
     theme: dark
     background:
       image: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/moon.jpg
