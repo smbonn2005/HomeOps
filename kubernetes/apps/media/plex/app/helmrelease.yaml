@@ -39,6 +39,8 @@ spec:
                 - path: /config
         containers:
           main:
+            annotations:
+              reloader.stakater.com/auto: "true"
             image:
               repository: ghcr.io/onedr0p/plex
               tag: 1.32.8.7639-fb6452ebf@sha256:637fe10cef736f249d96cb004c12f81646c81ca17ddce22374ea8782aa6646c2
@@ -46,10 +48,10 @@ spec:
               TZ: America/New_York
               ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
               PLEX_CLAIM: ${SECRET_PLEX_TOKEN}
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 gpu.intel.com/i915: 1
@@ -75,10 +77,10 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups:
-              - 44
-              - 105
-              - 10000
+            supplementalGroups: [105]
+              # - 44
+              # - 105
+              # - 10000
     service:
       main:
         ports:
