@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: ghcr.io/alexjustesen/speedtest-tracker
-              tag: v0.14.3@sha256:00d7240a063a3a662a0b2caa3d97acf89b2afe3d4c1de8e8ef700e269c2feee6
+              tag: v0.14.4@sha256:4aa9c7d7407f4dcbf869f4b7a0500832138c787b10257803b65c0796c75fcc5e
             env:
               PUID: 1000
               PGID: 1000
