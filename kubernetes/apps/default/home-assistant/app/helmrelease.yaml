@@ -55,6 +55,23 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.20.0
+            env:
+              TZ: ${TIMEZONE}
+            args:
+              - "/config"
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+            volumeMounts:
+            - name: config
+              mountPath: /config
         pod:
           securityContext:
             runAsUser: 568
@@ -67,6 +84,9 @@ spec:
         ports:
           http:
             port: 8123
+          codeserver:
+            enabled: "true"
+            ports: 8080
     ingress:
       main:
         enabled: true
@@ -90,6 +110,19 @@ spec:
         tls:
           - hosts:
               - *host
+      codeserver:
+        enabled: true
+        className: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+        hosts:
+          - host: hass-code.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: codeserver
     persistence:
       config:
         enabled: true
