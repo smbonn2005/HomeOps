@@ -36,8 +36,6 @@ spec:
               TZ: America/New_York
               HASS_UNIT_SYSTEM: imperial
               HASS_EXTERNAL_URL: https://hass.${SECRET_DOMAIN}
-              HASS_USE_X_FORWARDED_FOR: "true"
-              HASS_TRUSTED_PROXIES: 10:42.0.0/16
             envFrom:
               - secretRef:
                   name: home-assistant-secret
