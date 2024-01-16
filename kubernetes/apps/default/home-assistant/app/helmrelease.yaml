@@ -91,6 +91,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: home-assistant
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 20Gi
+        globalMounts:
+          - path: /config
       tmp:
         type: emptyDir
