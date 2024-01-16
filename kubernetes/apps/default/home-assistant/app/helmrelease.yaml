@@ -86,7 +86,7 @@ spec:
             port: 8123
           codeserver:
             enabled: "true"
-            ports: 8080
+            port: 8080
     ingress:
       main:
         enabled: true
