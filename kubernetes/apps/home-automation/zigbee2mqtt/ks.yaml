@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-zigbee2mqtt
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-longhorn
+    - name: cluster-apps-mosquitto
+  path: "./kubernetes/apps/home-automation/zigbee2mqtt/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
+      kind: HelmRelease
+      name: zigbee2mqtt
+      namespace: home-automation
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
