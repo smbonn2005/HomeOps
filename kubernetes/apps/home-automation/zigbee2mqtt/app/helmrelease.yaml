@@ -67,7 +67,9 @@ spec:
               - secretRef:
                   name: zigbee2mqtt-secret
             securityContext:
-              privileged: "true"
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
