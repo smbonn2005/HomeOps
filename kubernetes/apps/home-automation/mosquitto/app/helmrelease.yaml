@@ -48,7 +48,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 16Mi
+                memory: 40Mi
         pod:
           securityContext:
             runAsUser: 568
@@ -62,8 +62,12 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mosquitto.${SECRET_DOMAIN}
           io.cilium/lb-ipam-ips: 192.168.1.96
+        externalTrafficPolicy: Local
         ports:
           http:
+            enabled: false
+          mqtt:
+            enabled: true
             port: 1883
     persistence:
       config:
