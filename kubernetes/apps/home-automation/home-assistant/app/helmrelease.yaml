@@ -127,6 +127,14 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClassName: longhorn
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+      configuration:
+        enabled: true
+        type: configMap
+        name: hass-config
+        mountPath: /config/configuration.yaml
+        subPath: configuration.yaml
       tmp:
         type: emptyDir

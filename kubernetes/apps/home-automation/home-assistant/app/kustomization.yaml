@@ -5,6 +5,10 @@ namespace: home-automation
 resources:
   - ./secret.sops.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: hass-config
+    files:
+      - ./config/configuration.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: home-assistant
