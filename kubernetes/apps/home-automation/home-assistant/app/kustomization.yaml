@@ -9,6 +9,8 @@ configMapGenerator:
   - name: hass-config
     files:
       - ./config/configuration.yaml
+generatorOptions:
+  disableNameSuffixHash: true
 labels:
   - pairs:
       app.kubernetes.io/name: home-assistant
