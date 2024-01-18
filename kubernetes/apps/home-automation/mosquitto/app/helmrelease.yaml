@@ -23,8 +23,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: cluster-apps-longhorn
   values:
     controllers:
       main:
