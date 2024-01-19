@@ -160,15 +160,15 @@ spec:
     ingress:
       enabled: true
       ingressClassName: nginx
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/icon: grafana.png
-        gethomepage.dev/name: Grafana
-        gethomepage.dev/group: Observability
-        gethomepage.dev/widget.type: grafana
-        gethomepage.dev/widget.url: http://grafana.monitoring
-        gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_GRAFANA_USERNAME}}'
-        gethomepage.dev/widget.password: '{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}'
+      # annotations:
+      #   gethomepage.dev/enabled: "true"
+      #   gethomepage.dev/icon: grafana.png
+      #   gethomepage.dev/name: Grafana
+      #   gethomepage.dev/group: Observability
+      #   gethomepage.dev/widget.type: grafana
+      #   gethomepage.dev/widget.url: http://grafana.monitoring
+      #   gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_GRAFANA_USERNAME}}'
+      #   gethomepage.dev/widget.password: '{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}'
       hosts:
         - &host "grafana.${SECRET_DOMAIN}"
       tls:
