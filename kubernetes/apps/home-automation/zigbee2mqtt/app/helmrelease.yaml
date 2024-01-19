@@ -50,7 +50,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_LEGACY: "false"
               ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_RETAIN: "true"
               ZIGBEE2MQTT_CONFIG_EXPERIMENTAL_NEW_API: "true"
-              ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: &port 80
+              ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: 80
               ZIGBEE2MQTT_CONFIG_FRONTEND_URL: https://zigbee2mqtt.${SECRET_DOMAIN}
               ZIGBEE2MQTT_CONFIG_HOMEASSISTANT: "true"
               ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC: zigbee2mqtt
@@ -62,7 +62,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: 115200
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
-              ZIGBEE2MQTT_CONFIG_SERIAL_PORT:  &usbdevice /dev/ttyACM0
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: /dev/ttyACM0
             envFrom:
               - secretRef:
                   name: zigbee2mqtt-secret
@@ -82,7 +82,7 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 80
     ingress:
       main:
         enabled: true
@@ -109,7 +109,7 @@ spec:
       usb:
         enabled: true
         type: hostPath
-        hostPath: *usbdevice
+        hostPath: /dev/ttyACM0
         hostPathType: CharDevice
         globalMounts:
-          - path: *usbdevice
+          - path: /dev/ttyACM0
