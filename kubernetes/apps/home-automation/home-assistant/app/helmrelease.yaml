@@ -82,6 +82,9 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:
+        type: LoadBalancer
+        annotations:
+        io.cilium/lb-ipam-ips: 192.168.1.95
         ports:
           http:
             port: 8123
@@ -91,11 +94,9 @@ spec:
     ingress:
       main:
         enabled: true
-        type: LoadBalancer
         className: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
-          io.cilium/lb-ipam-ips: 192.168.1.95
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/name: Home-Assistant
