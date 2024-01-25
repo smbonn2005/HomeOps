@@ -151,7 +151,7 @@ My `pfSense` router is utilizing the `pfBlockerNG` plugin which allows me to fil
 | Device                    | Count | OS Disk Size | Data Disk Size              | Ram  | Operating System | Purpose             |
 |---------------------------|-------|--------------|-----------------------------|------|------------------|---------------------|
 | Supermicro SuperServer 1U | 1     | 256GB NVMe   | -                           | 16GB | pfSense          | Router              |
-| Intel NUC11PAHi7          | 3     | 250GB SSD    | 2TB NVMe (longhorn)         | 64GB | Ubuntu           | Kubernetes Masters  |
+| Intel NUC11PAHi7          | 3     | 250GB SSD    | 2TB NVMe (longhorn)         | 64GB | Debian           | Kubernetes Masters  |
 | Intel NUC11PAHi7          | 1     | 250GB SSD    | 1TB NVMe                    | 64GB | XCP-NG           | VM Hypervisor       |
 | Custom Storage Server     | 1     | 2x 250GB SSD | 6x14TB ZFS (mirrored vdevs) | 128GB| TrueNas Scale    | NFS + Backup Server |
 | APC SMT3000 w/ NIC        | 1     | -            | -                           | -    | -                | UPS                 |
