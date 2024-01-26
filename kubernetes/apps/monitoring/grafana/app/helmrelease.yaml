@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: longhorn-system
-    - name: ingress-nginx
+    - name: nginx-internal
       namespace: networking
   values:
     deploymentStrategy:
