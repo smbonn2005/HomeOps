@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./external-nas-ui.yaml
   - ./external-xen-ui.yaml
-  - ./external-pihole-ui.yaml
   - ./external-pfsense-ui.yaml
   - ./external-wings.yaml
   - ./external-projects.yaml
