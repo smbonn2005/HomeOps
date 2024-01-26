@@ -58,7 +58,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/uptime.png
