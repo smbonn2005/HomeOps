@@ -37,8 +37,8 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-    kubernetes.io/ingress.class: external
 spec:
+  ingressClassName: external
   rules:
     - host: projects.${SECRET_DOMAIN}
       http:
