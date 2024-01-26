@@ -87,10 +87,8 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
+        className: internal
         annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: sonarr.png
           gethomepage.dev/name: Sonarr

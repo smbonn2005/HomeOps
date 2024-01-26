@@ -94,9 +94,9 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
+        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           cert-manager.io/cluster-issuer: letsencrypt-production
           nginx.ingress.kubernetes.io/enable-cors: "true"
           nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"

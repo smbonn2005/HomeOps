@@ -58,10 +58,8 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: internal
         annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/uptime.png
           gethomepage.dev/name: Uptime Kuma

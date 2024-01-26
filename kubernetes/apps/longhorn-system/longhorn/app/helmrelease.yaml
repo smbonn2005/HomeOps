@@ -29,7 +29,7 @@ spec:
       backupTarget: "nfs://${SECRET_NFS_SERVER}:${SECRET_NFS_BACKUP_LH}"
     ingress:
       enabled: true
-      ingressClassName: "nginx"
+      ingressClassName: internal
       host: longhorn.${SECRET_DOMAIN}
       tls: true
       tlsSecret: longhorn.tls
