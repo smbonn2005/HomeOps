@@ -28,32 +28,27 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /config
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: &secret speedtest-tracker-secret
         containers:
           main:
             image:
               repository: ghcr.io/alexjustesen/speedtest-tracker
               tag: v0.14.4@sha256:4aa9c7d7407f4dcbf869f4b7a0500832138c787b10257803b65c0796c75fcc5e
             env:
-              PUID: 1000
-              PGID: 1000
-              APP_KEY: base64:5fvnoTrDbGf1hUkOCL59bcmrNV5sxQiD6OBvRF4295M=
-              DB_CONNECTION: mysql
-              DB_HOST: ${SECRET_MARIADB_URL}
-              DB_PORT: 3306
-              DB_DATABASE: "speedtest_tracker"
-              DB_USERNAME: "speedtest"
-              DB_PASSWORD: ${SPEEDTEST_MARIADB_PASSWORD}
+              TZ: America/New_York
+            envFrom:
+              - secretRef:
+                  name: *secret
             resources:
               requests:
                 cpu: 10m
@@ -87,3 +82,10 @@ spec:
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: config-speedtest-0
+        # type: persistentVolumeClaim
+        # accessMode: ReadWriteOnce
+        # size: 1Gi
