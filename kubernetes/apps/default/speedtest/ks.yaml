@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-mariadb
+    - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-longhorn
   path: ./kubernetes/apps/default/speedtest/app
   prune: true

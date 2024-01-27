@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
+  - ./externalsecret.yaml
   - ../../../../templates/gatus/guarded
 labels:
   - pairs:
