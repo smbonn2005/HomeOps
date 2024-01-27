@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-gatus-ep
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |
+    endpoints:
+      - name: redis
+        group: infrastructure
+        url: tcp://redis.databases.svc.cluster.local:6379
+        interval: 1m
+        conditions: ["[CONNECTED] == true"]
+        alerts: [{ type: discord }]
+        ui:
+          hide-url: true
+          hide-hostname: true
