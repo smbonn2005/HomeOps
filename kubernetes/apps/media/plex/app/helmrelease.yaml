@@ -47,7 +47,9 @@ spec:
             env:
               TZ: America/New_York
               ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-              PLEX_CLAIM: ${SECRET_PLEX_TOKEN}
+            envFrom:
+              - secretRef:
+                  name: plex-secret
             # securityContext:
             #   allowPrivilegeEscalation: false
             #   readOnlyRootFilesystem: true

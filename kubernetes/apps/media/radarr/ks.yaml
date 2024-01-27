@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-prowlarr
     - name: cluster-apps-longhorn
+    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/media/radarr/app
   prune: true
   sourceRef:

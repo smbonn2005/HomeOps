@@ -50,7 +50,9 @@ spec:
               SONARR__PORT: &port 80
               SONARR__LOG_LEVEL: info
               SONARR__AUTHENTICATION_METHOD: External
-              SONARR__API_KEY: ${SECRET_SONARR_KEY}
+            envFrom:
+              - secretRef:
+                  name: sonarr-secret
             resources:
               requests:
                 cpu: 10m

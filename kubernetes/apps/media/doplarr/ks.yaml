@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-sonarr
     - name: cluster-apps-radarr
+    - name: clister-apps-external-secrets-stores
   path: ./kubernetes/apps/media/doplarr/app
   prune: true
   sourceRef:

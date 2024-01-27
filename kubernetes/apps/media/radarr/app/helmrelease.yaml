@@ -50,7 +50,9 @@ spec:
               RADARR__PORT: &port 80
               RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
               RADARR__LOG_LEVEL: info
-              RADARR__API_KEY: ${SECRET_RADARR_KEY}
+            envFrom:
+              - secretRef:
+                  name: prowlarr-secret
             resources:
               requests:
                 cpu: 10m

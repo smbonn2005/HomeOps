@@ -44,12 +44,11 @@ spec:
             env:
               TZ: America/New_York
               UN_WEBSERVER_METRICS: "true"
-              UN_SONARR_0_URL: ${SECRET_SONARR_URL}
               UN_SONARR_0_PATHS_0: /media/Downloads
-              UN_SONARR_0_API_KEY: ${SECRET_SONARR_KEY}
-              UN_RADARR_0_URL: ${SECRET_RADARR_URL}
               UN_RADARR_0_PATHS_0: /media/Downloads
-              UN_RADARR_0_API_KEY: ${SECRET_RADARR_KEY}
+            envFrom:
+              - secretRef:
+                  name: unpackerr-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
