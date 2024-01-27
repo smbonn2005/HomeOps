@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: databases
 resources:
   - ./helmrelease.yaml
-  - ../../../../templates/gatus/guarded
+  - ./gatus.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: mariadb
