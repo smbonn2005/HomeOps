@@ -22,3 +22,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitute:
+      APP: pterodactyl
+      GATUS_SUBDOMAIN: pterodactyl

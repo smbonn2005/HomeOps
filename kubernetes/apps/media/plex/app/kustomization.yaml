@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: media
 resources:
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/external
 labels:
   - pairs:
       app.kubernetes.io/name: plex

@@ -5,6 +5,7 @@ namespace: home-automation
 resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
+  - ../../../../templates/gatus/guarded
 labels:
   - pairs:
       app.kubernetes.io/name: mosquitto

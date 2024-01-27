@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: media
 resources:
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/guarded
 labels:
   - pairs:
       app.kubernetes.io/name: readarr
