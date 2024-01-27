@@ -190,8 +190,8 @@ data:
           showLabel: true
     - openmeteo:
         label: Home
-        latitude: ${LATITUDE}
-        longitude: ${LONGITUDE}
+        latitude: {{HOMEPAGE_VAR_HASS_LATITUDE}}
+        longitude: {{HOMEPAGE_VAR_HASS_LONGITUDE}}
         units: imperial
         cache: 5
     - longhorn:
