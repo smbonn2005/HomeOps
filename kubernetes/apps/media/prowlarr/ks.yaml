@@ -19,3 +19,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitute:
+      APP: prowlarr
+      GATUS_SUBDOMAIN: prowlarr
