@@ -46,6 +46,7 @@ spec:
               tag: v0.14.4@sha256:4aa9c7d7407f4dcbf869f4b7a0500832138c787b10257803b65c0796c75fcc5e
             env:
               TZ: America/New_York
+              DB_CONNECTION: pgsql
             envFrom:
               - secretRef:
                   name: *secret
