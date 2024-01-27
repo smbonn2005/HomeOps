@@ -1,0 +1,23 @@
+---
+web:
+  port: ${CUSTOM_WEB_PORT}
+storage:
+  type: memory
+metrics: true
+debug: false
+ui:
+  title: Health Status
+  header: Health Status
+  logo: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/smb.jpg
+alerting:
+  discord:
+    webhook-url: ${DISCORD_WEBHOOK_URL}
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 5
+      success-threshold: 2
+connectivity:
+  checker:
+    target: 1.1.1.1:53
+    interval: 1m

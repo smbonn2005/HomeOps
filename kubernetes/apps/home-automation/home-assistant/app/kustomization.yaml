@@ -5,6 +5,7 @@ namespace: home-automation
 resources:
   - ./secret.sops.yaml
   - ./helmrelease.yaml
+  - ../../../templates/gatus/external
 configMapGenerator:
   - name: hass-config
     files:
