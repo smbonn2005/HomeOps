@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-longhorn
+    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/default/speedtest/app
   prune: true
   sourceRef:
