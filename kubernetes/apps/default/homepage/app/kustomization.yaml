@@ -5,7 +5,7 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ./configmap.yaml
-  - ./secret.sops.yaml
+  - ./externalsecret.yaml
   - ./rbac.yaml
   - ../../../../templates/gatus/guarded
 labels:
