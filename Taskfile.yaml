@@ -14,6 +14,7 @@ includes:
   ansible: .taskfiles/AnsibleTasks.yaml
   brew: .taskfiles/BrewTasks.yaml
   cluster: .taskfiles/ClusterTasks.yaml
+  pvcedit: .taskfiles/PVCEditTask.yaml
 
 tasks:
 
