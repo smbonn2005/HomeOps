@@ -48,7 +48,7 @@ tasks:
         claim: PVC to mount (required)
     interactive: true
     cmd: |
-      kubectl --context {{.cluster}} run -n {{.ns}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
+      kubectl run -n {{.ns}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
         {
           "apiVersion": "v1",
           "spec": {
@@ -80,7 +80,6 @@ tasks:
           }
         }'
     vars:
-      cluster: '{{ or .cluster (fail "Argument (cluster) is required") }}'
       ns: '{{.ns | default "default"}}'
       claim: '{{ or .claim (fail "Argument (claim) is required") }}'
     preconditions:
