@@ -43,7 +43,6 @@ tasks:
     desc: Mount a PersistentVolumeClaim to a temporary pod for a cluster
     summary: |
       Args:
-        cluster: Cluster to run command against (required)
         ns: Namespace the PVC is in (default: default)
         claim: PVC to mount (required)
     interactive: true
@@ -83,4 +82,4 @@ tasks:
       ns: '{{.ns | default "default"}}'
       claim: '{{ or .claim (fail "Argument (claim) is required") }}'
     preconditions:
-      - { msg: "PVC not found", sh: "kubectl --context {{.cluster}} -n {{.ns}} get persistentvolumeclaim {{.claim}}" }
+      - { msg: "PVC not found", sh: "kubectl -n {{.ns}} get persistentvolumeclaim {{.claim}}" }
