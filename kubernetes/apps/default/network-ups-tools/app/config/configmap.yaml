@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: network-ups-tools-configmap
+data:
+  nut.conf: |-
+    MODE=netserver
+  upsd.conf: |-
+    MAXAGE 20
+    LISTEN 0.0.0.0
+  upsd.users: |-
+    [monuser]
+      password = secret
+      monuser master
+  ups.conf: |-
+    [apcrack1]
+            driver = "snmp-ups"
+            port = "192.168.1.249"
+            desc = "APC"
+            mibs = "ietf"
+            community = "public"
+    [apcrack2]
+            driver = "snmp-ups"
+            port = "192.168.1.249"
+            desc = "Smart-UPS 3000"
+            mibs = "apcc"
+            community = "public"
+  upsmon.conf: |-
+    MONITOR apcrack1@localhost 1 monuser secret master
+    MONITOR apcrack2@localhost 1 monuser secret master
