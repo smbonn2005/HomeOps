@@ -54,6 +54,16 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 6000Mi
+          vuetorrent:
+            image: registry.k8s.io/git-sync/git-sync:v4.2.0
+            imagePullPolicy: IfNotPresent
+            args:
+              - --repo=https://github.com/WDaan/VueTorrent
+              - --branch=latest-release
+              - --wait=86400 # 1 day
+              - --root=/add-ons
+            volumeMounts:
+              - { name: add-ons, mountPath: /add-ons }
         pod:
           securityContext:
             runAsUser: 568
@@ -119,14 +129,3 @@ spec:
       add-ons:
         enabled: true
         type: emptyDir
-    sidecars:
-      vuetorrent:
-        image: registry.k8s.io/git-sync/git-sync:v4.2.0
-        imagePullPolicy: IfNotPresent
-        args:
-          - --repo=https://github.com/WDaan/VueTorrent
-          - --branch=latest-release
-          - --wait=86400 # 1 day
-          - --root=/add-ons
-        volumeMounts:
-          - { name: add-ons, mountPath: /add-ons }
