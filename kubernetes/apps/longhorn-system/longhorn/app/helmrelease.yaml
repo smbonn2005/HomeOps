@@ -36,3 +36,6 @@ spec:
       path: /
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
+    metrics:
+      serviceMonitor:
+        enabled: true
