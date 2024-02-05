@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-longhorn
     - name: cluster-apps-mosquitto
-  path: "./kubernetes/apps/home-automation/wyoming-piper/app"
+  path: ./kubernetes/apps/home-automation/wyoming-piper/app
   prune: true
   sourceRef:
     kind: GitRepository

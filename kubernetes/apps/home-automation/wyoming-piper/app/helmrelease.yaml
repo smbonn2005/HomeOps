@@ -52,6 +52,7 @@ spec:
         enabled: false
       data:
         enabled: true
+        storageClass: longhorn
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 15Gi

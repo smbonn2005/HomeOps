@@ -8,8 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-longhorn
     - name: cluster-apps-mosquitto
-    - name: cluster-apps-external-secrets-stores
-  path: "./kubernetes/apps/home-automation/wyoming-whisper/app"
+  path: ./kubernetes/apps/home-automation/wyoming-whisper/app
   prune: true
   sourceRef:
     kind: GitRepository
