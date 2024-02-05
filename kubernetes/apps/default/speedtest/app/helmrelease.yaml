@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: ghcr.io/alexjustesen/speedtest-tracker
-              tag: v0.14.5@sha256:4c0bd62058e585a61c679904953e158908c0a8ce06c820c746f29b552f991af8
+              tag: v0.14.6@sha256:9062ccb79f9fab471fc3b2193da7e290b82f9ece68f517bca7af128ffe27401b
             env:
               TZ: America/New_York
               DB_CONNECTION: pgsql
