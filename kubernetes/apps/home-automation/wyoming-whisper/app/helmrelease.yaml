@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: wyoming-whisper
+  namespace: home-automation
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: rhasspy/wyoming-faster-whisper
+              tag: 1.1.0
+            args:
+              - --model
+              - base
+              - --language
+              - en
+            env:
+              TZ: America/New_York
+    service:
+      main:
+        ports:
+          http:
+            enabled: false
+            primary: false
+          whisper:
+            enabled: true
+            primary: true
+            port: 10300
+            protocol: TCP
+    persistence:
+      config:
+        enabled: false
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 15Gi
