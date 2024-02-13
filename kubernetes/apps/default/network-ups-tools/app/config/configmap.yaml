@@ -9,23 +9,21 @@ data:
   upsd.conf: |-
     MAXAGE 20
     LISTEN 0.0.0.0
+    LISTEN 127.0.0.1
   upsd.users: |-
+    [admin]
+    password=secret
+    actions=set
+    instcmds=all
     [monuser]
-      password = secret
-      monuser master
+    password=secret
+    upsmon master
   ups.conf: |-
-    [apcrack1]
-            driver = "snmp-ups"
-            port = "192.168.1.249"
-            desc = "APC"
-            mibs = "ietf"
-            community = "public"
-    [apcrack2]
-            driver = "snmp-ups"
-            port = "192.168.1.249"
+    [RackAPC]
+            driver = snmp-ups
+            port = 192.168.1.249
             desc = "Smart-UPS 3000"
-            mibs = "apcc"
-            community = "public"
+            mibs = apcc
   upsmon.conf: |-
+    RUN_AS_USER root
     MONITOR apcrack1@localhost 1 monuser secret master
-    MONITOR apcrack2@localhost 1 monuser secret master
