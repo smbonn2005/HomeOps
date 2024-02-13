@@ -81,11 +81,10 @@ spec:
               TRUSTED_PROXIES: "*"
             resources:
               requests:
-                cpu: 300m
-                memory: 256Mi
+                cpu: 50m
+                memory: 128M
               limits:
-                cpu: 500m
-                memory: 512Mi
+                memory: 256M
     service:
       main:
         ports:
