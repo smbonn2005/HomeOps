@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/kashalls/kromgo/main/config.schema.json
 metrics:
   - name: cluster_node_count
     query: count(count by (node) (kube_node_status_condition{condition="Ready"}))
@@ -21,6 +22,14 @@ metrics:
       - { color: green, min: 0, max: 35 }
       - { color: orange, min: 36, max: 75 }
       - { color: red, min: 76, max: 9999 }
+
+  - name: cluster_power_usage
+    query: round((network_ups_tools_output_voltage) * (network_ups_tools_output_current)) # Rack Output Voltage * Rack Output Current = Output Watts
+    suffix: "W"
+    colors:
+      - { color: "green", min: 0, max: 1199 }
+      - { color: "orange", min: 1200, max: 2000 }
+      - { color: "red", min: 1201, max: 3000 }
 
   - name: cluster_age_days
     query: round((time() - max(kube_node_created{}) ) / 86400)
