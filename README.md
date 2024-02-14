@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/LilDrunkenSmurf/k3s-home-cluster/main/icons/logo.png" align="center" width="144px" height="144px"/>
+<img src="https://raw.githubusercontent.com/smbonn2005/HomeOps/main/icons/logo.png" align="center" width="144px" height="144px"/>
 
 ### My Home Operations repository :octocat:
 
@@ -45,7 +45,7 @@ There is a template over at [onedr0p/flux-cluster-template](https://github.com/o
 
 ### Installation
 
-My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Debian Server 12 using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a semi hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage.
+My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Debian Bookworm using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a semi hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage.
 
 🔸 _[Click here](./ansible) to see my Ansible playbooks and roles._
 
@@ -142,11 +142,11 @@ My `pfSense` router is utilizing the `pfBlockerNG` plugin which allows me to fil
 
 ## 🔧 Hardware
 
-<!-- <details>
+<details>
   <summary>Click to see da rack!</summary>
 
-  <img src="https://user-images.githubusercontent.com/213795/172947261-65a82dcd-3274-45bd-aabf-140d60a04aa9.png" align="center" width="200px" alt="rack"/>
-</details> -->
+  <img src="https://raw.githubusercontent.com/smbonn2005/HomeOps/main/icons/rack.jpg" align="center" width="200px" alt="rack"/>
+</details>
 
 | Device                    | Count | OS Disk Size | Data Disk Size              | Ram  | Operating System | Purpose             |
 |---------------------------|-------|--------------|-----------------------------|------|------------------|---------------------|
