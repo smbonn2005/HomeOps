@@ -23,3 +23,14 @@ connectivity:
   checker:
     target: 1.1.1.1:53
     interval: 1m
+endpoints:
+  - name: flux-webhook
+    group: external
+    url: https://flux-webhook.smbonn.me
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
+    alerts:
+      - type: discord
