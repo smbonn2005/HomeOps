@@ -33,7 +33,7 @@ spec:
               tag: 1.4.0
             args:
               - --voice
-              - en-us-ryan-medium
+              - en-us-lessac-low
             env:
               TZ: America/New_York
     service:
