@@ -112,7 +112,8 @@ spec:
           # renovate: depName="pal-exporter"
           gnetId: 20421 # https://grafana.com/grafana/dashboards/20421?tab=revisions
           revision: 3
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       flux:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
