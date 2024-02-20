@@ -109,7 +109,6 @@ spec:
           revision: 31
           datasource: Prometheus
         pal-exporter:
-          # renovate: depName="pal-exporter"
           gnetId: 20421 # https://grafana.com/grafana/dashboards/20421?tab=revisions
           revision: 3
           datasource:
