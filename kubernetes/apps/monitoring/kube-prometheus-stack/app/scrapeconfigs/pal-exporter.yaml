@@ -3,9 +3,10 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: amok-palworld
+  name: pal-exporter
 spec:
   staticConfigs:
     - targets:
         - 192.168.1.210:9877
+        - 192.168.1.211:9877
   metricsPath: /metrics
