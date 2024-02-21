@@ -6,4 +6,6 @@ metadata:
   name: coredns
 spec:
   staticConfigs:
-    - targets: ["kube-dns.kube-system.svc.cluster.local:9153"]
+    - targets:
+        - kube-dns.kube-system.svc.cluster.local:9153
+  metricsPath: /metrics
