@@ -160,25 +160,18 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-        # limits:
-          #   memory: 7000Mi
-    # prometheusOperator:
-    #   resources:
-    #     requests:
-    #       cpu: 100m
-    #       memory: 256Mi
-    #     limits:
-    #       memory: 384Mi
-    #     additionalScrapeConfigs:
-    #       - job_name: coredns
-    #         scrape_interval: 1m
-    #         scrape_timeout: 10s
-    #         honor_timestamps: true
-    #         static_configs:
-    #           - targets: ["kube-dns.kube-system.svc.cluster.local:9153"]
-    #       - job_name: node-exporter
-    #         scrape_interval: 1m
-    #         scrape_timeout: 10s
-    #         honor_timestamps: true
-    #         static_configs:
-    #           - targets: ["kube-prometheus-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100"]
+  postRenderers:
+    - kustomize: # put KPS Grafana dashboards into Kubernetes folder, stolen from onedr0p
+        patches:
+          - target:
+              version: v1
+              kind: ConfigMap
+              labelSelector: grafana_dashboard in (1)
+            patch: |-
+              apiVersion: v1
+              kind: ConfigMap
+              metadata:
+                name: not-used
+                namespace: not-used
+                annotations:
+                  grafana_folder: Kubernetes
