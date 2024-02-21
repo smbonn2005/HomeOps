@@ -6,6 +6,7 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./scrapeconfigs
+  - ./prometheusrules
 labels:
   - pairs:
       app.kubernetes.io/name: kube-prometheus-stack
