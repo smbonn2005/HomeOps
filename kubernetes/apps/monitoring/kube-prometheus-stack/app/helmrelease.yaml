@@ -43,7 +43,7 @@ spec:
         tls:
           - hosts:
               - *host-alert-manager
-      alertManagerSpec:
+      alertmanagerSpec:
         useExistingSecret: true
         configSecret: alertmanager-secret
         storage:
