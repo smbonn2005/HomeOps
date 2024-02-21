@@ -28,45 +28,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    crds:
+      enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      config:
-        receivers:
-          - name: heartbeat
-            webhook_configs:
-              - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
-                send_resolved: true
-          - name: "null" # quote
-          - name: discord
-            webhook_configs:
-              - url: "http://alertmanager-discord:9094"
-                send_resolved: true
-        route:
-          group_by: ["alertname", "job"]
-          group_wait: 30s
-          group_interval: 5m
-          repeat_interval: 6h
-          receiver: discord
-          routes:
-            - receiver: heartbeat
-              group_wait: 0s
-              group_interval: 5m
-              repeat_interval: 1h
-              matchers:
-                - alertname =~ "Watchdog"
-            - receiver: "null"
-              matchers:
-                - alertname =~ "InfoInhibitor"
-            - receiver: discord
-              matchers:
-                - severity = "critical"
-              continue: true
-        inhibit_rules:
-          - source_matchers:
-              - severity = "critical"
-            target_matchers:
-              - severity = "warning"
-            equal: ["alertname", "namespace"]
       ingress:
         enabled: true
         ingressClassName: internal
@@ -79,6 +44,8 @@ spec:
           - hosts:
               - *host-alert-manager
       alertManagerSpec:
+        useExistingSecret: true
+        configSecret: alertmanager-secret
         storage:
           volumeClaimTemplate:
             spec:
@@ -86,13 +53,6 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-        resources:
-          requests:
-            cpu: 50m
-            memory: 64Mi
-          limits:
-            cpu: 60m
-            memory: 64Mi
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -140,7 +100,10 @@ spec:
             action: drop
     kubeControllerManager:
       enabled: true
-      endpoints: ["192.168.1.20", "192.168.1.21", "192.168.1.22"]
+      endpoints: &cp
+        - 192.168.1.20
+        - 192.168.1.21
+        - 192.168.1.22
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate metrics
@@ -149,13 +112,12 @@ spec:
             action: keep
     kubeEtcd:
       enabled: true
-      endpoints: ["192.168.1.20", "192.168.1.21", "192.168.1.22"]
+      endpoints: *cp
     kubeProxy:
-      enabled: false # Disabled because eBPF
-      endpoints: ["192.168.1.20", "192.168.1.21", "192.168.1.22"]
+      enabled: false
     kubeScheduler:
       enabled: true
-      endpoints: ["192.168.1.20", "192.168.1.21", "192.168.1.22"]
+      endpoints: *cp
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate metrics
@@ -179,10 +141,6 @@ spec:
         tls:
           - hosts:
               - *host
-      # thanosService:
-      #   enabled: true
-      # thanosServiceMonitor:
-      #   enabled: true
       prometheusSpec:
         replicas: 3
         replicaExternalLabelName: __replica__
@@ -193,53 +151,34 @@ spec:
         probeSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
-        # Remote write with Thanos Receiver
-        # remoteWrite:
-        #   - url: http://thanos-receive-router.monitoring.svc.cluster.local:19291/api/v1/receive
-        # remoteWriteDashboards: true
-        # thanos:
-        #   image: quay.io/thanos/thanos:v0.31.0
-        #   objectStorageConfig:
-        #     name: thanos-objstore-secret
-        #     key: objstore.yml
         retention: 2d
         retentionSize: 15GB
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: longhorn
               resources:
                 requests:
                   storage: 20Gi
-        resources:
-          requests:
-            cpu: 150m
-            memory: 2000Mi
         # limits:
           #   memory: 7000Mi
-    prometheusOperator:
-      resources:
-        requests:
-          cpu: 100m
-          memory: 256Mi
-        limits:
-          memory: 384Mi
-        additionalScrapeConfigs:
-          - job_name: coredns
-            scrape_interval: 1m
-            scrape_timeout: 10s
-            honor_timestamps: true
-            static_configs:
-              - targets: ["kube-dns.kube-system.svc.cluster.local:9153"]
-          - job_name: node-exporter
-            scrape_interval: 1m
-            scrape_timeout: 10s
-            honor_timestamps: true
-            static_configs:
-              - targets: ["kube-prometheus-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100"]
-          - job_name: pal-exporter
-            scrape_interval: 1m
-            scrape_timeout: 10s
-            honor_timestamps: true
-            static_configs:
-              - targets: ["192.168.1.210:9877"]
+    # prometheusOperator:
+    #   resources:
+    #     requests:
+    #       cpu: 100m
+    #       memory: 256Mi
+    #     limits:
+    #       memory: 384Mi
+    #     additionalScrapeConfigs:
+    #       - job_name: coredns
+    #         scrape_interval: 1m
+    #         scrape_timeout: 10s
+    #         honor_timestamps: true
+    #         static_configs:
+    #           - targets: ["kube-dns.kube-system.svc.cluster.local:9153"]
+    #       - job_name: node-exporter
+    #         scrape_interval: 1m
+    #         scrape_timeout: 10s
+    #         honor_timestamps: true
+    #         static_configs:
+    #           - targets: ["kube-prometheus-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100"]
