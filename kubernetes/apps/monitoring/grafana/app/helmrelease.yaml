@@ -201,7 +201,8 @@ spec:
           # renovate: depName="Spegel"
           gnetId: 18089
           revision: 1
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
     sidecar:
       dashboards:
         enabled: true
