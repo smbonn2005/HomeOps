@@ -197,6 +197,11 @@ spec:
           gnetId: 1860
           revision: 32
           datasource: Prometheus
+        spegel:
+          # renovate: depName="Spegel"
+          gnetId: 18089
+          revision: 1
+          datasource: Prometheus
     sidecar:
       dashboards:
         enabled: true
