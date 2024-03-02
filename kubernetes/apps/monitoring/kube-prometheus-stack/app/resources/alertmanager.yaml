@@ -34,6 +34,6 @@ receivers:
         send_resolved: true
   - name: "null" # quote
   - name: discord
-    webhook_configs:
-      - url: "http://alertmanager-discord:9094"
+    discord_configs:
+      - webhook-url: "{{ .AM_DISCORD_WEBHOOK }}"
         send_resolved: true
