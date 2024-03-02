@@ -35,5 +35,5 @@ receivers:
   - name: "null" # quote
   - name: discord
     discord_configs:
-      - webhook-url: "{{ .AM_DISCORD_WEBHOOK }}"
+      - webhook_url: "{{ .AM_DISCORD_WEBHOOK }}"
         send_resolved: true
