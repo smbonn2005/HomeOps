@@ -105,7 +105,7 @@
 7. Associate private policy with the user
 
    ```sh
-   mc admin policy attach minio outline-private user=outline
+   mc admin policy attach minio outline-private --user outline
    ```
 
 8. Associate public policy with the bucket
