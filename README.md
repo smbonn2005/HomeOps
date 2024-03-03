@@ -52,13 +52,15 @@ My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Debian Bookw
 ### Core Components
 
 - [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
-- [cilium](https://cilium.io/): Internal Kubernetes networking plugin.
 - [cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
+- [cilium](https://cilium.io/): Internal Kubernetes networking plugin.
+- [cloudflared](https://github.com/cloudflare/cloudflared): Enables Cloudflare secure access to certain ingresses.
 - [external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
 - [external-secrets](https://github.com/external-secrets/external-secrets/): Managed Kubernetes secrets using [1Password Connect](https://github.com/1Password/connect).
 - [ingress-nginx](https://github.com/kubernetes/ingress-nginx/): Ingress controller to expose HTTP traffic to pods over DNS.
 - [longhorn](https://github.com/longhorn/longhorn): Distributed block storage for peristent storage.
 - [sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Managed secrets for Kubernetes, Ansible.
+- [spegel](https://github.com/XenitAB/spegel): Stateless cluster local OCI registry mirror.
 
 ### GitOps
 
@@ -116,15 +118,14 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 | [1Password](https://1password.com/)             | Secrets with [External Secrets](https://external-secrets.io/)     | ~$65/yr        |
 | [Cloudflare](https://www.cloudflare.com/)       | Domain, DNS and proxy management                                  | ~$30/yr        |
 | [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
+| [Healthchecks.io](https://healthchecks.io/)     | External alerting if cluster goes down                            | Free           |
 |                                                 |                                                                   | Total: ~$8/mo  |
 
 ---
 
 ### Ingress Controller
 
-Over WAN, I have port forwarded ports `80` and `443` to the load balancer IP of my ingress controller that's running in my Kubernetes cluster.
-
-[Cloudflare](https://www.cloudflare.com/) works as a proxy to hide my homes WAN IP and also as a firewall. When not on my home network, all the traffic coming into my ingress controller on port `80` and `443` comes from Cloudflare. In `VyOS` I block all IPs not originating from the [Cloudflares list of IP ranges](https://www.cloudflare.com/ips/).
+External access to my cluster is done using a [Cloudflare](https://www.cloudflare.com/) tunnel. This works to prevent me from having to open ports in my router / firewall, as you would normally have to do to allow access to internal services.
 
 ### Internal DNS
 
