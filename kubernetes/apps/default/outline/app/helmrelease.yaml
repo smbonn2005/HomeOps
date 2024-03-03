@@ -82,7 +82,7 @@ spec:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/outline.jpeg
+          gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/outline.jpg
           gethomepage.dev/name: Outline
           gethomepage.dev/group: Media
         hosts:
