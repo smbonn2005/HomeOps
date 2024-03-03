@@ -67,7 +67,7 @@ spec:
                 memory: 100Mi
                 cpu: 100m
               limits:
-                memory: 750Mi
+                memory: 2000Mi
     service:
       main:
         enabled: true
@@ -86,9 +86,9 @@ spec:
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-            # bearerTokenSecret:
-            #   name: minio-prometheus-secret   #Not created yet
-            #   key: token
+            bearerTokenSecret:
+              name: minio-prometheus-secret
+              key: token
     ingress:
       main:
         enabled: true
