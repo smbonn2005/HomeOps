@@ -29,6 +29,8 @@ spec:
   values:
     controllers:
       main:
+        replicas: 3
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -44,8 +46,6 @@ spec:
             image:
               repository: docker.io/outlinewiki/outline
               tag: 0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
-            envFrom:
-              <<: *envFrom
             env:
               # AWS_REGION: us-east-1
               # AWS_S3_ACL: private
@@ -64,10 +64,12 @@ spec:
               # SMTP_FROM_EMAIL: "outline@${SECRET_DOMAIN}"
               # SMTP_SECURE: "false"
               URL: "https://docs.${SECRET_DOMAIN}"
-              PORT: 8080
+              PORT: 80
               WEB_CONCURRENCY: 10
               ENABLE_UPDATES: "false"
+              PGSSLMODE: disable
               FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
+            envFrom: *envFrom
             command:
               [
                 "/bin/sh",
@@ -84,7 +86,7 @@ spec:
       main:
         ports:
           http:
-            port: 8080
+            port: 80
     ingress:
       main:
         enabled: true

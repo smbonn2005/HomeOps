@@ -11,6 +11,7 @@ spec:
     - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/default/outline/app
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
