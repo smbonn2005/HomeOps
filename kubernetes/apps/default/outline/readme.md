@@ -99,13 +99,13 @@
 6. Apply the bucket policies
 
    ```sh
-   mc admin policy add minio outline-private outline-user-policy.json
+   mc admin policy create minio outline-private outline-user-policy.json
    ```
 
 7. Associate private policy with the user
 
    ```sh
-   mc admin policy set minio outline-private user=outline
+   mc admin policy attach minio outline-private user=outline
    ```
 
 8. Associate public policy with the bucket
