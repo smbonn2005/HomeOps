@@ -1,0 +1,107 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app outline
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: outline-secret
+        containers:
+          main:
+            image:
+              repository: docker.io/outlinewiki/outline
+              tag: 0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
+            envFrom:
+              <<: *envFrom
+            env:
+              # AWS_REGION: us-east-1
+              # AWS_S3_ACL: private
+              # AWS_S3_FORCE_PATH_STYLE: "true"
+              # AWS_S3_UPLOAD_BUCKET_NAME: outline
+              # AWS_S3_UPLOAD_BUCKET_URL: "https://minio.${SECRET_DOMAIN}:9000"
+              # OIDC_AUTH_URI: "https://auth.${SECRET_CLUSTER_DOMAIN}/api/oidc/authorization"
+              # OIDC_CLIENT_ID: outline
+              # OIDC_DISPLAY_NAME: Authelia
+              # OIDC_SCOPES: "openid profile email offline_access"
+              # OIDC_TOKEN_URI: "https://auth.${SECRET_CLUSTER_DOMAIN}/api/oidc/token"
+              # OIDC_USERINFO_URI: "https://auth.${SECRET_CLUSTER_DOMAIN}/api/oidc/userinfo"
+              # OIDC_USERNAME_CLAIM: email
+              # SMTP_HOST: smtp-relay.default.svc.cluster.local.
+              # SMTP_PORT: 2525
+              # SMTP_FROM_EMAIL: "outline@${SECRET_DOMAIN}"
+              # SMTP_SECURE: "false"
+              URL: "https://docs.${SECRET_DOMAIN}"
+              PORT: 8080
+              WEB_CONCURRENCY: 10
+              ENABLE_UPDATES: "false"
+              FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
+            command:
+              [
+                "/bin/sh",
+                "-c",
+                "yarn db:migrate --env=production-ssl-disabled && yarn start --env=production-ssl-disabled",
+              ]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 750Mi
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/outline.jpeg
+          gethomepage.dev/name: Outline
+          gethomepage.dev/group: Media
+        hosts:
+          - host: &host "docs.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
