@@ -60,18 +60,14 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            securityContext:
+              privileged: true
             resources:
               requests:
                 memory: 100Mi
                 cpu: 100m
               limits:
                 memory: 750Mi
-        pod:
-          securityContext:
-            runAsUser: 3000
-            runAsGroup: 3000
-            fsGroup: 3000
-            fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         enabled: true
