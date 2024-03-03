@@ -47,22 +47,11 @@ spec:
               repository: docker.io/outlinewiki/outline
               tag: 0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
             env:
-              # AWS_REGION: us-east-1
-              # AWS_S3_ACL: private
-              # AWS_S3_FORCE_PATH_STYLE: "true"
-              # AWS_S3_UPLOAD_BUCKET_NAME: outline
-              # AWS_S3_UPLOAD_BUCKET_URL: "https://minio.${SECRET_DOMAIN}:9000"
-              # OIDC_AUTH_URI: "https://auth.${SECRET_CLUSTER_DOMAIN}/api/oidc/authorization"
-              # OIDC_CLIENT_ID: outline
-              # OIDC_DISPLAY_NAME: Authelia
-              # OIDC_SCOPES: "openid profile email offline_access"
-              # OIDC_TOKEN_URI: "https://auth.${SECRET_CLUSTER_DOMAIN}/api/oidc/token"
-              # OIDC_USERINFO_URI: "https://auth.${SECRET_CLUSTER_DOMAIN}/api/oidc/userinfo"
-              # OIDC_USERNAME_CLAIM: email
-              # SMTP_HOST: smtp-relay.default.svc.cluster.local.
-              # SMTP_PORT: 2525
-              # SMTP_FROM_EMAIL: "outline@${SECRET_DOMAIN}"
-              # SMTP_SECURE: "false"
+              AWS_REGION: us-east-1
+              AWS_S3_ACL: private
+              AWS_S3_FORCE_PATH_STYLE: "true"
+              AWS_S3_UPLOAD_BUCKET_NAME: outline
+              AWS_S3_UPLOAD_BUCKET_URL: "https://minio.${SECRET_DOMAIN}:9000"
               URL: "https://docs.${SECRET_DOMAIN}"
               PORT: 80
               WEB_CONCURRENCY: 10
