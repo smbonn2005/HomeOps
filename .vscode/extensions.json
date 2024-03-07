@@ -10,5 +10,8 @@
         "will-stone.in-any-case",
         "EditorConfig.editorconfig",
         "PKief.material-icon-theme",
+        "samuelcolvin.jinjahtml",
+        "IronGeek.vscode-env",
+        "oderwat.indent-rainbow",
     ]
 }
