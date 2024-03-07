@@ -53,10 +53,10 @@ spec:
                   httpGet:
                     path: /minio/health/live
                     port: &api-port 9000
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 6
               readiness: *probes
               startup:
                 enabled: false
@@ -78,14 +78,14 @@ spec:
         ports:
           http:
             port: 9001
-          api:
+          s3:
             enabled: true
             port: *api-port
     serviceMonitor:
       main:
         enabled: true
         endpoints:
-          - port: api
+          - port: s3
             scheme: http
             path: /minio/v2/metrics/cluster
             interval: 1m
@@ -99,39 +99,27 @@ spec:
         className: internal
         annotations:
         hosts:
-          - host: &console-host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
-        tls:
-          - hosts:
-              - *console-host
-      s3:
-        enabled: true
-        className: internal
-        annotations:
-          hajimari.io/enable: "false"
-          nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
-          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            chunked_transfer_encoding off;
-        hosts:
-          - host: &api-host s3.${SECRET_DOMAIN}
+          - host: &s3host s3.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   name: main
-                  port: api
+                  port: s3
         tls:
           - hosts:
-              - *api-host
+              - *host
+              - *s3host
     persistence:
       data:
         enabled: true
         type: nfs
         server: "${SECRET_NFS_SERVER}"
         path: "${SECRET_NFS_MINIO}"
-        mountPath: /data
+        globalMounts:
+          - path: /data
