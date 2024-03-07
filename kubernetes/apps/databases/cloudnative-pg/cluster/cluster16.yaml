@@ -6,7 +6,7 @@ metadata:
   name: postgres
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.1-13
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-6
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -42,7 +42,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: https://s3.${SECRET_DOMAIN}:9000
-      # Note: serverName version needs to be inclemented
+      # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres-v1
       s3Credentials:
@@ -52,22 +52,14 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
-  # # Note: previousCluster needs to be set to the name of the previous
-  # # cluster when recovering from an existing cnpg cluster
-  # bootstrap:
-  #   recovery:
-  #     source: postgres-v1
-  # externalClusters:
-  #   - name: postgres-v1
-  #     barmanObjectStore:
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: https://s3.${SECRET_DOMAIN}:9000
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: cloudnative-pg-secret
-  #           key: aws-access-key-id
-  #         secretAccessKey:
-  #           name: cloudnative-pg-secret
-  #           key: aws-secret-access-key
-  #       wal:
-  #         maxParallel: 8
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
+  bootstrap:
+    recovery:
+      source: &previousCluster postgres16-v0
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        <<: *barmanObjectStore
+        serverName: *previousCluster
