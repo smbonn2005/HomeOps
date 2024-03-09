@@ -42,7 +42,7 @@ spec:
             order: 2
             image: &configSyncImage
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.26.0@sha256:5b85530b0f28d1f407855b653eb4ab2f4ca1c83716257d7ad8dd746edb2dab1d
+              tag: 1.26.1@sha256:b8d5067137fec093cf48670dc3a1dbb38f9e734f3a6683015c2e89a45db5fd16
               pullPolicy: IfNotPresent
             env: &configSyncEnv
               FOLDER: /config
@@ -62,7 +62,7 @@ spec:
             image:
               # TODO: move to semver once available
               repository: ghcr.io/twin/gatus
-              tag: latest@sha256:c3987a61cb5f0290826715216ff6bfa8df06c4add3f4ad11d0b3927a18bb93c4
+              tag: latest@sha256:7b51ab732fa3a4a0e1f9023272e2b5bf69982be879ac5047028b7f9d4b571fff
             env:
               TZ: America/New_York
               GATUS_CONFIG_PATH: /config
