@@ -7,10 +7,10 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-redis
-    - name: cluster-apps-cloudnative-pg
+    - name: redis
+    - name: cloudnative-pg-cluster
     - name: minio
-    - name: cluster-apps-external-secrets-stores
+    - name: external-secrets-stores
   path: ./kubernetes/apps/default/outline/app
   targetNamespace: default
   commonMetadata:

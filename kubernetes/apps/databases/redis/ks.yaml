@@ -2,11 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-redis
+  name: redis
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-longhorn
+    - name: longhorn
   path: ./kubernetes/apps/databases/redis/app
   prune: true
   sourceRef:
