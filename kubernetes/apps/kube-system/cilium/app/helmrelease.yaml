@@ -1,9 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cilium
-  namespace: kube-system
 spec:
   interval: 30m
   chart:
@@ -14,9 +14,7 @@ spec:
         kind: HelmRepository
         name: cilium
         namespace: flux-system
-  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -25,20 +23,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-helm-values
   values:
-    autoDirectNodeRoutes: true
-    bpf:
-      masquerade: true
-    bgp:
-      enabled: false
-    cluster:
-      name: home-cluster
-      id: 1
-    containerRuntime:
-      integration: containerd
-      socketPath: /var/run/k3s/containerd/containerd.sock
-    endpointRoutes:
-      enabled: true
     hubble:
       enabled: true
       metrics:
@@ -69,31 +57,17 @@ spec:
           enabled: true
           className: internal
           annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/icon: cilium.png
+            gethomepage.dev/name: Hubble
+            gethomepage.dev/group: Observability
+            gethomepage.dev/description: Network Monitoring Dashboard
           hosts:
-            - &host "hubble.${SECRET_DOMAIN}"
+            - &host hubble.${SECRET_DOMAIN}
           tls:
             - hosts:
                 - *host
-    ipam:
-      mode: kubernetes
-    k8sServiceHost: "127.0.0.1"
-    k8sServicePort: 6444
-    ipv4NativeRoutingCIDR: "10.42.0.0/16"
-    kubeProxyReplacement: strict
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-    # https://github.com/cilium/cilium/issues/26586
-    l2announcements:
-      enabled: true
-      leaseDuration: 120s
-      leaseRenewDeadline: 60s
-      leaseRetryPeriod: 1s
-    loadBalancer:
-      algorithm: maglev
-      mode: dsr
-    localRedirectPolicy: true
     operator:
-      replicas: 1
-      rollOutPods: true
       prometheus:
         enabled: true
         serviceMonitor:
@@ -106,11 +80,8 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+        trustCRDsExist: true
     dashboards:
       enabled: true
       annotations:
         grafana_folder: Cilium
-    rollOutCiliumPods: true
-    securityContext:
-      privileged: true
-    routingMode: native

@@ -3,13 +3,24 @@
 Thumbs.db
 # k8s
 kubeconfig
-# vscode-sops
 .decrypted~*.yaml
 .config.env
 *.agekey
 *.pub
 *.key
+# Private
+.private
+.bin
 # Ansible
+.venv*
 xanmanning.k3s*
-# Initial Bootstrap
-bootstrap/
+# Taskfile
+.task
+# Brew
+Brewfile.lock.json
+# intellij
+.idea
+# wiki
+wiki
+# Bootstrap
+/config.yaml
