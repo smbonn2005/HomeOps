@@ -25,10 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: longhorn
-      namespace: longhorn-system
-    - name: nginx-internal
       namespace: networking
   values:
     deploymentStrategy:
