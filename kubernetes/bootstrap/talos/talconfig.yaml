@@ -22,7 +22,7 @@ nodes:
   - hostname: "k8s-master-0"
     ipAddress: "192.168.1.20"
     installDiskSelector:
-      serial: "50026B7784D461C3"
+      wwid: "naa.50026b7784d461c3"
     talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
     controlPlane: true
     networkInterfaces:
@@ -39,7 +39,7 @@ nodes:
   - hostname: "k8s-master-1"
     ipAddress: "192.168.1.21"
     installDiskSelector:
-      serial: "50026B7784D46419"
+      wwid: "naa.50026b7784d46419"
     talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
     controlPlane: true
     networkInterfaces:
@@ -56,7 +56,7 @@ nodes:
   - hostname: "k8s-master-2"
     ipAddress: "192.168.1.22"
     installDiskSelector:
-      serial: "50026B7784D4627D"
+      wwid: "naa.50026b7784d4627d"
     talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
     controlPlane: true
     networkInterfaces:
