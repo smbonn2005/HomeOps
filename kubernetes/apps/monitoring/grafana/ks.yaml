@@ -6,14 +6,14 @@ metadata:
   name: &app grafana
   namespace: flux-system
 spec:
-  targetNamespace: networking
+  targetNamespace: monitoring
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: longhorn
     - name: external-secrets-stores
-  path: ./kubernetes/apps/networking/grafana/app
+  path: ./kubernetes/apps/monitoring/grafana/app
   prune: true
   sourceRef:
     kind: GitRepository
