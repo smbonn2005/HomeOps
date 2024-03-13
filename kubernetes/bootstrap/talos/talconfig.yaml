@@ -23,7 +23,7 @@ nodes:
     ipAddress: "192.168.1.20"
     installDiskSelector:
       wwid: "naa.50026b7784d461c3"
-    talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
+    talosImageURL: factory.talos.dev/installer/c2e0324a7089e454c4534c541ce423efc63e85a8f8b25458776c486038051239
     controlPlane: true
     networkInterfaces:
       - interface: eth0
@@ -40,7 +40,7 @@ nodes:
     ipAddress: "192.168.1.21"
     installDiskSelector:
       wwid: "naa.50026b7784d46419"
-    talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
+    talosImageURL: factory.talos.dev/installer/c2e0324a7089e454c4534c541ce423efc63e85a8f8b25458776c486038051239
     controlPlane: true
     networkInterfaces:
       - interface: eth0
@@ -57,7 +57,7 @@ nodes:
     ipAddress: "192.168.1.22"
     installDiskSelector:
       wwid: "naa.50026b7784d4627d"
-    talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
+    talosImageURL: factory.talos.dev/installer/c2e0324a7089e454c4534c541ce423efc63e85a8f8b25458776c486038051239
     controlPlane: true
     networkInterfaces:
       - interface: eth0
@@ -86,6 +86,23 @@ patches:
               discard_unpacked_layers = false
             [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
               discard_unpacked_layers = false
+
+  # Configure NFS Mounts
+  - |-
+    machine:
+      files:
+        - op: overwrite
+          path: /etc/nfsmount.conf
+          permissions: 420
+          content: |-
+            [ NFSMount_Global_Options ]
+              nfsvers = 4.2
+              hard = True
+              noatime = True
+              nodiratime = True
+              rsize = 131072
+              wsize = 131072
+              nconnect = 8
 
   # Disable search domain everywhere
   - |-
@@ -146,6 +163,13 @@ patches:
           - destination: /var/openebs/local
             type: bind
             source: /var/openebs/local
+            options:
+              - bind
+              - rshared
+              - rw
+          - destination: /var/lib/longhorn
+            type: bind
+            source: /var/lib/longhorn
             options:
               - bind
               - rshared
