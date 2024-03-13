@@ -12,7 +12,7 @@ _... managed with Flux, Renovate and GitHub Actions_ 🤖
 <div align="center">
 
 [![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/k8s-at-home)&nbsp;&nbsp;
-[![Kubernetes](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsmbonn2005%2FHomeOps%2F.taskfiles%2FTalos%2FTaskfile.yaml&query=%24.vars.KUBERNETES_VERSION&style=for-the-badge&logo=kubernetes&logoColor=white&label=%20)](https://www.talos.dev/)&nbsp;&nbsp;
+[![Kubernetes](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/smbonn2005/HomeOps/6b0b2980c90c7b71ce25240590d048d7043fc65e/kubernetes/bootstrap/talos/talconfig.yaml&query=kubernetesVersion&style=for-the-badge&logo=kubernetes&logoColor=white&label=%20)](https://www.talos.dev/)&nbsp;&nbsp;
 [![GitHub last commit](https://img.shields.io/github/last-commit/smbonn2005/HomeOps?color=purple&style=for-the-badge)](https://github.com/smbonn2005/HomeOps/commits/main 'Commit History')\
 [![GitHub stars](https://img.shields.io/github/stars/smbonn2005/HomeOps?color=green&style=for-the-badge)](https://github.com/smbonn2005/HomeOps/stargazers 'This repo star count')
 <!-- [![Renovate](https://img.shields.io/github/actions/workflow/status/smbonn2005/HomeOps/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/smbonn2005/HomeOps/actions/workflows/renovate.yaml) -->
