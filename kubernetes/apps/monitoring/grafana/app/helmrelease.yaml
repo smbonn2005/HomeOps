@@ -23,9 +23,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
-      namespace: networking
   values:
     deploymentStrategy:
       type: Recreate
