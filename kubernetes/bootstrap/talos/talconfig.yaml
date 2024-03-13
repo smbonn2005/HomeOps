@@ -173,9 +173,9 @@ patches:
     machine:
       kubelet:
         extraMounts:
-          - destination: /var/lib/longhorn
+          - destination: /var/mnt/longhorn
             type: bind
-            source: /var/lib/longhorn
+            source: /var/mnt/longhorn
             options:
               - bind
               - rshared
@@ -187,7 +187,7 @@ patches:
       disks:
       - device: /dev/nvme0n1
         partitions:
-          - mountpoint: /var/lib/longhorn
+          - mountpoint: /var/mnt/longhorn
 
   # Disable predictable NIC naming
   - |-
