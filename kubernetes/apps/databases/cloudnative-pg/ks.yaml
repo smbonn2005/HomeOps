@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cluster-apps-cloudnative-pg
+  name: &app cloudnative-pg
   namespace: flux-system
 spec:
   targetNamespace: databases
@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-external-secrets-stores
+    - name: external-secrets-stores
   path: ./kubernetes/apps/databases/cloudnative-pg/app
   prune: true
   sourceRef:
@@ -26,7 +26,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cluster-apps-cloudnative-pg-cluster
+  name: &app cloudnative-pg-cluster
   namespace: flux-system
 spec:
   targetNamespace: databases
@@ -34,8 +34,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-longhorn
+    - name: cloudnative-pg
+    - name: longhorn
   path: ./kubernetes/apps/databases/cloudnative-pg/cluster
   prune: true
   sourceRef:

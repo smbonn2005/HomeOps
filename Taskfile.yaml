@@ -1,20 +1,44 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 vars:
-  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
+  # Directories
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
+  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
+  SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
+  # Files
+  AGE_FILE: "{{.ROOT_DIR}}/age.key"
+  BOOTSTRAP_CONFIG_FILE: "{{.ROOT_DIR}}/config.yaml"
+  KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
+  MAKEJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/makejinja.toml"
+  PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
+  # Binaries
+  PYTHON_BIN: python3
 
 env:
-  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
-  SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+  KUBECONFIG: "{{.KUBECONFIG_FILE}}"
+  PYTHONDONTWRITEBYTECODE: "1"
+  SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
+  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
 
 includes:
-  ansible: .taskfiles/AnsibleTasks.yaml
-  brew: .taskfiles/BrewTasks.yaml
-  cluster: .taskfiles/ClusterTasks.yaml
-  pvcedit: .taskfiles/PVCEditTask.yaml
+  ansible: .taskfiles/Ansible/Taskfile.yaml
+  kubernetes:
+    aliases: ["k8s"]
+    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
+  flux: .taskfiles/Flux/Taskfile.yaml
+  repository:
+    aliases: ["repo"]
+    taskfile: .taskfiles/Repository/Taskfile.yaml
+  talos: .taskfiles/Talos/Taskfile.yaml
+  sops: .taskfiles/Sops/Taskfile.yaml
+  workstation: .taskfiles/Workstation/Taskfile.yaml
+  user:
+    taskfile: .taskfiles/User
+    optional: true
 
 tasks:
 
@@ -22,25 +46,37 @@ tasks:
 
   init:
     desc: Initialize configuration files
-    dir: "{{.BOOTSTRAP_DIR}}"
     cmds:
-      - cp -n vars/addons.sample.yaml vars/addons.yaml
-      - cp -n vars/config.sample.yaml vars/config.yaml
-      - cmd: echo "=== Configuration files copied ==="
+      - mkdir -p {{.PRIVATE_DIR}}
+      - cp -n {{.BOOTSTRAP_CONFIG_FILE | replace ".yaml" ".sample.yaml"}} {{.BOOTSTRAP_CONFIG_FILE}}
+      - cmd: echo === Configuration file copied ===
         silent: true
-      - cmd: echo "Proceed with updating the configuration files..."
+      - cmd: echo Proceed with updating the configuration files...
         silent: true
-      - cmd: echo "{{.BOOTSTRAP_DIR}}/vars/config.yaml"
-        silent: true
-      - cmd: echo "{{.BOOTSTRAP_DIR}}/vars/addons.yaml"
+      - cmd: echo {{.BOOTSTRAP_CONFIG_FILE}}
         silent: true
     status:
-      - test -f "{{.BOOTSTRAP_DIR}}/vars/addons.yaml"
-      - test -f "{{.BOOTSTRAP_DIR}}/vars/config.yaml"
+      - test -f "{{.BOOTSTRAP_CONFIG_FILE}}"
 
   configure:
-    desc: Configure repository from Ansible vars
-    dir: "{{.BOOTSTRAP_DIR}}"
-    cmd: ansible-playbook configure.yaml
-    env:
-      ANSIBLE_DISPLAY_SKIPPED_HOSTS: "false"
+    desc: Configure repository from bootstrap vars
+    prompt: Any conflicting config in the root kubernetes and ansible directories will be overwritten... continue?
+    deps: ["workstation:direnv", "workstation:venv", "sops:age-keygen", "init"]
+    cmds:
+      - task: .template
+      - task: sops:encrypt
+      - task: .validate
+
+  .template:
+    internal: true
+    cmd: "{{.VIRTUAL_ENV}}/bin/makejinja"
+    preconditions:
+      - { msg: "Missing virtual environment", sh: "test -d {{.VIRTUAL_ENV}}" }
+      - { msg: "Missing Makejinja config file", sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}" }
+      - { msg: "Missing Makejinja plugin file", sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py" }
+      - { msg: "Missing bootstrap config file", sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}" }
+
+  .validate:
+    internal: true
+    cmds:
+      - task: kubernetes:kubeconform

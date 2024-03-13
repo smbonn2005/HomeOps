@@ -2,13 +2,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-doplarr
+  name: doplarr
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-sonarr
-    - name: cluster-apps-radarr
-    - name: cluster-apps-external-secrets-stores
+    - name: sonarr
+    - name: radarr
+    - name: external-secrets-stores
   path: ./kubernetes/apps/media/doplarr/app
   prune: true
   sourceRef:

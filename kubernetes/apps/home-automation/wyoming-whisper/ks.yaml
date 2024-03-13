@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-wyoming-whisper
+  name: wyoming-whisper
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-longhorn
-    - name: cluster-apps-mosquitto
+    - name: longhorn
+    - name: mosquitto
   path: ./kubernetes/apps/home-automation/wyoming-whisper/app
   prune: true
   sourceRef:
