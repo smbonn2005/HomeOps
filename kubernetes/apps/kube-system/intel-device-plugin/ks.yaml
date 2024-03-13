@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -21,6 +22,7 @@ spec:
   retryInterval: 1m
   timeout: 3m
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -38,28 +40,6 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta2
       kind: HelmRelease
       name: intel-device-plugin-gpu
-      namespace: kube-system
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: intel-device-plugin-gpu-exporter
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: intel-device-plugin-gpu
-  path: ./kubernetes/apps/kube-system/intel-device-plugin/exporter
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
-      kind: HelmRelease
-      name: intel-gpu-exporter
       namespace: kube-system
   interval: 30m
   retryInterval: 1m
