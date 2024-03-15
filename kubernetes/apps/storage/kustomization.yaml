@@ -6,5 +6,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./minio/ks.yaml
-  # - ./snapshot-controller/ks.yaml
-  # - ./volsync/ks.yaml
+  - ./snapshot-controller/ks.yaml
+  - ./volsync/ks.yaml
