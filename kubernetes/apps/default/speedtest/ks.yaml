@@ -9,6 +9,7 @@ spec:
     - name: cloudnative-pg-cluster
     - name: longhorn
     - name: external-secrets-stores
+    - name: volsync
   path: ./kubernetes/apps/default/speedtest/app
   prune: true
   sourceRef:

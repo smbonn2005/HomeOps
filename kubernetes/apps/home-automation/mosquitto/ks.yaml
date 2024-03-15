@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: longhorn
     - name: external-secrets-stores
+    - name: volsync
   path: ./kubernetes/apps/home-automation/mosquitto/app
   prune: true
   sourceRef:

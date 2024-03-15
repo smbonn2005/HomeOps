@@ -9,6 +9,7 @@ spec:
     - name: longhorn
     - name: redis
     - name: mariadb
+    - name: volsync
     - name: external-secrets-stores
   path: ./kubernetes/apps/default/pterodactyl/app
   prune: true
