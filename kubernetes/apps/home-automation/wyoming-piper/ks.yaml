@@ -24,4 +24,5 @@ spec:
   postBuild:
     substitute:
       APP: wyoming-piper
+      VOLSYNC_CAPACITY: 4Gi
       # GATUS_SUBDOMAIN: piper

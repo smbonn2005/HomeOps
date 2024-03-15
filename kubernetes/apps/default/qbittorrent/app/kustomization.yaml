@@ -5,6 +5,7 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/gatus/guarded
+  - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: qbittorrent

@@ -25,5 +25,6 @@ spec:
   postBuild:
     substitute:
       APP: plex
+      VOLSYNC_CAPACITY: 30Gi
       GATUS_SUBDOMAIN: plex
       GATUS_URL_PATH: /web/index.html

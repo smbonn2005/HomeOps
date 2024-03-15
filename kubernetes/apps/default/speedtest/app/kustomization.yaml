@@ -6,6 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ../../../../templates/gatus/guarded
+  - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: speedtest

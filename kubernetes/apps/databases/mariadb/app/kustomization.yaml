@@ -5,6 +5,7 @@ namespace: databases
 resources:
   - ./helmrelease.yaml
   - ./gatus.yaml
+  - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: mariadb

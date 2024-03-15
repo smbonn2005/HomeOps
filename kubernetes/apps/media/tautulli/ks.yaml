@@ -23,4 +23,5 @@ spec:
   postBuild:
     substitute:
       APP: tautulli
+      VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: tautulli

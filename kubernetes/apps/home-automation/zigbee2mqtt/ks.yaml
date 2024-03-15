@@ -25,4 +25,5 @@ spec:
   postBuild:
     substitute:
       APP: zigbee2mqtt
+      VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: zigbee

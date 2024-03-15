@@ -24,4 +24,5 @@ spec:
   postBuild:
     substitute:
       APP: mosquitto
+      VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: mosquitto

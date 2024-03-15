@@ -25,4 +25,5 @@ spec:
   postBuild:
     substitute:
       APP: speedtest-tracker
+      VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: speedtest
