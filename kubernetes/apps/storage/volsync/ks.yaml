@@ -6,6 +6,8 @@ metadata:
   name: &app volsync
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: snapshot-controller
   targetNamespace: storage
   commonMetadata:
     labels:
