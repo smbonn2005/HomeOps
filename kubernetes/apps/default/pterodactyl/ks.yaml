@@ -11,6 +11,7 @@ spec:
     - name: mariadb
     - name: volsync
     - name: external-secrets-stores
+  targetNamespace: default
   path: ./kubernetes/apps/default/pterodactyl/app
   prune: true
   sourceRef:

@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: longhorn
     - name: volsync
+  targetNamespace: default
   path: ./kubernetes/apps/default/qbittorrent/app
   prune: true
   sourceRef:

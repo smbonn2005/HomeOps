@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: longhorn
     - name: volsync
+  targetNamespace: databases
   path: ./kubernetes/apps/databases/mariadb/app
   prune: true
   sourceRef:

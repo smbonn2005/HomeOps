@@ -9,6 +9,7 @@ spec:
     - name: sonarr
     - name: radarr
     - name: external-secrets-stores
+  targetNamespace: media
   path: ./kubernetes/apps/media/doplarr/app
   prune: true
   sourceRef:

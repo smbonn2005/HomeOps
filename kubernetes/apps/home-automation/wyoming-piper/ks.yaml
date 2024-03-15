@@ -9,6 +9,7 @@ spec:
     - name: longhorn
     - name: mosquitto
     - name: volsync
+  targetNamespace: home-automation
   path: ./kubernetes/apps/home-automation/wyoming-piper/app
   prune: true
   sourceRef:

@@ -9,6 +9,7 @@ spec:
     - name: prowlarr
     - name: longhorn
     - name: external-secrets-stores
+  targetNamespace: media
   path: ./kubernetes/apps/media/sonarr/app
   prune: true
   sourceRef:

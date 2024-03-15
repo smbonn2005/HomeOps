@@ -10,6 +10,7 @@ spec:
     - name: longhorn
     - name: external-secrets-stores
     - name: volsync
+  targetNamespace: default
   path: ./kubernetes/apps/default/speedtest/app
   prune: true
   sourceRef:

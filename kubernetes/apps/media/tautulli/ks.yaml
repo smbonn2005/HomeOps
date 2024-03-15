@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: longhorn
     - name: volsync
+  targetNamespace: media
   path: ./kubernetes/apps/media/tautulli/app
   prune: true
   sourceRef:

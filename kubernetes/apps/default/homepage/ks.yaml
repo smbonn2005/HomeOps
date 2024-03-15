@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: longhorn
     - name: external-secrets-stores
+  targetNamespace: default
   path: ./kubernetes/apps/default/homepage/app
   prune: true
   sourceRef:
