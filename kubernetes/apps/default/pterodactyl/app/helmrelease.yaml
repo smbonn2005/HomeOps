@@ -30,6 +30,33 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+        type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: pterodactyl-app
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /app/var/
+            - name: pterodactyl-nginx
+              accessMode: ReadWriteOnce
+              size: 500Mi
+              storageClass: longhorn
+              globalMounts:
+                - path: /etc/nginx/http.d/
+            - name: pterodactyl-le
+              accessMode: ReadWriteOnce
+              size: 100Mi
+              storageClass: longhorn
+              globalMounts:
+                - path: /etc/letsencrypt/
+            - name: pterodactyl-logs
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /app/storage/logs/
         containers:
           main:
             image:
@@ -95,18 +122,18 @@ spec:
         tls:
           - hosts:
               - *host
-    persistence:
-      data:
-        enabled: true
-        existingClaim: *app
-        advancedMounts:
-          main:
-            main:
-              - subPath: "data"
-                path: "/app/var"
-              - subPath: "nginx"
-                path: "/etc/nginx/http.d"
-              - subPath: "letsencrypt"
-                path: "/etc/letsencrypt"
-              - subPath: "logs"
-                path: "/app/storage/logs"
+    # persistence:
+    #   data:
+    #     enabled: true
+    #     existingClaim: *app
+    #     advancedMounts:
+    #       main:
+    #         main:
+    #           - subPath: "data"
+    #             path: "/app/var"
+    #           - subPath: "nginx"
+    #             path: "/etc/nginx/http.d"
+    #           - subPath: "letsencrypt"
+    #             path: "/etc/letsencrypt"
+    #           - subPath: "logs"
+    #             path: "/app/storage/logs"
