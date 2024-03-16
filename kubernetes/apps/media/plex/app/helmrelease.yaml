@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: plex
+  name: &app plex
   namespace: media
 spec:
   interval: 15m
@@ -28,7 +28,6 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
         containers:
           main:
             annotations:
