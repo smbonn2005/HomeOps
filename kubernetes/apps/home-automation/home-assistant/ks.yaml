@@ -26,6 +26,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM: home-assistant-config
       VOLSYNC_CAPACITY: 5Gi
       GATUS_SUBDOMAIN: hass

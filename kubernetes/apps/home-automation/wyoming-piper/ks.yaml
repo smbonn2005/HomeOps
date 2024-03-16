@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: wyoming-piper
+  name: &app wyoming-piper
   namespace: flux-system
 spec:
   dependsOn:
@@ -25,6 +25,6 @@ spec:
   timeout: 3m
   postBuild:
     substitute:
-      APP: wyoming-piper
+      APP: *app
       VOLSYNC_CAPACITY: 4Gi
       # GATUS_SUBDOMAIN: piper

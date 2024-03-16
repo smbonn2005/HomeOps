@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: speedtest
+  name: &app speedtest
   namespace: default
 spec:
   interval: 15m
@@ -86,7 +86,4 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: config-speedtest-0
-        # type: persistentVolumeClaim
-        # accessMode: ReadWriteOnce
-        # size: 1Gi
+        existingClaim: *app

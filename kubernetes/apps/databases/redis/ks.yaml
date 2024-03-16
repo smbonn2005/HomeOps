@@ -5,8 +5,6 @@ metadata:
   name: redis
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: longhorn
   targetNamespace: databases
   path: ./kubernetes/apps/databases/redis/app
   prune: true

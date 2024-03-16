@@ -10,7 +10,6 @@ spec:
     - name: redis
     - name: mariadb
     - name: volsync
-    - name: external-secrets-stores
   targetNamespace: default
   path: ./kubernetes/apps/default/pterodactyl/app
   prune: true
@@ -28,5 +27,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      # VOLSYNC_CAPACITY: 2Gi
-      GATUS_SUBDOMAIN: pterodactyl
+      VOLSYNC_CAPACITY: 5Gi
+      GATUS_SUBDOMAIN: *app
