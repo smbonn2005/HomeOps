@@ -5,7 +5,7 @@ namespace: media
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ../../../../templates/volsync
+#  - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: unpackerr

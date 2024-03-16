@@ -5,7 +5,7 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/gatus/external
-  - ../../../../templates/volsync
+#  - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: pterodactyl
