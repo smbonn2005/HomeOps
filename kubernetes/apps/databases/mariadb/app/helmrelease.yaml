@@ -37,8 +37,8 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-    persistence:
-      config:
+    primary:
+      persistence:
         enabled: true
         existingClaim: *app
     initdbScripts:
