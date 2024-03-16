@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: unpackerr
+  name: &app unpackerr
 spec:
   interval: 30m
   chart:
@@ -26,14 +26,6 @@ spec:
     controllers:
       main:
         type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /config
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -76,6 +68,11 @@ spec:
       main:
         enabled: true
     persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /config
       media:
         enabled: true
         type: nfs

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: home-assistant
+  name: &app home-assistant
   namespace: home-automation
 spec:
   interval: 30m
@@ -128,9 +128,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
+        existingClaim: *app
       configuration:
         enabled: true
         type: configMap

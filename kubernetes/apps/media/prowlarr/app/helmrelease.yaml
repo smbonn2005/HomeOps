@@ -29,14 +29,6 @@ spec:
     controllers:
       main:
         type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 2Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /config
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -107,3 +99,9 @@ spec:
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /config

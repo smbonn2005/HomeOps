@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: wyoming-piper
+  name: &app wyoming-piper
   namespace: home-automation
 spec:
   interval: 30m
@@ -52,7 +52,4 @@ spec:
         enabled: false
       data:
         enabled: true
-        storageClass: longhorn
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 15Gi
+        existingClaim: *app

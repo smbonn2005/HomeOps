@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: mosquitto
+  name: &app mosquitto
 spec:
   interval: 30m
   chart:
@@ -72,9 +72,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
+        existingClaim: *app
         globalMounts:
           - path: /data
       config-file:

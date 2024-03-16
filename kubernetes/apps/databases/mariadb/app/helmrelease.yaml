@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: mariadb
+  name: &app mariadb
   namespace: databases
 spec:
   interval: 10m
@@ -25,8 +25,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      storageClass: longhorn
     auth:
       rootPassword: "${MARIADB_ROOT_PASSWORD}"
     resources:
@@ -39,6 +37,10 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
     initdbScripts:
       create-pterodactyl.sql: |
         CREATE DATABASE IF NOT EXISTS panel;

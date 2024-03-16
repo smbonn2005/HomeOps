@@ -37,7 +37,7 @@ includes:
   sops: .taskfiles/Sops/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
   user:
-    taskfile: .taskfiles/User
+    taskfile: .taskfiles/User/Taskfile.yaml
     optional: true
 
 tasks:
