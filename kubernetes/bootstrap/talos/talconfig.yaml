@@ -132,8 +132,7 @@ patches:
           image-gc-high-threshold: 55
           rotate-server-certificates: true
         nodeIP:
-          validSubnets:
-            - "192.168.1.0/24"
+          validSubnets: ["192.168.1.0/24"]
 
   # Force nameserver
   - |-
@@ -147,8 +146,7 @@ patches:
     machine:
       time:
         disabled: false
-        servers:
-          - 192.168.1.1
+        servers: ["192.168.1.1"]
 
   # Custom sysctl settings
   - |-
@@ -166,10 +164,7 @@ patches:
           - destination: /var/openebs/local
             type: bind
             source: /var/openebs/local
-            options:
-              - bind
-              - rshared
-              - rw
+            options: ["bind", "rshared", "rw"]
 
   # Mount Longhorn storage in kubelet
   - |-
@@ -179,10 +174,7 @@ patches:
           - destination: /var/mnt/longhorn
             type: bind
             source: /var/mnt/longhorn
-            options:
-              - bind
-              - rshared
-              - rw
+            options: ["bind", "rshared", "rw"]
 
   # Mount 2nd disk for Longhorn Storage
   - |-
@@ -191,14 +183,6 @@ patches:
       - device: /dev/nvme0n1
         partitions:
           - mountpoint: /var/mnt/longhorn
-
-  # Disable predictable NIC naming
-  - |-
-    machine:
-      install:
-        extraKernelArgs:
-          - net.ifnames=0
-
 
 controlPlane:
   patches:
@@ -237,9 +221,5 @@ controlPlane:
         features:
           kubernetesTalosAPIAccess:
             enabled: true
-            allowedRoles:
-              - os:admin
-            allowedKubernetesNamespaces:
-              - system-upgrade
-
-
+            allowedRoles: ["os:admin"]
+            allowedKubernetesNamespaces: ["system-upgrade"]
