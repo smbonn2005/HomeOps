@@ -40,7 +40,7 @@ tasks:
   bootstrap-genconfig:
     desc: Generate the Talos configs
     dir: "{{.TALOS_DIR}}"
-    cmd: talhelper genconfig
+    cmd: talhelper genconfig -s talhelper.sops.yaml # remove after genconfig if completely new config
     preconditions:
       - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
 
