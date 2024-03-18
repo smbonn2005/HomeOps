@@ -6,7 +6,6 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ../../../../templates/gatus/external
-  - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: plex
