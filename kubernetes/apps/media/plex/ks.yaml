@@ -27,6 +27,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 30Gi
+      VOLSYNC_CAPACITY: 50Gi
       GATUS_SUBDOMAIN: *app
       GATUS_URL_PATH: /web/index.html
