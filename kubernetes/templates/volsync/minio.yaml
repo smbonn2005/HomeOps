@@ -9,7 +9,7 @@ spec:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: "${APP}-volsync-secret"
+    name: "${APP}-volsync"
     template:
       engineVersion: v2
       data:
@@ -24,24 +24,24 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-dst"
+  name: "${APP}-bootstrap"
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: "${APP}-volsync-secret"
-    copyMethod: Snapshot # must be Snapshot
+    repository: "${APP}-volsync"
+    copyMethod: Snapshot
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn-snapclass}"
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-longhorn}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn-snapshot}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-    capacity: "${VOLSYNC_CAPACITY}"
     moverSecurityContext:
       runAsUser: "${VOLSYNC_UID:-568}"
       runAsGroup: "${VOLSYNC_GID:-568}"
       fsGroup: "${VOLSYNC_GID:-568}"
+    capacity: "${VOLSYNC_CAPACITY}"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -54,7 +54,7 @@ spec:
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
     pruneIntervalDays: 10
-    repository: "${APP}-volsync-secret"
+    repository: "${APP}-volsync"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn-snapclass}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-longhorn}"
