@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -21,11 +22,9 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
+      wyoming-piper:
         containers:
           main:
             image:
@@ -38,10 +37,8 @@ spec:
               TZ: America/New_York
     service:
       main:
+        controller: *app
         ports:
-          http:
-            enabled: false
-            primary: false
           whisper:
             enabled: true
             primary: true

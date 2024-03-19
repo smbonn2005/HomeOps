@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -20,11 +21,9 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
+      unpackerr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -60,11 +59,13 @@ spec:
             supplementalGroups: [10000]
     service:
       main:
+        controller: *app
         ports:
           http:
             port: 5656
     serviceMonitor:
       main:
+        serviceName: *app
         enabled: true
     persistence:
       config:
