@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -21,11 +22,9 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
+      home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -35,6 +34,8 @@ spec:
               tag: 2024.3.1@sha256:2a5531471db90664df50d4aec488f340a74a1f18de6dd2a4a7c53335ad9b6e0e
             env:
               TZ: America/New_York
+              HASS_HTTP_TRUSTED_PROXY_1: 192.168.42.0/24
+              HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
               HASS_UNIT_SYSTEM: imperial
               HASS_EXTERNAL_URL: https://hass.${SECRET_DOMAIN}
             envFrom:
@@ -70,9 +71,6 @@ spec:
               - "/config/.vscode"
               - --extensions-dir
               - "/config/.vscode"
-            volumeMounts:
-            - name: config
-              mountPath: /config
         pod:
           securityContext:
             runAsUser: 568
@@ -82,6 +80,8 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:
+        controller: *app
+        nameOverride: *app
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: hass.${SECRET_DOMAIN}
@@ -89,8 +89,12 @@ spec:
         ports:
           http:
             port: 8123
-          codeserver:
-            enabled: "true"
+      codeserver:
+        controller: *app
+        type: ClusterIP
+        ports:
+          http:
+            enabled: true
             port: 8080
     ingress:
       main:
@@ -110,7 +114,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -119,12 +123,15 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: hass-code.${SECRET_DOMAIN}
+          - host: &host-code hass-code.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
-                  name: main
-                  port: codeserver
+                  identifier: codeserver
+                  port: http
+        tls:
+          - hosts:
+              - *host-code
     persistence:
       config:
         enabled: true
@@ -133,7 +140,12 @@ spec:
         enabled: true
         type: configMap
         name: hass-config
-        mountPath: /config/configuration.yaml
-        subPath: configuration.yaml
+        advancedMounts:
+          home-assistant:
+            main:
+              - path: /config/configuration.yaml
+              - subPath: configuration.yaml
+            codeserver:
+              - path: /config
       tmp:
         type: emptyDir
