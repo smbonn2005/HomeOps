@@ -97,8 +97,8 @@ spec:
         enabled: true
         existingClaim: *app
         advancedMounts:
-          main:
-            main:
+          pterodactyl:
+            app:
               - subPath: "data"
                 path: "/app/var"
               - subPath: "nginx"
