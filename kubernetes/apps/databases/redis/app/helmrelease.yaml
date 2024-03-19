@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app redis
-  namespace: databases
 spec:
   interval: 15m
   chart:
@@ -28,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: public.ecr.aws/docker/library/redis
               tag: 7.2.4
@@ -47,4 +46,3 @@ spec:
           redis:
             enabled: true
             port: 6379
-
