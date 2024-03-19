@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app outline
-  namespace: default
 spec:
   interval: 30m
   chart:
@@ -38,7 +37,7 @@ spec:
               - secretRef:
                   name: outline-secret
         containers:
-          main:
+          app:
             image:
               repository: docker.io/outlinewiki/outline
               tag: 0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
@@ -68,13 +67,13 @@ spec:
               limits:
                 memory: 750Mi
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 80
     ingress:
-      main:
+      app:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
@@ -87,7 +86,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
