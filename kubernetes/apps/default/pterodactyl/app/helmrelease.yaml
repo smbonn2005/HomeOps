@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app pterodactyl
-  namespace: default
 spec:
   interval: 15m
   chart:
@@ -28,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/pterodactyl/panel
               tag: v1.11.5@sha256:1c2ce5a484db2fa9dc07b62703d08299573c8af8771b2134854814253cd355a8
@@ -55,13 +54,13 @@ spec:
               limits:
                 memory: 500M
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 80
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -88,7 +87,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
@@ -98,8 +97,8 @@ spec:
         enabled: true
         existingClaim: *app
         advancedMounts:
-          main:
-            main:
+          pterodactyl:
+            app:
               - subPath: "data"
                 path: "/app/var"
               - subPath: "nginx"

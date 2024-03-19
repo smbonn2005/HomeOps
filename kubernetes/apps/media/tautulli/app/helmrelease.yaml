@@ -25,7 +25,7 @@ spec:
     controllers:
       tautulli:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/tautulli
               tag: 2.13.4@sha256:b3000c0063cc4c0c6f2436fb7174f4bcfd8d91eca05206731edccb8b643ea570
@@ -44,13 +44,13 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 8181
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
@@ -67,7 +67,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

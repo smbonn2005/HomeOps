@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app home-assistant
-  namespace: home-automation
 spec:
   interval: 30m
   chart:
@@ -28,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
               tag: 2024.3.1@sha256:2a5531471db90664df50d4aec488f340a74a1f18de6dd2a4a7c53335ad9b6e0e
@@ -79,7 +78,7 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
         controller: *app
         nameOverride: *app
         type: LoadBalancer
@@ -97,7 +96,7 @@ spec:
             enabled: true
             port: 8080
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -114,7 +113,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
@@ -136,15 +135,10 @@ spec:
       config:
         enabled: true
         existingClaim: *app
-      configuration:
-        enabled: true
-        type: configMap
-        name: hass-config
         advancedMounts:
           home-assistant:
-            main:
-              - path: /config/configuration.yaml
-              - subPath: configuration.yaml
+            app: 
+              - path: /config
             codeserver:
               - path: /config
       tmp:

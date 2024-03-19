@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app kromgo
-  namespace: monitoring
 spec:
   interval: 15m
   chart:
@@ -30,7 +29,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/kashalls/kromgo
               tag: 0.3.0@sha256:7fa9b72f306b0970a16667f97604b4f3ebac2bdd1de29132bf81d8e6072abaf2
@@ -60,13 +59,13 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -76,7 +75,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
