@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app cloudflared
-  namespace: networking
 spec:
   interval: 30m
   chart:
@@ -30,7 +29,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/cloudflare/cloudflared
               tag: 2024.2.1@sha256:60e94a8669dccbe461b6913ce33ab759104334220b49042ec03cfca62a2f01e7
@@ -84,13 +83,13 @@ spec:
             runAsGroup: 65534
             runAsNonRoot: true
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: *port
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: http

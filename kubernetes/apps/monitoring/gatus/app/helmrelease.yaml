@@ -54,7 +54,7 @@ spec:
               limits:
                 memory: 128Mi
         containers:
-          main:
+          app:
             image:
               # TODO: move to semver once available
               repository: ghcr.io/twin/gatus
@@ -83,13 +83,13 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: *port
     serviceMonitor:
-      main:
+      app:
         serviceName: gatus
         endpoints:
           - port: http
@@ -98,7 +98,7 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -114,7 +114,7 @@ spec:
           paths:
           - path: /
             service:
-              identifier: main
+              identifier: app
               port: http
         tls:
         - hosts:

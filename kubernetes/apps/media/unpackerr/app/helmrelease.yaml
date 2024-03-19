@@ -27,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/golift/unpackerr
               tag: 0.13.1@sha256:99defbe8fc765584f93ef246e8b8e01cf626f2477d8b096984705ed0fe9c40c3
@@ -58,13 +58,13 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups: [10000]
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 5656
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         enabled: true
     persistence:

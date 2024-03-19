@@ -27,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/koenkk/zigbee2mqtt
               tag: 1.36.0@sha256:4de1ee53d67a9b4556045c34a2722bfd2348dabbefcb792e862643104d3e9fd0
@@ -77,13 +77,13 @@ spec:
           nodeSelector:
             zigbee.feature.node.kubernetes.io/sonoff: "true"
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -91,7 +91,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

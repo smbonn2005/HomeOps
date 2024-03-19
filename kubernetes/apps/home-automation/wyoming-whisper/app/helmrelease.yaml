@@ -21,13 +21,11 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
       wyoming-whisper:
         containers:
-          main:
+          app:
             image:
               repository: rhasspy/wyoming-whisper
               tag: latest
@@ -39,7 +37,7 @@ spec:
             env:
               TZ: America/New_York
     service:
-      main:
+      app:
         controller: *app
         ports:
           whisper:

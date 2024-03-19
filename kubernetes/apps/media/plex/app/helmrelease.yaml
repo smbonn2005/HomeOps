@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app plex
-  namespace: media
 spec:
   interval: 15m
   chart:
@@ -28,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/plex
               tag: 1.40.1.8227-c0dd5a73e@sha256:4ca8db0ffa1bee5a2976a0385cc43368112e81a2485b80d0fff3b04c9d5bd1ca
@@ -68,13 +67,13 @@ spec:
               # - 105
               # - 10000
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 32400
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -94,7 +93,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
