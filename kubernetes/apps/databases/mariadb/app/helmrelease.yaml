@@ -28,17 +28,23 @@ spec:
   values:
     auth:
       rootPassword: "${MARIADB_ROOT_PASSWORD}"
-    resources:
-      requests:
-        cpu: 200m
-        memory: 256Mi
-      limits:
-        memory: 512Mi
     metrics:
       enabled: true
+      resources:
+        requests:
+          cpu: 200m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
       serviceMonitor:
         enabled: true
     primary:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
       persistence:
         enabled: true
         existingClaim: *app
