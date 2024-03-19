@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app speedtest
-  namespace: default
 spec:
   interval: 15m
   chart:
@@ -37,7 +36,7 @@ spec:
               - secretRef:
                   name: &secret speedtest-tracker-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/alexjustesen/speedtest-tracker
               tag: v0.18.3@sha256:1e4950459742ab7203d17c641959c36b6a30e8072e01edf732b599f38253416d
@@ -54,13 +53,13 @@ spec:
               limits:
                 memory: 256Mi
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 80
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
@@ -76,7 +75,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
