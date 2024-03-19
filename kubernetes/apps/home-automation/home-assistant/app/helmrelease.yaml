@@ -135,15 +135,10 @@ spec:
       config:
         enabled: true
         existingClaim: *app
-      configuration:
-        enabled: true
-        type: configMap
-        name: hass-config
         advancedMounts:
           home-assistant:
-            app:
-              - path: /config/configuration.yaml
-              - subPath: configuration.yaml
+            app: 
+              - path: /config
             codeserver:
               - path: /config
       tmp:
