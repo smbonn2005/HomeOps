@@ -42,6 +42,3 @@ spec:
       app:
         controller: *app
         enabled: false
-    ingress:
-      app:
-        enabled: false
