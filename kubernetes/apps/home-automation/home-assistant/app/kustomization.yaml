@@ -6,9 +6,3 @@ resources:
   - ./helmrelease.yaml
   - ../../../../templates/gatus/external
   - ../../../../templates/volsync
-configMapGenerator:
-  - name: hass-config
-    files:
-      - ./config/configuration.yaml
-generatorOptions:
-  disableNameSuffixHash: true
