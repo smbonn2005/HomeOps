@@ -46,8 +46,6 @@ spec:
             port: 10300
             protocol: TCP
     persistence:
-      config:
-        enabled: false
       data:
         enabled: true
         existingClaim: *app
