@@ -20,6 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -98,7 +99,6 @@ spec:
               - *host
     persistence:
       config:
-        enabled: true
         existingClaim: *app
         globalMounts:
           - path: /config
