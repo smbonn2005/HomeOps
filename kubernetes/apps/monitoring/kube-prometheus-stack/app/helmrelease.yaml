@@ -58,9 +58,8 @@ spec:
       forceDeployDashboards: true
       sidecar:
         dashboards:
-          multicluster:
-            etcd:
-              enabled: true
+          annotations:
+            grafana_folder: Kubernetes
     kube-state-metrics:
       metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
       prometheus:
@@ -154,18 +153,3 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-  postRenderers:
-    - kustomize: # put KPS Grafana dashboards into Kubernetes folder, stolen from onedr0p
-        patches:
-          - target:
-              version: v1
-              kind: ConfigMap
-              labelSelector: grafana_dashboard in (1)
-            patch: |-
-              apiVersion: v1
-              kind: ConfigMap
-              metadata:
-                name: not-used
-                namespace: not-used
-                annotations:
-                  grafana_folder: Kubernetes
