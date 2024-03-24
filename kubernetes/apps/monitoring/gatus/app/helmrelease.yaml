@@ -79,10 +79,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             resources: *resources
         pod:
           dnsConfig:
@@ -91,7 +87,6 @@ spec:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
-            runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
           topologySpreadConstraints:
