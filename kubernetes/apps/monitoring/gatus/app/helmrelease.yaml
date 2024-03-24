@@ -20,6 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -34,8 +35,8 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
             envFrom: &envFrom
-            - secretRef:
-                name: gatus-secret
+              - secretRef:
+                  name: gatus-secret
           init-config:
             dependsOn: init-db
             image:
@@ -58,7 +59,7 @@ spec:
           app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: 5.8.0@sha256:fecb4c38722df59f5e00ab4fcf2393d9b8dad9161db208d8d79386dc86da8a55
+              tag: v5.8.0@sha256:fecb4c38722df59f5e00ab4fcf2393d9b8dad9161db208d8d79386dc86da8a55
             env:
               TZ: America/New_York
               GATUS_CONFIG_PATH: /config
@@ -127,15 +128,14 @@ spec:
           gethomepage.dev/widget.type: gatus
           gethomepage.dev/widget.url: http://gatus.monitoring
         hosts:
-        - host: &host status.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host status.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts: [*host]
     serviceAccount:
       create: true
       name: gatus
@@ -146,6 +146,6 @@ spec:
         type: configMap
         name: gatus-configmap
         globalMounts:
-        - path: /config/config.yaml
-          subPath: config.yaml
-          readOnly: true
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
