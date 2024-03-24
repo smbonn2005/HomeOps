@@ -24,6 +24,8 @@ spec:
   values:
     controllers:
       gatus:
+        replicas: 2
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -46,11 +48,12 @@ spec:
               RESOURCE: both
               UNIQUE_FILENAMES: true
               METHOD: WATCH
+            restartPolicy: Always
             resources: &resources
               requests:
                 cpu: 10m
               limits:
-                memory: 512Mi
+                memory: 256Mi
         containers:
           app:
             image:
@@ -81,11 +84,22 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources: *resources
         pod:
+          dnsConfig:
+            options:
+              - { name: ndots, value: "1" }
           securityContext:
             runAsUser: 568
             runAsGroup: 568
+            runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       app:
         controller: *app
