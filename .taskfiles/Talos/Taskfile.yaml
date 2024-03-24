@@ -103,7 +103,3 @@ tasks:
     prompt: This will destroy your cluster and reset the nodes... continue?
     dir: "{{.TALOS_DIR}}"
     cmd: talhelper gencommand reset --extra-flags "--reboot --graceful=false --wait=false" | bash
-
-  .reset:
-    internal: true
-    cmd: rm -rf {{.TALOS_DIR}}

@@ -36,9 +36,6 @@ includes:
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   volsync: .taskfiles/VolSync/Taskfile.yaml
-  user:
-    taskfile: .taskfiles/User/Taskfile.yaml
-    optional: true
   workstation: .taskfiles/Workstation/Taskfile.yaml
 
 tasks:
