@@ -36,23 +36,23 @@ spec:
             - secretRef:
                 name: gatus-secret
           init-config:
-            image: &configSyncImage
+            dependsOn: init-db
+            image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
               tag: 1.26.1@sha256:b8d5067137fec093cf48670dc3a1dbb38f9e734f3a6683015c2e89a45db5fd16
               pullPolicy: IfNotPresent
-            env: &configSyncEnv
+            env:
               FOLDER: /config
               LABEL: gatus.io/enabled
               NAMESPACE: ALL
               RESOURCE: both
               UNIQUE_FILENAMES: true
-              METHOD: LIST
-            resources: &configSyncResources
+              METHOD: WATCH
+            resources: &resources
               requests:
                 cpu: 10m
-                memory: 10Mi
               limits:
-                memory: 128Mi
+                memory: 256Mi
         containers:
           app:
             image:
@@ -62,24 +62,32 @@ spec:
             env:
               TZ: America/New_York
               GATUS_CONFIG_PATH: /config
+              GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 80
             envFrom: *envFrom
-            resources:
-              requests:
-                cpu: 10m
-                memory: 256M
-              limits:
-                memory: 512M
-          config-sync:
-            image: *configSyncImage
-            env:
-              <<: *configSyncEnv
-              METHOD: WATCH
-            resources: *configSyncResources
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources: *resources
         pod:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
+            runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
@@ -99,7 +107,6 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        enabled: true
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
