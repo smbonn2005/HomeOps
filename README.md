@@ -48,8 +48,6 @@ There is a template over at [onedr0p/flux-cluster-template](https://github.com/o
 
 My Kubernetes cluster is deployed with [Talos](https://www.talos.dev/). This is a semi hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage.
 
-🔸 _[Click here](./ansible) to see my Ansible playbooks and roles._
-
 ### Core Components
 
 - [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
