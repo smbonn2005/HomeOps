@@ -76,7 +76,6 @@ spec:
             port: *port
     ingress:
       app:
-        enabled: true
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
@@ -95,8 +94,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         existingClaim: *app

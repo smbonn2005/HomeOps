@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cloudnative-pg
-  namespace: databases
 spec:
   interval: 30m
   chart:
@@ -15,16 +14,14 @@ spec:
         kind: HelmRepository
         name: cloudnative-pg
         namespace: flux-system
-  maxHistory: 3
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     crds:
       create: true

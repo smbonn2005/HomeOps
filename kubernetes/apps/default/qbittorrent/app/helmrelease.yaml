@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app qbittorrent
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -20,6 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -68,7 +69,6 @@ spec:
         externalTrafficPolicy: Local
     ingress:
       app:
-        enabled: true
         className: internal
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -92,8 +92,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         enabled: true

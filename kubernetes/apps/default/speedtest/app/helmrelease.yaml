@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app speedtest
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -20,6 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -60,7 +61,6 @@ spec:
             port: 80
     ingress:
       app:
-        enabled: true
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
@@ -78,8 +78,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         enabled: true

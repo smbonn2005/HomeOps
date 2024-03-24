@@ -1,30 +1,29 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app wyoming-whisper
   namespace: flux-system
 spec:
+  targetNamespace: home-automation
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
     - name: longhorn
     - name: mosquitto
     - name: volsync
-  targetNamespace: home-automation
   path: ./kubernetes/apps/home-automation/wyoming-whisper/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
-      kind: HelmRelease
-      name: wyoming-whisper
-      namespace: home-automation
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 15Gi
-      # GATUS_SUBDOMAIN: whisper

@@ -20,6 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -116,8 +117,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
       codeserver:
         enabled: true
         className: internal
@@ -129,8 +129,7 @@ spec:
                   identifier: codeserver
                   port: http
         tls:
-          - hosts:
-              - *host-code
+          - hosts: [*host-code]
     persistence:
       config:
         enabled: true

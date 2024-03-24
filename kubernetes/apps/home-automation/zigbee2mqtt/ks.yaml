@@ -5,25 +5,24 @@ metadata:
   name: &app zigbee2mqtt
   namespace: flux-system
 spec:
+  targetNamespace: home-automation
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
     - name: longhorn
     - name: mosquitto
     - name: external-secrets-stores
     - name: volsync
-  targetNamespace: home-automation
   path: ./kubernetes/apps/home-automation/zigbee2mqtt/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
-      kind: HelmRelease
-      name: zigbee2mqtt
-      namespace: home-automation
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
   postBuild:
     substitute:
       APP: *app

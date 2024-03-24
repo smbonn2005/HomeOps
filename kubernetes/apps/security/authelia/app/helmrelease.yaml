@@ -20,12 +20,13 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   dependsOn:
     - name: lldap
       namespace: default
     - name: redis
-      namespace: database
+      namespace: databases
   values:
     controllers:
       authelia:
@@ -127,8 +128,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: configMap
