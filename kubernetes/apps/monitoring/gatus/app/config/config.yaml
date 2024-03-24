@@ -1,4 +1,5 @@
 ---
+# Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
 web:
   port: ${CUSTOM_WEB_PORT}
 storage:
@@ -24,6 +25,16 @@ connectivity:
     target: 1.1.1.1:53
     interval: 1m
 endpoints:
+  - name: status
+    group: external
+    url: https://status.smbonn.me
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: discord
   - name: flux-webhook
     group: external
     url: https://flux-webhook.smbonn.me
