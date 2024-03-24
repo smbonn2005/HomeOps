@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+
+  cluster:
+    vars: &vars
+      cephnodes: k8s-master-0 k8s-master-1 k8s-master-2
+      cephdisk: /dev/nvme0n1
+    cmds:
+      - task: :talos:bootstrap
+        vars: *vars
+      - task: :rook:reset
+        vars: *vars
+      - task: :flux:bootstrap
+        vars: *vars
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig/talosconfig
+      - talosctl config info >/dev/null 2>&1
