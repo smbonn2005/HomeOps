@@ -11,7 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: longhorn
+    - name: rook-ceph-cluster
+    - name: openebs
     - name: external-secrets-stores
   path: ./kubernetes/apps/monitoring/kube-prometheus-stack/app
   prune: true

@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: prowlarr
-    - name: longhorn
+    - name: rook-ceph-cluster
     - name: external-secrets-stores
     - name: volsync
   path: ./kubernetes/apps/media/readarr/app

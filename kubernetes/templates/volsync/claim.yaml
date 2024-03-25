@@ -3,6 +3,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: "${CLAIM:-${APP}}"
+  labels:
+    app.kubernetes.io/name: "${APP}"
 spec:
   accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
   dataSourceRef:
@@ -12,4 +14,4 @@ spec:
   resources:
     requests:
       storage: "${VOLSYNC_CAPACITY}"
-  storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn}"
+  storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
