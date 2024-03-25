@@ -56,7 +56,7 @@ tasks:
       - bash {{.scriptsDir}}/wait.sh unlock-{{.app}}-{{.ts}} {{.ns}}
       - kubectl -n {{.ns}} wait job/unlock-{{.app}}-{{.ts}} --for condition=complete --timeout=1m
       - kubectl -n {{.ns}} logs job/unlock-{{.app}}-{{.ts}} --container unlock-minio
-      - kubectl -n {{.ns}} logs job/unlock-{{.app}}-{{.ts}} --container unlock-r2
+      # - kubectl -n {{.ns}} logs job/unlock-{{.app}}-{{.ts}} --container unlock-r2
       - kubectl -n {{.ns}} delete job unlock-{{.app}}-{{.ts}}
     env: *env
     vars:
