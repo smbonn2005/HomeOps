@@ -95,7 +95,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 4
+            size: 3
         storageClass:
           enabled: true
           name: ceph-block
@@ -123,11 +123,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 4
+              size: 3
           dataPools:
             - failureDomain: host
               replicated:
-                size: 4
+                size: 3
               name: data0
           metadataServer:
             activeCount: 1
@@ -175,12 +175,12 @@ spec:
           metadataPool:
             failureDomain: host
             replicated:
-              size: 4
+              size: 3
           dataPool:
             failureDomain: host
             erasureCoded:
               dataChunks: 2
-              codingChunks: 2
+              codingChunks: 1
           preservePoolsOnDelete: true
           gateway:
             port: 80
@@ -201,7 +201,7 @@ spec:
           reclaimPolicy: Delete
           volumeBindingMode: Immediate
           parameters:
-            region: ca-west-1
+            region: us-east-1
         ingress:
           enabled: true
           ingressClassName: internal
