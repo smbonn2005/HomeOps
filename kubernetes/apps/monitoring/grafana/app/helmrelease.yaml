@@ -230,6 +230,7 @@ spec:
     serviceMonitor:
       enabled: true
     ingress:
+      enabled: true
       ingressClassName: internal
       annotations:
         gethomepage.dev/enabled: "true"
@@ -245,7 +246,6 @@ spec:
       tls:
         - hosts: [*host]
     persistence:
-      enabled: true
-      existingClaim: *app
+      enabled: false
     testFramework:
       enabled: false
