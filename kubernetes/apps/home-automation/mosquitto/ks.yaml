@@ -11,9 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: rook-ceph-cluster
     - name: external-secrets-stores
-    - name: volsync
   path: ./kubernetes/apps/home-automation/mosquitto/app
   prune: true
   sourceRef:

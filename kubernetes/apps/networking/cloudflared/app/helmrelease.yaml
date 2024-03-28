@@ -22,6 +22,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: nginx-external
+      namespace: networking
   values:
     controllers:
       cloudflared:
@@ -44,7 +47,7 @@ spec:
               TUNNEL_ID:
                 valueFrom:
                   secretKeyRef:
-                    name: cloudflared-secret
+                    name: cloudflared-tunnel-secret
                     key: TUNNEL_ID
             args:
               - tunnel
@@ -65,14 +68,10 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-              seccompProfile:
-                type: RuntimeDefault
             resources:
               requests:
                 cpu: 10m
@@ -80,8 +79,8 @@ spec:
                 memory: 256Mi
         pod:
           securityContext:
-            runAsUser: 65534
-            runAsGroup: 65534
+            runAsUser: 568
+            runAsGroup: 568
             runAsNonRoot: true
     service:
       app:
@@ -110,7 +109,7 @@ spec:
       creds:
         enabled: true
         type: secret
-        name: cloudflared-secret
+        name: cloudflared-tunnel-secret
         globalMounts:
         - path: /etc/cloudflared/creds/credentials.json
           subPath: credentials.json

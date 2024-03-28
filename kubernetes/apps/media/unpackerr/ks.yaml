@@ -11,9 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: rook-ceph-cluster
     - name: external-secrets-stores
-    - name: volsync
   path: ./kubernetes/apps/media/unpackerr/app
   prune: true
   sourceRef:
@@ -26,4 +24,3 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi

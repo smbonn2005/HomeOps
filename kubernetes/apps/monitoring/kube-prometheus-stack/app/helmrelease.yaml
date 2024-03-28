@@ -25,6 +25,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
   values:
     crds:
       enabled: true

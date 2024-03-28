@@ -9,10 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: rook-ceph-cluster
-    - name: mosquitto
-    - name: volsync
   path: ./kubernetes/apps/home-automation/wyoming-piper/app
   prune: true
   sourceRef:
