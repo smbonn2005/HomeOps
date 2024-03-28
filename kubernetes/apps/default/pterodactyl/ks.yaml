@@ -10,11 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: longhorn
-    - name: redis
-    - name: mariadb
-    - name: volsync
   path: ./kubernetes/apps/default/pterodactyl/app
   prune: true
   sourceRef:

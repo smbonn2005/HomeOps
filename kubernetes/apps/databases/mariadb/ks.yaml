@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/databases/mariadb/app
   dependsOn:
-    - name: longhorn
+    - name: rook-ceph-cluster
     - name: volsync
   prune: true
   sourceRef:

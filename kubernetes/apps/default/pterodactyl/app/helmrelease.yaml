@@ -22,6 +22,15 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: redis
+      namespace: databases
+    - name: mariadb
+      namespace: databases
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       pterodactyl:
