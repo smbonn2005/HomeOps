@@ -59,7 +59,7 @@ My Kubernetes cluster is deployed with [Talos](https://www.talos.dev/). This is 
 - [ingress-nginx](https://github.com/kubernetes/ingress-nginx/): Ingress controller to expose HTTP traffic to pods over DNS.
 - [longhorn](https://github.com/longhorn/longhorn): Distributed block storage for peristent storage.
 - [sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Managed secrets for Kubernetes, Ansible.
-- [spegel](https://github.com/XenitAB/spegel): Stateless cluster local OCI registry mirror.
+- [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
 
 ### GitOps
 

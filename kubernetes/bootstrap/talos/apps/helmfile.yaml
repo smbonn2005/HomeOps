@@ -29,7 +29,7 @@ releases:
     wait: true
   - name: spegel
     namespace: kube-system
-    chart: oci://ghcr.io/xenitab/helm-charts/spegel
-    version: v0.0.18
+    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
+    version: v0.0.19
     values: ["../../../apps/kube-system/spegel/app/helm-values.yaml"]
     wait: true
