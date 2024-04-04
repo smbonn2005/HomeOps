@@ -21,20 +21,11 @@ tasks:
       # - task: bootstrap-genconfig
       # - task: bootstrap-apply
       # - task: bootstrap-install
-      - task: bootstrap-etcd
+      - task: bootstrap-apply
+      - task: bootstrap-install
       - task: fetch-kubeconfig
       - task: bootstrap-apps
       - talosctl health --server=false
-
-  bootstrap-etcd:
-    desc: Bootstrap Etcd
-    cmd: until talosctl --nodes {{.controller}} bootstrap; do sleep 10; done
-    vars:
-      controller:
-        sh: talosctl config info --output json | jq --raw-output '.endpoints[0]'
-    preconditions:
-      - test -f {{.TALOS_DIR}}/clusterconfig/talosconfig
-      - talosctl config info >/dev/null 2>&1
 
   bootstrap-gensecret:
     desc: Generate the Talos secrets
