@@ -22,6 +22,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: nginx-external
+      namespace: networking
   values:
     controllers:
       cloudflared:
@@ -41,11 +44,6 @@ spec:
               TUNNEL_ORIGIN_ENABLE_HTTP2: true
               TUNNEL_TRANSPORT_PROTOCOL: quic
               TUNNEL_POST_QUANTUM: true
-              TUNNEL_ID:
-                valueFrom:
-                  secretKeyRef:
-                    name: cloudflared-tunnel-secret
-                    key: TunnelID
             args:
               - tunnel
               - --config
