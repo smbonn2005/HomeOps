@@ -64,7 +64,7 @@ spec:
       bittorrent:
         controller: *app
         type: LoadBalancer
-        externalIPs: ["192.168.1.222"]
+        externalIPs: ["192.168.1.223"]
         ports:
           bittorrent:
             enabled: true
