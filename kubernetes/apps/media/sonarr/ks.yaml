@@ -11,10 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: prowlarr
-    - name: longhorn
     - name: external-secrets-stores
-    - name: volsync
   path: ./kubernetes/apps/media/sonarr/app
   prune: true
   sourceRef:

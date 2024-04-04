@@ -83,11 +83,11 @@ data:
             icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/xen.png
             description: XCP-NG Host
             siteMonitor: https://xen.smbonn.me
-        - Longhorn:
-            href: https://longhorn.smbonn.me
-            icon: longhorn.png
+        - Rook-Ceph:
+            href: https://rook.smbonn.me
+            icon: ceph.png
             description: K3S Cluster Storage
-            siteMonitor: http://longhorn-frontend.longhorn-system
+            siteMonitor: http://rook-ceph.rook-ceph
         # - Unifi:
         #     href: https://unifi.ui.com
         #     icon: unifi.png
@@ -159,8 +159,8 @@ data:
         columns: 3
         icon: mdi-download-circle
     providers:
-      longhorn:
-        url: http://longhorn-frontend.longhorn-system
+      rook-ceph:
+        url: http://rook-ceph.rook-ceph
   widgets.yaml: |
     # - resources:
     #     backend: kubernetes
@@ -194,7 +194,7 @@ data:
         longitude: {{HOMEPAGE_VAR_HASS_LONGITUDE}}
         units: imperial
         cache: 5
-    - longhorn:
+    - rook-ceph:
         expanded: false
         total: true
         labels: true
