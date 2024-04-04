@@ -45,7 +45,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: cloudflared-tunnel-secret
-                    key: TUNNEL_ID
+                    key: TunnelID
             args:
               - tunnel
               - --config
