@@ -14,19 +14,19 @@ env:
   SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
 
 includes:
-  bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
+  bootstrap: .taskfiles/Bootstrap
   kubernetes:
     aliases: ["k8s"]
-    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
-  flux: .taskfiles/Flux/Taskfile.yaml
+    taskfile: .taskfiles/Kubernetes
+  flux: .taskfiles/Flux
   repository:
     aliases: ["repo"]
-    taskfile: .taskfiles/Repository/Taskfile.yaml
-  rook: .taskfiles/Rook/Taskfile.yaml
-  talos: .taskfiles/Talos/Taskfile.yaml
-  sops: .taskfiles/Sops/Taskfile.yaml
-  volsync: .taskfiles/VolSync/Taskfile.yaml
-  workstation: .taskfiles/Workstation/Taskfile.yaml
+    taskfile: .taskfiles/Repository
+  rook: .taskfiles/Rook
+  talos: .taskfiles/Talos
+  sops: .taskfiles/Sops
+  volsync: .taskfiles/VolSync
+  workstation: .taskfiles/Workstation
 
 tasks:
 
