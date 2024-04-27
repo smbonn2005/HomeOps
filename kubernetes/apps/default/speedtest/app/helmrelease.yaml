@@ -44,8 +44,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/alexjustesen/speedtest-tracker
-              tag: v0.19.0@sha256:19abfdb836bcf5b3d15d65dde992efcfafd44454e378476340a5aa0351a01a32
+              repository: lscr.io/linuxserver/speedtest-tracker
+              tag: v0.19.0@sha256:2746213b802abcc63c5737f954ce70bd35c77afed9c4b46ba6322f2935b24ed3
             env:
               TZ: America/New_York
               DB_CONNECTION: pgsql
