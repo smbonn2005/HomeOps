@@ -15,13 +15,8 @@ env:
 
 includes:
   bootstrap: .taskfiles/Bootstrap
-  kubernetes:
-    aliases: ["k8s"]
-    taskfile: .taskfiles/Kubernetes
+  kubernetes: .taskfiles/Kubernetes
   flux: .taskfiles/Flux
-  repository:
-    aliases: ["repo"]
-    taskfile: .taskfiles/Repository
   rook: .taskfiles/Rook
   talos: .taskfiles/Talos
   sops: .taskfiles/Sops

@@ -36,15 +36,6 @@ tasks:
       - { msg: "Missing Homebrew", sh: "command -v brew" }
       - { msg: "Missing Brewfile", sh: "test -f {{.BREWFILE}}" }
 
-  arch:
-    desc: Install Arch workstation dependencies with Paru Or Yay
-    cmd: "{{.helper}} -Syu --needed --noconfirm --noprogressbar $(cat {{.ARCHFILE}} | xargs)"
-    vars:
-      helper:
-        sh: "command -v yay || command -v paru"
-    preconditions:
-      - { msg: "Missing Archfile", sh: "test -f {{.ARCHFILE}}" }
-
   generic-linux:
     desc: Install CLI tools into the projects .bin directory using curl
     dir: "{{.GENERIC_BIN_DIR}}"
