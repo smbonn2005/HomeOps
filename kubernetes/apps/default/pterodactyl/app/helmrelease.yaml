@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pterodactyl/panel
-              tag: v1.11.5@sha256:1c2ce5a484db2fa9dc07b62703d08299573c8af8771b2134854814253cd355a8
+              tag: v1.11.6@sha256:fb29f2cc672d861aa98822d8ebfadc820032e3bbd044b8d0ea665eae82169437
             env:
               DB_HOST: ${SECRET_MARIADB_URL}
               DB_PORT: 3306
