@@ -41,7 +41,7 @@ tasks:
     preconditions:
       - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
       - { msg: "Missing talhelper config file", sh: "test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/{{.TALHELPER_CONFIG_FILE}}" }
-      
+
   bootstrap-etcd:
     desc: Bootstrap Etcd
     cmd: until talosctl --context {{.cluster}} --nodes {{.controller}} bootstrap; do sleep 10; done
@@ -65,7 +65,8 @@ tasks:
     requires:
       vars: ["cluster"]
     preconditions:
-      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/clusterconfig/{{.TALOSCONFIG }}
       - talosctl --context {{.cluster}} config info >/dev/null 2>&1
 
   bootstrap-apps:
