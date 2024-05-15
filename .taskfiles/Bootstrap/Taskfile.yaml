@@ -4,14 +4,27 @@ version: "3"
 
 tasks:
 
-  cluster:
+  main:
     vars: &vars
+      cluster: main
       cephnodes: k8s-master-0 k8s-master-1 k8s-master-2
       cephdisk: /dev/nvme0n1
     cmds:
       - task: :talos:bootstrap
         vars: *vars
       - task: :rook:reset
+        vars: *vars
+      - task: :flux:bootstrap
+        vars: *vars
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig/talosconfig
+      - talosctl config info >/dev/null 2>&1
+
+  utility:
+    vars: &vars
+      cluster: utility
+    cmds:
+      - task: :talos:bootstrap
         vars: *vars
       - task: :flux:bootstrap
         vars: *vars
