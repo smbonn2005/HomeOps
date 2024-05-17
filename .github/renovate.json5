@@ -24,6 +24,8 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "onboarding": false,
+  "requireConfig": "ignored",
   "flux": {
     "fileMatch": [
       "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"
