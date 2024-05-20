@@ -21,7 +21,6 @@ includes:
   workstation: .taskfiles/Workstation
 
 tasks:
-
   default: 
     silent: true
     cmd: task -l
