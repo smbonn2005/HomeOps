@@ -9,5 +9,5 @@ resources:
   - ./grafana/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./prometheus-operator-crds/ks.yaml
+  # - ./prometheus-operator-crds/ks.yaml # Uncomment on next bootstrap
   - ./namespace.yaml
