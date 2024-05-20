@@ -17,7 +17,7 @@ helmDefaults:
 
 releases:
   - name: prometheus-operator-crds
-    namespace: observability
+    namespace: monitoring
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
     version: 11.0.0
   - name: cilium
