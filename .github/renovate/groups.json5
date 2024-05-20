@@ -4,11 +4,18 @@
     {
       "description": ["Actions Runner Controller Group"],
       "groupName": "Actions Runner Controller",
-      "matchPackagePatterns": [
-        "gha-runner-scale-set-controller",
-        "gha-runner-scale-set"
-      ],
-      "matchDatasources": ["helm", "docker"],
+      "matchPackagePatterns": ["gha-runner-scale-set"],
+      "matchDatasources": ["docker", "helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": ["Dragonfly Operator Group"],
+      "groupName": "Dragonfly Operator",
+      "matchPackagePatterns": ["dragonfly(?:db)?.operator"],
+      "matchDatasources": ["docker", "github-releases"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
@@ -17,13 +24,23 @@
     {
       "description": "Flux Group",
       "groupName": "Flux",
-      "matchPackagePatterns": ["flux"],
+      "matchPackagePatterns": ["fluxcd"],
       "matchDatasources": ["docker", "github-tags"],
       "versioning": "semver",
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": true
+    },
+    {
+      "description": ["Intel Device Plugins Group"],
+      "groupName": "Intel-Device-Plugins",
+      "matchPackagePatterns": ["intel-device-plugins"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
+      },
+      "separateMinorPatch": true,
     },
     {
       "description": ["Rook-Ceph Group"],

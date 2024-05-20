@@ -6,7 +6,6 @@
         "description": ["Process custom dependencies"],
         "fileMatch": [
           "(^|/).taskfiles/.+\\.ya?ml(?:\\.j2)?$",
-          "(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$",
           "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"
         ],
         "matchStrings": [

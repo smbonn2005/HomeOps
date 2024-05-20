@@ -4,11 +4,6 @@ area/addons:
       - any-glob-to-any-file: bootstrap/templates/addons/**/*
       - any-glob-to-any-file: bootstrap/tasks/addons/**/*
       - any-glob-to-any-file: bootstrap/vars/addons.sample.yaml
-area/ansible:
-  - changed-files:
-      - any-glob-to-any-file: ansible/**/*
-      - any-glob-to-any-file: bootstrap/templates/ansible/**/*
-      - any-glob-to-any-file: bootstrap/tasks/ansible/**/*
 area/bootstrap:
   - changed-files:
       - any-glob-to-any-file: bootstrap/**/*

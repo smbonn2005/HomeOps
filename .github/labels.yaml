@@ -2,8 +2,6 @@
 # Area
 - name: area/addons
   color: "0e8a16"
-- name: area/ansible
-  color: "0e8a16"
 - name: area/bootstrap
   color: "0e8a16"
 - name: area/github
@@ -13,8 +11,6 @@
 - name: area/taskfile
   color: "0e8a16"
 # Renovate
-- name: renovate/ansible
-  color: "027fa0"
 - name: renovate/container
   color: "027fa0"
 - name: renovate/github-action

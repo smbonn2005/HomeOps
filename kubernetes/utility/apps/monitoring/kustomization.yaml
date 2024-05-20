@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./gatus/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./prometheus-operator-crds/ks.yaml
+  - ./namespace.yaml
