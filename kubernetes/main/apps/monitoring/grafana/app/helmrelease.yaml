@@ -205,7 +205,7 @@ spec:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 32
+          revision: 36
           datasource: Prometheus
         smart:
           # renovate: depName="Dashboard for smartctl_exporter"
