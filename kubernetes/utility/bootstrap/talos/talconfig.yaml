@@ -21,9 +21,9 @@ cniConfig:
 nodes:
   - hostname: "k8s-utility-0"
     ipAddress: "192.168.1.23"
-    installDisk: /dev/sda
-      # wwid: "naa.50026b7784d461c3"    #with installDiskSelector:    
-    talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
+    installDiskSelector:
+      wwid: "naa.50026b7784d461c3" 
+    talosImageURL: factory.talos.dev/installer/c2e0324a7089e454c4534c541ce423efc63e85a8f8b25458776c486038051239
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
