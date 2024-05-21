@@ -5,22 +5,22 @@ talosVersion: v1.7.2
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.30.1
 
-clusterName: &cluster HomeOps
-endpoint: https://192.168.1.48:6443
+clusterName: &cluster Utility
+endpoint: https://192.168.1.49:6443
 clusterPodNets:
   - "10.42.0.0/16"
 clusterSvcNets:
   - "10.43.0.0/16"
 additionalApiServerCertSans: &sans
-  - "192.168.1.48"
+  - "192.168.1.49"
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
 cniConfig:
   name: none
 
 nodes:
-  - hostname: "k8s-master-0"
-    ipAddress: "192.168.1.20"
+  - hostname: "k8s-utility-0"
+    ipAddress: "192.168.1.23"
     installDisk: /dev/sda
       # wwid: "naa.50026b7784d461c3"    #with installDiskSelector:    
     talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
@@ -30,49 +30,13 @@ nodes:
           hardwareAddr: "88:ae:dd:0a:64:bc"
         dhcp: false
         addresses:
-          - "192.168.1.20/24"
+          - "192.168.1.23/24"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
             gateway: "192.168.1.1"
         vip:
-          ip: "192.168.1.48"
-  - hostname: "k8s-master-1"
-    ipAddress: "192.168.1.21"
-    installDisk: /dev/sda
-      # wwid: "naa.50026b7784d46419"    #with installDiskSelector:
-    talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
-    controlPlane: true
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "88:ae:dd:09:ca:81"
-        dhcp: false
-        addresses:
-          - "192.168.1.21/24"
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
-        vip:
-          ip: "192.168.1.48"
-  - hostname: "k8s-master-2"
-    ipAddress: "192.168.1.22"
-    installDisk: /dev/sda
-      # wwid: "naa.50026b7784d4627d"    #with installDiskSelector:
-    talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
-    controlPlane: true
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "88:ae:dd:09:c7:2e"
-        dhcp: false
-        addresses:
-          - "192.168.1.22/24"
-        mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
-        vip:
-          ip: "192.168.1.48"
+          ip: "192.168.1.49"
 
 patches:
   # Configure containerd
@@ -138,8 +102,7 @@ patches:
   - |-
     machine:
       network:
-        nameservers:
-          - 192.168.1.1
+        nameservers: ["192.168.1.1"]
 
   # Configure NTP
   - |-
@@ -165,6 +128,23 @@ patches:
             type: bind
             source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
+
+  # Mount Longhorn storage in kubelet
+  - |-
+    machine:
+      kubelet:
+        extraMounts:
+          - destination: /var/mnt/longhorn
+            type: bind
+            source: /var/mnt/longhorn
+            options: ["bind", "rshared", "rw"]
+  # Mount 2nd disk for Longhorn Storage
+  - |-
+    machine:
+      disks:
+      - device: /dev/nvme0n1
+        partitions:
+          - mountpoint: /var/mnt/longhorn
 
 controlPlane:
   patches:
