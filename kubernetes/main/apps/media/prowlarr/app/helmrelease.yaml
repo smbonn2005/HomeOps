@@ -39,10 +39,14 @@ spec:
               tag: 1.18.0.4543@sha256:563ca1f28815db564116b2258ae5b1db30dba4f0bafc8115f51257e9672fc45a
             env:
               TZ: America/New_York
-              PROWLARR__INSTANCE_NAME: Prowlarr
-              PROWLARR__PORT: &port 80
-              PROWLARR__LOG_LEVEL: info
-              # PROWLARR__AUTHENTICATION_METHOD: External
+              PROWLARR__APP__INSTANCENAME: Prowlarr
+              PROWLARR__APP__THEME: dark
+              PROWLARR__SERVER__PORT: &port 80
+              PROWLARR__LOG__DBENABLED: "False"
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              PROWLARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: prowlarr-secret

@@ -41,10 +41,14 @@ spec:
               tag: 4.0.5.1719@sha256:0fc7fff53bad288cdad69ab2b05fc53b5f16066215aa98bb2f2886d984e1eaf7
             env:
               TZ: America/New_York
-              SONARR__INSTANCE_NAME: Sonarr
-              SONARR__PORT: &port 80
-              SONARR__LOG_LEVEL: info
-              SONARR__AUTHENTICATION_METHOD: External
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 80
+              SONARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: sonarr-secret
