@@ -8,10 +8,16 @@ metadata:
     app.kubernetes.io/name: *app
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
+  resources: ["*"]
   verbs: ["get", "watch", "list"]
 - apiGroups: ["helm.toolkit.fluxcd.io"]
   resources: ["helmreleases"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["kustomize.toolkit.fluxcd.io"]
+  resources: ["kustomizations"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["source.toolkit.fluxcd.io"]
+  resources: ["gitrepositories"]
   verbs: ["get", "watch", "list"]
 - apiGroups: ["networking.k8s.io"]
   resources: ["ingresses"]
