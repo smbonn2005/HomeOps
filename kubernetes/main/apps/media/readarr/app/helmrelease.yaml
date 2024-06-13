@@ -40,11 +40,14 @@ spec:
               repository: ghcr.io/onedr0p/readarr-develop
               tag: 0.3.28.2554@sha256:4beda7d63d2cb014a860bf4f8fa367f9621e378675396b684d300f1e3a0380dc
             env:
-              TZ: America/New_York
-              READARR__INSTANCE_NAME: Readarr
-              READARR__PORT: &port 80
-              READARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-              READARR__LOG_LEVEL: info
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: readarr-secret
