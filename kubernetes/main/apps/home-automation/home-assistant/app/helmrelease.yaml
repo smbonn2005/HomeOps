@@ -113,7 +113,7 @@ spec:
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/widget.type: homeassistant
           gethomepage.dev/widget.url: http://home-assistant.home-automation:8123
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_HASS_TOKEN}}`}}"
         hosts:
           - host: &host hass.${SECRET_DOMAIN}
             paths:
