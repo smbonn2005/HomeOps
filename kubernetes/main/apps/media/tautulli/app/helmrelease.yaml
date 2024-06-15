@@ -84,7 +84,7 @@ spec:
           gethomepage.dev/group: Media
           gethomepage.dev/widget.type: tautulli
           gethomepage.dev/widget.url: http://tautulli.media:80
-          gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_TAUTULLI_KEY}}'
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_TAUTULLI_KEY}}`}}"
           gethomepage.dev/widget.enableUser: "true"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

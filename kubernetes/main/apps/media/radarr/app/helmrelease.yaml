@@ -96,7 +96,7 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: radarr
           gethomepage.dev/widget.url: http://radarr.media
-          gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_RADARR_KEY}}'
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_RADARR_KEY}}`}}"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -118,5 +118,5 @@ spec:
         type: nfs
         server: ${SECRET_NFS_SERVER}
         path: ${SECRET_NFS_MEDIA}
-        globalMounts: 
+        globalMounts:
           - path: /media

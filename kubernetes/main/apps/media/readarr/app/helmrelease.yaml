@@ -95,7 +95,7 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: readarr
           gethomepage.dev/widget.url: http://readarr.media
-          gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_READARR_KEY}}'
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_READARR_KEY}}`}}"
         hosts:
           - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:
@@ -117,5 +117,5 @@ spec:
         type: nfs
         server: ${SECRET_NFS_SERVER}
         path: ${SECRET_NFS_MEDIA}
-        globalMounts: 
+        globalMounts:
           - path: /media
