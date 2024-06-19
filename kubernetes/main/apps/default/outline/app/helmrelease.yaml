@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 0.77.1@sha256:caaec9502c53f79d3d851531d72a11a6892bf9d9c8a66a902af5dc16d8cd4f90
+              tag: 0.77.2@sha256:1826a274b422152fc2fdbce84289e977c42a9e0e8e25a2653fe58a7ce385752d
             env:
               AWS_REGION: us-east-1
               AWS_S3_ACL: private
