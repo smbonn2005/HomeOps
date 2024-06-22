@@ -200,7 +200,8 @@ spec:
           # renovate: depName="VolSync Dashboard"
           gnetId: 21356
           revision: 2
-          datasource: Prometheus
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
       system:
         node-exporter:
           # renovate: depName="Node Exporter"
