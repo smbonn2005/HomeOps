@@ -23,6 +23,29 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    localpv-provisioner:
+      localpv:
+        image:
+          registry: quay.io/
+      helperPod:
+        image:
+          registry: quay.io/
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        isDefaultClass: false
+        basePath: /var/openebs/local
+    openebs-crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
+          keep: false
+    zfs-localpv:
+      enabled: false
+    lvm-localpv:
+      enabled: false
+    mayastor:
+      enabled: false
     engines:
       local:
         lvm:
@@ -32,16 +55,3 @@ spec:
       replicated:
         mayastor:
           enabled: false
-    openebs-crds:
-      csi:
-        volumeSnapshots:
-          enabled: false
-    localpv-provisioner:
-      localpv:
-        image:
-          registry: quay.io/
-      hostpathClass:
-        enabled: true
-        name: openebs-hostpath
-        isDefaultClass: false
-        basePath: /var/openebs/local
