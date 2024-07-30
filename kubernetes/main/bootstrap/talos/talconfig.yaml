@@ -22,7 +22,7 @@ nodes:
   - hostname: "k8s-master-0"
     ipAddress: "192.168.1.20"
     installDiskSelector:
-      wwid: "naa.50026b7784d461c3"   
+      wwid: "naa.50026b7784d461c3"
     talosImageURL: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2
     controlPlane: true
     networkInterfaces:
@@ -81,7 +81,7 @@ patches:
       files:
         - op: create
           path: /etc/cri/conf.d/20-customization.part
-          content: |-
+          content: |
             [plugins."io.containerd.grpc.v1.cri"]
               enable_unprivileged_ports = true
               enable_unprivileged_icmp = true
@@ -97,7 +97,7 @@ patches:
         - op: overwrite
           path: /etc/nfsmount.conf
           permissions: 420
-          content: |-
+          content: |
             [ NFSMount_Global_Options ]
               nfsvers = 4.2
               hard = True
