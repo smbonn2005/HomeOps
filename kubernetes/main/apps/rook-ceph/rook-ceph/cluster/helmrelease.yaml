@@ -212,6 +212,7 @@ spec:
             gethomepage.dev/name: Rook-Ceph
             gethomepage.dev/description: K3S Cluster Storage
             gethomepage.dev/group: Infrastructure
+            gethomepage.dev/href: http://rook.${SECRET_DOMAIN}
           host:
             name: &host rgw.${SECRET_DOMAIN}
             path: /
