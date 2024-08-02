@@ -41,6 +41,7 @@ spec:
               TZ: America/New_York
               PUID: 1000
               PGID: 1000
+              APP_URL: https://bookstack.${SECRET_DOMAIN}
               DB_HOST: ${SECRET_MARIADB_URL}
               DB_PORT: 3306
               DB_DATABASE: "bookstackapp"
