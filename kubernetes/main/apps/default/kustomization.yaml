@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./bookstack/ks.yaml
-  - ./outline/ks.yaml
   - ./homepage/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./pterodactyl/ks.yaml
