@@ -40,3 +40,7 @@ spec:
         CREATE DATABASE IF NOT EXISTS panel;
         CREATE USER IF NOT EXISTS 'pterodactyl'@'%' IDENTIFIED BY '${PTERODACTYL_MARIADB_PASSWORD}';
         GRANT ALL PRIVILEGES ON panel.* to 'pterodactyl'@'%';
+      create-bookstack.sql: |
+        CREATE DATABASE IF NOT EXISTS bookstackapp;
+        CREATE USER IF NOT EXISTS 'bookstack'@'%' IDENTIFIED BY '${BOOKSTACK_MARIADB_PASSWORD}';
+        GRANT ALL PRIVILEGES ON bookstack.* to 'bookstack'@'%';
