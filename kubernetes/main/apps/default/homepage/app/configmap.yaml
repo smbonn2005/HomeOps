@@ -83,11 +83,6 @@ data:
             icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/xen.png
             description: XCP-NG Host
             siteMonitor: https://xen.smbonn.me
-        - Rook-Ceph:
-            href: https://rook.smbonn.me
-            icon: ceph.png
-            description: K3S Cluster Storage
-            siteMonitor: http://rook-ceph.rook-ceph
         # - Unifi:
         #     href: https://unifi.ui.com
         #     icon: unifi.png
@@ -179,7 +174,7 @@ data:
     - kubernetes:
         cluster:
           cpu: true
-          label: cluster
+          label: talos cluster
           memory: true
           show: true
           showLabel: true
@@ -194,11 +189,11 @@ data:
         longitude: {{HOMEPAGE_VAR_HASS_LONGITUDE}}
         units: imperial
         cache: 5
-    - rook-ceph:
-        expanded: false
-        total: true
-        labels: true
-        nodes: false
+    # - rook-ceph:
+    #     expanded: false
+    #     total: true
+    #     labels: true
+    #     nodes: false
     - datetime:
         text_size: l
         format:

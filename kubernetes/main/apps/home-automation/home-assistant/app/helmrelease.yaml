@@ -111,6 +111,7 @@ spec:
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
+          gethomepage.dev/app: home-assistant
           gethomepage.dev/widget.type: homeassistant
           gethomepage.dev/widget.url: http://home-assistant.home-automation:8123
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_HASS_TOKEN}}`}}"

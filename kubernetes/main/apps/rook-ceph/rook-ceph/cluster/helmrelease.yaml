@@ -205,6 +205,13 @@ spec:
         ingress:
           enabled: true
           ingressClassName: internal
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/app: ceph-mgr
+            gethomepage.dev/icon: ceph.png
+            gethomepage.dev/name: Rook-Ceph
+            gethomepage.dev/description: K3S Cluster Storage
+            gethomepage.dev/group: Infrastructure
           host:
             name: &host rgw.${SECRET_DOMAIN}
             path: /

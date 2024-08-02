@@ -96,6 +96,7 @@ spec:
         ingressClassName: internal
         annotations:
           gethomepage.dev/enabled: "true"
+          gethomepage.dev/app: kube-prometheus-stack-prometheus-operator
           gethomepage.dev/icon: prometheus.png
           gethomepage.dev/name: Prometheus
           gethomepage.dev/group: Observability
