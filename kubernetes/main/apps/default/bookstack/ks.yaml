@@ -24,4 +24,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: bookstack
+      GATUS_SUBDOMAIN: *app
+      VOLSYNC_CAPACITY: 1Gi
