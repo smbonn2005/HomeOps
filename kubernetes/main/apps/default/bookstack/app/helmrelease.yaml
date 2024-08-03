@@ -69,6 +69,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/bookstack.png
           gethomepage.dev/name: Bookstack
           gethomepage.dev/group: Observability
+          gethomepage.dev/description: Documentation and Wiki
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
