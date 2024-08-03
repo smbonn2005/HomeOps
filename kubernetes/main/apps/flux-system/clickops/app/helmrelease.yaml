@@ -39,7 +39,7 @@ spec:
               __HOST: &host "clickops.${SECRET_DOMAIN}"
             probes:
               liveness: &probe
-                enabled: true          
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -86,6 +86,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Observability
           gethomepage.dev/name: ClickOps
+          gethomepage.dev/description: Flux Reconciliation Checker
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
