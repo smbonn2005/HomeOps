@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/bookstack
-              tag: 24.05.3@sha256:96d1bdea3703db8799ae2b07ecd960024d3a99c926f836eeff67c6ba4b42a2cb
+              tag: 24.05.3@sha256:ac3e0d069e77bde419ada5866002e04da1db19d4b7c9c0f774d6b8df691c0772
             env:
               TZ: America/New_York
               PUID: 1000
