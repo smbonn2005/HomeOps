@@ -9,6 +9,7 @@
     ":semanticCommits",
     ":automergeDigest",
     ":automergeBranch",
+    "github>smbonn2005/HomeOps//.github/renovate/allowedVersions.json5",
     "github>smbonn2005/HomeOps//.github/renovate/autoMerge.json5",
     "github>smbonn2005/HomeOps//.github/renovate/clusters.json5",
     "github>smbonn2005/HomeOps//.github/renovate/commitMessage.json5",
