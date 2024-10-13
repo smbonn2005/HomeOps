@@ -3,18 +3,8 @@
     "packageRules": [
       {
         "description": ["Separate PRs for main cluster"],
-        "matchFileNames": [
-          "**/kubernetes/main/**",
-        ],
+        "matchFileNames": ["**/kubernetes/main/**"],
         "additionalBranchPrefix": "main-"
       }
-      // REMOVING FOR NOW UNTIL UTILITY CLUSTER IS ACTUALLY DEPLOYED
-      // {
-      //   "description": ["Separate PRs for utility cluster"],
-      //   "matchFileNames": [
-      //     "**/kubernetes/utility/**",
-      //   ],
-      //   "additionalBranchPrefix": "utility-"
-      // }
     ]
   }
