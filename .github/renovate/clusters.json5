@@ -7,13 +7,14 @@
           "**/kubernetes/main/**",
         ],
         "additionalBranchPrefix": "main-"
-      },
-      {
-        "description": ["Separate PRs for utility cluster"],
-        "matchFileNames": [
-          "**/kubernetes/utility/**",
-        ],
-        "additionalBranchPrefix": "utility-"
       }
+      // REMOVING FOR NOW UNTIL UTILITY CLUSTER IS ACTUALLY DEPLOYED
+      // {
+      //   "description": ["Separate PRs for utility cluster"],
+      //   "matchFileNames": [
+      //     "**/kubernetes/utility/**",
+      //   ],
+      //   "additionalBranchPrefix": "utility-"
+      // }
     ]
   }
