@@ -43,7 +43,7 @@ spec:
     - host: auth.${SECRET_DOMAIN}
       http:
         paths:
-          - path: /hooks/
+          - path: /
             pathType: Prefix
             backend:
               service:
