@@ -11,7 +11,7 @@ spec:
       targetPort: 9000
 ---
 apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+kind: Endpoint
 metadata:
   name: projects
   namespace: networking
