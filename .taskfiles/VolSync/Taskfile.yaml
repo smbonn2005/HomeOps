@@ -46,6 +46,14 @@ tasks:
     silent: true
 
   unlock:
+    desc: Unlock all Restic repositories
+    summary: |-
+      CLUSTER: Cluster to run command against (default: main)
+    cmd: >
+      kubectl get replicationsources --all-namespaces --no-headers -A | awk '{print $1, $2}'
+      | xargs --max-procs=2 -l bash -c 'kubectl --namespace "$0" patch --field-manager=flux-client-side-apply replicationsources "$1" --type merge --patch "{\"spec\":{\"restic\":{\"unlock\":\"{{now | unixEpoch}}\"}}}"'
+
+  unlock-local:
     desc: Unlock a Restic repository for an application
     summary: |
       Args:
