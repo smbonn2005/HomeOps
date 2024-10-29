@@ -66,7 +66,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mosquitto.${SECRET_DOMAIN}
-          io.cilium/lb-ipam-ips: 192.168.1.96
+          lbipam.cilium.io/ips: 192.168.1.96
         externalTrafficPolicy: Local
         ports:
           mqtt:
