@@ -66,12 +66,12 @@ spec:
                 cpu: 100m
               limits:
                 memory: 2000Mi
-        pod:
-          securityContext:
-            runAsUser: 3000
-            runAsGroup: 3000
-            fsGroup: 3000
-            fsGroupChangePolicy: OnRootMismatch
+        # pod:
+        #   securityContext:
+        #     runAsUser: 3000
+        #     runAsGroup: 3000
+        #     fsGroup: 3000
+        #     fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
