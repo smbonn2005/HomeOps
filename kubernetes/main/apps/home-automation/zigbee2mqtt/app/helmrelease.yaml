@@ -68,31 +68,22 @@ spec:
               ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: 115200
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
-              ZIGBEE2MQTT_CONFIG_SERIAL_PORT:  tcp://192.168.1.6:6638
-              ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ember
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT:  &usbdevice /dev/ttyACM0
+              ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ezsp
             envFrom:
               - secretRef:
                   name: zigbee2mqtt-secret
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 10
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              privileged: true
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 512Mi
+        pod:
+          nodeSelector:
+            zigbee.feature.node.kubernetes.io/sonoff: "true"
     service:
       app:
         controller: *app
@@ -115,3 +106,10 @@ spec:
       config:
         enabled: true
         existingClaim: *app
+      usb:
+        enabled: true
+        type: hostPath
+        hostPath: *usbdevice
+        hostPathType: CharDevice
+        globalMounts:
+          - path: *usbdevice
