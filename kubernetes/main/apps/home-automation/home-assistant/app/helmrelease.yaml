@@ -68,6 +68,11 @@ spec:
               tag: 4.96.2
             env:
               TZ: ${TIMEZONE}
+              HASS_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: home-assistant-secret
+                    key: HASS_VSCODE_TOKEN
             args:
               - "/config"
               - --auth
