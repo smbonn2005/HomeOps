@@ -150,5 +150,11 @@ spec:
       config:
         enabled: true
         existingClaim: *app
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config
+            code-server:
+              - path: /config
       tmp:
         type: emptyDir
