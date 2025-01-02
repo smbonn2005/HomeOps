@@ -6,7 +6,7 @@ namespace: monitoring
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ./scrapeconfigs
+  - ./scrapeconfigs
   - ./prometheusrules
 labels:
   - pairs:
