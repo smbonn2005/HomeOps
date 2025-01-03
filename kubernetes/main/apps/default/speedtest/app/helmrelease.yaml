@@ -50,7 +50,7 @@ spec:
               DISPLAY_TIMEZONE: America/New_York
               DB_CONNECTION: pgsql
               SPEEDTEST_SCHEDULE: "0 */1 * * *"
-              SPEEDTEST_SERVERS: "4920" #29094 stopped responding for some reason, swapping temporarily.
+              SPEEDTEST_SERVERS: "29093" #29094 stopped responding for some reason, swapping temporarily.
               PRUNE_RESULTS_OLDER_THAN: 120
             envFrom:
               - secretRef:
