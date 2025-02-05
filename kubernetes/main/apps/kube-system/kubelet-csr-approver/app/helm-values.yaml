@@ -1,3 +1,0 @@
----
-providerRegex: ^(k8s-master-0|k8s-master-1|k8s-master-2)$
-bypassDnsResolution: true
