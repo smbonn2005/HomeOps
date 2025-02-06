@@ -9,7 +9,6 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    name: home-kubernetes
     url: https://github.com/smbonn2005/HomeOps.git
     ref: refs/heads/main
     path: kubernetes/main/flux/config
