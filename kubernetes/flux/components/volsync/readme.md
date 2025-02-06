@@ -18,14 +18,14 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
 ```
 
-and then call the template in your applications `kustomization.yaml`
+and then call the component in your applications `ks.yaml`
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  # ...
- - ../../../../templates/volsync
+spec:
+  components:
+    - ../../../../flux/components/volsync
 ```
 
 ## Required `postBuild` vars:
