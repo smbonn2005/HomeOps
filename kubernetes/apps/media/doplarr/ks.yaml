@@ -10,6 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/media/doplarr/app
   prune: true
   sourceRef:

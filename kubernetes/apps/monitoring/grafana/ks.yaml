@@ -13,6 +13,7 @@ spec:
     - ../../../../flux/components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/monitoring/grafana/app
   prune: true
   sourceRef:

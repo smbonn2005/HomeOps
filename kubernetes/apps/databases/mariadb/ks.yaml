@@ -14,7 +14,9 @@ spec:
   path: ./kubernetes/apps/databases/mariadb/app
   dependsOn:
     - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: volsync
+      namespace: storage
   prune: true
   sourceRef:
     kind: GitRepository

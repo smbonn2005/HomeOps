@@ -13,6 +13,7 @@ spec:
     - ../../../../flux/components/volsync
   dependsOn:
     - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/home-automation/zigbee2mqtt/app
   prune: true
   sourceRef:
