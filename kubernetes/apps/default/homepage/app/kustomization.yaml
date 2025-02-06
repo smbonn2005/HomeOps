@@ -7,4 +7,3 @@ resources:
   - ./configmap.yaml
   - ./externalsecret.yaml
   - ./rbac.yaml
-  - ../../../../templates/gatus/guarded
