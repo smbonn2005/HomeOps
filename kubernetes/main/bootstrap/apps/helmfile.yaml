@@ -15,10 +15,13 @@ repositories:
     url: https://coredns.github.io/helm
 
 releases:
-  - name: kube-prometheus-stack-crds
-    namespace: observability
+  - name: prometheus-operator-crds
+    namespace: kube-system
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
     version: 18.0.0
+    values:
+      - annotations:
+          helm.sh/resource-policy: keep
 
   - name: cilium
     namespace: kube-system
