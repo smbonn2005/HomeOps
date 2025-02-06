@@ -6,6 +6,7 @@ namespace: databases
 components:
   - ../../flux/components/namespace
   - ../../flux/components/sops
+  - ../../flux/components/substitutions
 resources:
   - ./cloudnative-pg/ks.yaml
   - ./mariadb/ks.yaml

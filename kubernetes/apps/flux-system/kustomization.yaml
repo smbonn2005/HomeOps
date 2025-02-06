@@ -6,6 +6,7 @@ namespace: flux-system
 components:
   - ../../flux/components/namespace
   - ../../flux/components/sops
+  - ../../flux/components/substitutions
 resources:
   - ./clickops/ks.yaml
   - ./flux-operator/ks.yaml

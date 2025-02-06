@@ -6,5 +6,6 @@ namespace: rook-ceph
 components:
   - ../../flux/components/namespace
   - ../../flux/components/sops
+  - ../../flux/components/substitutions
 resources:
   - ./rook-ceph/ks.yaml

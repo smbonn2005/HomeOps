@@ -6,6 +6,7 @@ namespace: media
 components:
   - ../../flux/components/namespace
   - ../../flux/components/sops
+  - ../../flux/components/substitutions
 resources:
   - ./plex/ks.yaml
   - ./sonarr/ks.yaml

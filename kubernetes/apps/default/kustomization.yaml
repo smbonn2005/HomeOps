@@ -6,6 +6,7 @@ namespace: default
 components:
   - ../../flux/components/namespace
   - ../../flux/components/sops
+  - ../../flux/components/substitutions
 resources:
   - ./bookstack/ks.yaml
   - ./homepage/ks.yaml
