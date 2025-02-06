@@ -10,10 +10,9 @@ instance:
   sync:
     kind: GitRepository
     name: home-kubernetes
-    url: ssh://git@github.com/onedr0p/home-ops
+    url: https://github.com/smbonn2005/HomeOps.git
     ref: refs/heads/main
     path: kubernetes/main/flux/config
-    pullSecret: github-deploy-key
   kustomize:
     patches:
       # Increase the number of workers and limits
