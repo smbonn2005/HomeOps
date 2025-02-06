@@ -14,7 +14,7 @@ instance:
     kind: GitRepository
     url: https://github.com/smbonn2005/HomeOps.git
     ref: refs/heads/main
-    path: kubernetes/main/flux/config
+    path: kubernetes/flux/config
   kustomize:
     patches:
       # Increase the number of workers and limits
