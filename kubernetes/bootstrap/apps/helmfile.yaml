@@ -11,9 +11,6 @@ repositories:
   - name: cilium
     url: https://helm.cilium.io
 
-  - name: coredns
-    url: https://coredns.github.io/helm
-
 releases:
   - name: cilium
     namespace: kube-system
@@ -31,7 +28,7 @@ releases:
 
   - name: coredns
     namespace: kube-system
-    chart: coredns/coredns
+    chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.39.0
     values:
       - ../../apps/kube-system/coredns/app/helm-values.yaml
