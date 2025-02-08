@@ -3,7 +3,6 @@
 wait_for_crds() {
     local crds=(
         "ciliuml2announcementpolicies.cilium.io"
-        "ciliumbgppeeringpolicies.cilium.io"
         "ciliumloadbalancerippools.cilium.io"
     )
 
