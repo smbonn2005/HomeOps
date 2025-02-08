@@ -28,6 +28,19 @@ data:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: kube-system
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: onepassword-connect-secret
+  namespace: kube-system
+stringData:
+  token: {{ ENV.ONEPASSWORD_CONNECT_TOKEN }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: flux-system
 ---
 apiVersion: v1
