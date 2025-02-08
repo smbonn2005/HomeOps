@@ -83,7 +83,6 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          cert-manager.io/cluster-issuer: letsencrypt-production
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: plex.png
           gethomepage.dev/name: Plex
@@ -95,7 +94,6 @@ spec:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: app
                   port: http
