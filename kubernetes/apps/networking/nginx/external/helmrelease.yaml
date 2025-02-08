@@ -28,7 +28,7 @@ spec:
       replicaCount: 2
       extraEnvs:
         - name: TZ
-          value: "${TIMEZONE}"
+          value: "America/New_York"
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"

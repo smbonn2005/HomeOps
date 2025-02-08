@@ -33,7 +33,7 @@ spec:
               repository: quay.io/minio/minio
               tag: RELEASE.2025-02-03T21-03-04Z
             env:
-              TZ: "${TIMEZONE}"
+              TZ: "America/New_York"
               MINIO_UPDATE: "off"
               MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.monitoring:9090
               MINIO_PROMETHEUS_JOB_ID: minio
