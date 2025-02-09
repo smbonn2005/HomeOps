@@ -6,6 +6,8 @@ on:
   push:
     branches: ["main"]
     paths: [".github/labels.yaml"]
+  schedule:
+    - cron: "0 0 * * *" # Every day at midnight
 
 jobs:
   labels:
