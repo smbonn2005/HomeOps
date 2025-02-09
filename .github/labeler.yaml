@@ -1,5 +1,8 @@
 ---
 # Area
+area/bootstrap:
+  - changed-files:
+      - any-glob-to-any-file: kubernetes/bootstrap/**/*
 area/github:
   - changed-files:
       - any-glob-to-any-file: .github/**/*
@@ -10,10 +13,3 @@ area/taskfile:
   - changed-files:
       - any-glob-to-any-file: .taskfiles/**/*
       - any-glob-to-any-file: Taskfile*
-# Cluster
-cluster/main:
-  - changed-files:
-      - any-glob-to-any-file: kubernetes/main/**/*
-cluster/utility:
-  - changed-files:
-      - any-glob-to-any-file: kubernetes/utility/**/*
