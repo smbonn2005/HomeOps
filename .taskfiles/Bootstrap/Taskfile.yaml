@@ -44,6 +44,8 @@ tasks:
       - talosctl config info
       - test -f {{.KUBERNETES_DIR}}/talosconfig
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/scripts/cilium-presync.sh
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/scripts/cilium-postsync.sh
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/templates/resources.yaml.j2
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/templates/wipe-rook.yaml.gotmpl
       - which curl jq helmfile kubectl op talosctl
