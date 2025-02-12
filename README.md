@@ -17,7 +17,7 @@ _... managed with Flux, Renovate and GitHub Actions_ 🤖
 [![Flux](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.smbonn.me%2Fflux_version&style=for-the-badge&logo=flux&logoColor=white&color=blue&label=%20)](https://fluxcd.io)&nbsp;&nbsp;
 [![GitHub last commit](https://img.shields.io/github/last-commit/smbonn2005/HomeOps?color=purple&style=for-the-badge)](https://github.com/smbonn2005/HomeOps/commits/main 'Commit History')\
 [![GitHub stars](https://img.shields.io/github/stars/smbonn2005/HomeOps?color=green&style=for-the-badge)](https://github.com/smbonn2005/HomeOps/stargazers 'This repo star count')
-[![Renovate](https://img.shields.io/github/actions/workflow/status/smbonn2005/HomeOps/renovate.yaml?branch=main&label=&logo=renovate&style=for-the-badge&color=blue)](https://github.com/smbonn2005/HomeOps/actions/workflows/renovate.yaml)
+[![Renovate](https://img.shields.io/github/actions/workflow/status/smbonn2005/HomeOps/renovate.yaml?branch=main&label=&logo=renovate&style=for-the-badge&color=blue&logoColor=white)](https://github.com/smbonn2005/HomeOps/actions/workflows/renovate.yaml)
 
 </div>
 
