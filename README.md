@@ -36,7 +36,7 @@ _... managed with Flux, Renovate and GitHub Actions_ 🤖
 
 ## 📖 Overview
 
-This is a mono repository for my home infrastructure and Kubernetes cluster. I try to adhere to Infrastructure as Code (IaC) and GitOps practices using the tools like [Ansible](https://www.ansible.com/), [Kubernetes](https://kubernetes.io/), [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate) and [GitHub Actions](https://github.com/features/actions).
+This is a mono repository for my home infrastructure and Kubernetes cluster. I try to adhere to Infrastructure as Code (IaC) and GitOps practices using the tools like [FluxCD](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate), [Kubernetes](https://kubernetes.io/),  and [GitHub Actions](https://github.com/features/actions).
 
 ---
 
@@ -50,16 +50,17 @@ My Kubernetes cluster is deployed with [Talos](https://www.talos.dev/). This is 
 
 ### Core Components
 
-- [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
+<!-- - [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners. -->
 - [cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
 - [cilium](https://cilium.io/): Internal Kubernetes networking plugin.
 - [cloudflared](https://github.com/cloudflare/cloudflared): Enables Cloudflare secure access to certain ingresses.
 - [external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
 - [external-secrets](https://github.com/external-secrets/external-secrets/): Managed Kubernetes secrets using [1Password Connect](https://github.com/1Password/connect).
 - [ingress-nginx](https://github.com/kubernetes/ingress-nginx/): Ingress controller to expose HTTP traffic to pods over DNS.
-- [longhorn](https://github.com/longhorn/longhorn): Distributed block storage for peristent storage.
-- [sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Managed secrets for Kubernetes, Ansible.
+- [rook-ceph](https://github.com/rook/rook): Distributed block storage for peristent storage.
+- [sops](https://github.com/getsops/sops): Managed secrets for Kubernetes which are committed to Git.
 - [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
+- [volsync](https://github.com/backube/volsync): Backup and recover of persistent volume claims.
 
 ### GitOps
 
@@ -75,33 +76,22 @@ This Git repository contains the following directories under [kubernetes](./kube
 
 ```sh
 📁 kubernetes      # Kubernetes cluster defined as code
-├─📁 bootstrap     # Flux installation
-├─📁 flux          # Main Flux configuration of repository
+├─📁 bootstrap     # Cluster bootstrap procedures
+├─📁 flux          # Flux System configuration plus re-usable components
 └─📁 apps          # Apps deployed into my cluster grouped by namespace (see below)
 ```
 
-### Cluster layout
+### Flux Workflow
 
-Below is a a high level look at the layout of how my directory structure with Flux works. In this brief example you are able to see that `authelia` will not be able to run until `glauth` and  `cloudnative-pg` are running. It also shows that the `Cluster` custom resource depends on the `cloudnative-pg` Helm chart. This is needed because `cloudnative-pg` installs the `Cluster` custom resource definition in the Helm chart.
+This is a high-level look how Flux deploys my applications with dependencies. In most cases a `HelmRelease` will depend on other `HelmRelease`'s, in other cases a `Kustomization` will depend on other `Kustomization`'s, and in rare situations an app can depend on a `HelmRelease` and a `Kustomization`. The example below shows that `bookstack` won't be deployed or upgraded until the `rook-ceph-cluster` Helm release is installed or in a healthy state.
 
-```python
-# Key: <kind> :: <metadata.name>
-GitRepository :: home-ops-kubernetes
-    Kustomization :: cluster
-        Kustomization :: cluster-apps
-            Kustomization :: cluster-apps-authelia
-                DependsOn:
-                    Kustomization :: cluster-apps-glauth
-                    Kustomization :: cluster-apps-cloudnative-pg-cluster
-                HelmRelease :: authelia
-            Kustomization :: cluster-apps-glauth
-                HelmRelease :: glauth
-            Kustomization :: cluster-apps-cloudnative-pg
-                HelmRelease :: cloudnative-pg
-            Kustomization :: cluster-apps-cloudnative-pg-cluster
-                DependsOn:
-                    Kustomization :: cluster-apps-cloudnative-pg
-                Cluster :: postgres
+```mermaid
+graph TD
+    A>Kustomization: rook-ceph] -->|Creates| B[HelmRelease: rook-ceph]
+    A>Kustomization: rook-ceph] -->|Creates| C[HelmRelease: rook-ceph-cluster]
+    C>HelmRelease: rook-ceph-cluster] -->|Depends on| B>HelmRelease: rook-ceph]
+    D>Kustomization: bookstack] -->|Creates| E(HelmRelease: bookstack)
+    E>HelmRelease: bookstack] -->|Depends on| C>HelmRelease: rook-ceph-cluster]
 ```
 
 ---
@@ -151,12 +141,12 @@ My `pfSense` router is utilizing the `pfBlockerNG` plugin which allows me to fil
 | Device                    | Count | OS Disk Size | Data Disk Size              | Ram  | Operating System | Purpose             |
 |---------------------------|-------|--------------|-----------------------------|------|------------------|---------------------|
 | Supermicro SuperServer 1U | 1     | 256GB NVMe   | -                           | 16GB | pfSense          | Router              |
-| Intel NUC11PAHi7          | 3     | 250GB SSD    | 2TB NVMe (longhorn)         | 64GB | Debian           | Kubernetes Masters  |
+| Intel NUC11PAHi7          | 3     | 250GB SSD    | 2TB NVMe (rook-ceph)        | 64GB | Talos            | Kubernetes Masters  |
 | Intel NUC11PAHi7          | 1     | 250GB SSD    | 1TB NVMe                    | 64GB | XCP-NG           | VM Hypervisor       |
-| Custom Storage Server     | 1     | 2x 250GB SSD | 6x14TB ZFS (mirrored vdevs) | 128GB| TrueNas Scale    | NFS + Backup Server |
+| Minisforum MS01           | 1     | 2x 64GB NVMe | 6x12TB ZFS (mirrored vdevs) | 64GB | TrueNas Scale    | NFS + Backup Server |
 | APC SMT3000 w/ NIC        | 1     | -            | -                           | -    | -                | UPS                 |
-| Dell 8132F                | 1     | -            | -                           | -    | -                | Core 10Gb Switch    |
-| Dell X1052                | 1     | -            | -                           | -    | -                | Service Switch      |
+| Dell 8132F Switch         | 1     | -            | -                           | -    | -                | Core 10Gb Switch    |
+| Dell X1052 Switch         | 1     | -            | -                           | -    | -                | Service Switch      |
 
 ---
 
