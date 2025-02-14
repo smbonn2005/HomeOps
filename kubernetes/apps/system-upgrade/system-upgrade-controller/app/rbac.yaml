@@ -17,5 +17,4 @@ kind: ServiceAccount
 metadata:
   name: talos
 spec:
-  roles:
-    - os:admin
+  roles: ["os:admin"]
