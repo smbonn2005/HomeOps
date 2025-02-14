@@ -1,10 +1,5 @@
 ---
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: cert-manager
----
-apiVersion: v1
 kind: Secret
 metadata:
   name: smbonn-me-tls
@@ -22,13 +17,8 @@ metadata:
     controller.cert-manager.io/fao: "true"
 type: kubernetes.io/tls
 data:
-  tls.crt: {{ ENV.INGRESS_NGINX_TLS_CRT }}
-  tls.key: {{ ENV.INGRESS_NGINX_TLS_KEY }}
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: kube-system
+  tls.crt: op://HomeLab/smbonn-me-tls/tls.crt
+  tls.key: op://HomeLab/smbonn-me-tls/tls.key
 ---
 apiVersion: v1
 kind: Secret
@@ -36,12 +26,7 @@ metadata:
   name: onepassword-connect-secret
   namespace: kube-system
 stringData:
-  token: {{ ENV.ONEPASSWORD_CONNECT_TOKEN }}
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: flux-system
+  token: op://HomeLab/1password/OP_CONNECT_TOKEN
 ---
 apiVersion: v1
 kind: Secret
@@ -49,4 +34,4 @@ metadata:
   name: sops-age
   namespace: flux-system
 stringData:
-  age.agekey: {{ ENV.FLUX_SOPS_PRIVATE_KEY | indent(4) }}
+  age.agekey: op://HomeLab/sops/SOPS_PRIVATE_KEY
