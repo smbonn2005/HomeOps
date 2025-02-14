@@ -75,9 +75,6 @@ machine:
           rsize = 131072
           wsize = 131072
           nconnect = 8
-    # Disable default API server admission plugins.
-    - op: remove
-      path: /cluster/apiServer/admissionControl
   time:
     disabled: false
     servers:
@@ -112,6 +109,7 @@ machine:
       allowedRoles:
         - os:admin
       allowedKubernetesNamespaces:
+        - action-runner-system
         - system-upgrade
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
