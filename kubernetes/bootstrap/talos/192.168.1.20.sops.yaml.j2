@@ -44,22 +44,25 @@ machine:
     disableSearchDomain: true
   install:
     diskSelector:
-      model: KINGSTON SA400S3
-    extraKernelArgs:
-      - apparmor=0
-      - init_on_alloc=0
-      - init_on_free=0
-      - mitigations=off
-      - security=none
-      - talos.auditd.disabled=1
+      model: Samsung SSD 870
+    extraKernelArgs:                # Performance hacks
+      - apparmor=0                  # Less security, faster
+      - init_on_alloc=0             # Less security, faster
+      - init_on_free=0              # Less security, faster
+      - mitigations=off             # Less security, faster
+      - security=none               # Less security, faster
+      - talos.auditd.disabled=1     # Less security, faster
+    # i915, intel-ucode, thunderbolt
     image: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2:{{ ENV.TALOS_VERSION }}
     wipe: false
   files:
+    # Spegel
     - op: create
       path: /etc/cri/conf.d/20-customization.part
       content: |
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
+    # Configure NFS Mounts
     - op: overwrite
       path: /etc/nfsmount.conf
       permissions: 420
@@ -72,6 +75,7 @@ machine:
           rsize = 131072
           wsize = 131072
           nconnect = 8
+    # Disable default API server admission plugins.
     - op: remove
       path: /cluster/apiServer/admissionControl
   time:
@@ -79,17 +83,17 @@ machine:
     servers:
       - 192.168.1.1
   sysctls:
-    fs.inotify.max_user_watches: 1048576
-    fs.inotify.max_user_instances: 8192
-    net.core.default_qdisc: fq
-    net.core.rmem_max: 67108864
-    net.core.wmem_max: 67108864
-    net.ipv4.tcp_congestion_control: bbr
-    net.ipv4.tcp_fastopen: 3
-    net.ipv4.tcp_rmem: 4096 87380 33554432
-    net.ipv4.tcp_wmem: 4096 65536 33554432
-    net.ipv4.tcp_window_scaling: 1
-    vm.nr_hugepages: 1024
+    fs.inotify.max_user_watches: 1048576          # Watchdog
+    fs.inotify.max_user_instances: 8192           # Watchdog
+    net.core.default_qdisc: fq                    # 2.5Gb/s
+    net.core.rmem_max: 67108864                   # 2.5Gb/s | Cloudflared / QUIC
+    net.core.wmem_max: 67108864                   # 2.5Gb/s | Cloudflared / QUIC
+    net.ipv4.tcp_congestion_control: bbr          # 2.5Gb/s
+    net.ipv4.tcp_fastopen: 3                      # TCP Fast Open
+    net.ipv4.tcp_rmem: 4096 87380 33554432        # 2.5Gb/s
+    net.ipv4.tcp_wmem: 4096 65536 33554432        # 2.5Gb/s
+    net.ipv4.tcp_window_scaling: 1                # 2.5Gb/s
+    vm.nr_hugepages: 1024                         # PostgreSQL
   sysfs:
     devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
     devices.system.cpu.cpu0.cpufreq.energy_performance_preference: balance_performance
