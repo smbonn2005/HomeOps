@@ -26,9 +26,9 @@
       "matchPackagePatterns": ["intel-device-plugins"],
       "matchDatasources": ["helm"],
       "group": {
-        "commitMessageTopic": "{{{groupName}}} group",
+        "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true,
+      "separateMinorPatch": true
     },
     {
       "description": ["Kubernetes Group"],
