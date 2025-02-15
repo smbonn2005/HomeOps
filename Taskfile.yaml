@@ -19,7 +19,6 @@ env:
 includes:
   bootstrap: .taskfiles/Bootstrap
   kubernetes: .taskfiles/Kubernetes
-  rook: .taskfiles/Rook
   talos: .taskfiles/Talos
   volsync: .taskfiles/VolSync
   workstation: .taskfiles/Workstation

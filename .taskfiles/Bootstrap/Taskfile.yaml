@@ -36,9 +36,9 @@ tasks:
     requires:
       vars: [ROOK_DISK]
     preconditions:
-      # - op user get --me
+      - op --version
       - talosctl config info
       - test -f {{.KUBERNETES_DIR}}/talosconfig
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
-      - which gum jq helmfile kubectl kustomize op talosctl yq
+      - which helmfile op talosctl
