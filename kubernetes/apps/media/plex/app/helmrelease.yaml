@@ -37,8 +37,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/plex
-              tag: 1.41.4.9463-630c9f557@sha256:1f66577fe4fa60dc0984d568ca55fb5c2b3fae8498ef96ac1ed57710517552be
+              repository: ghcr.io/smbonn2005/plex
+              tag: 1.41.4.9463-630c9f557@sha256:5c43d187274fbe5b2a252e40e33279aee9dd6f15007ecda97cb13534274e9f7a
             env:
               TZ: America/New_York
               ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
