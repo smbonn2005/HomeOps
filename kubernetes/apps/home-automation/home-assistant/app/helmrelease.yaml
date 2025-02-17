@@ -35,7 +35,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/smnbonn2005/home-assistant
+              repository: ghcr.io/smbonn2005/home-assistant
               tag: 2025.2.4@sha256:f6f3b85626efc07f3ed579bab4b2394fd087c013708b4061f99961149ad3ff90
             env:
               TZ: America/New_York
