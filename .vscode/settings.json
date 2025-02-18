@@ -22,7 +22,6 @@
       "bootstrap": "seeders",
       "flux": "pipe",
       "talos": "linux",
-      // .github
       ".github/renovate": "robot",
       ".github/workflows": "ci",
       // namespaces
