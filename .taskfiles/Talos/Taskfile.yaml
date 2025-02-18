@@ -8,20 +8,19 @@ tasks:
     desc: Apply Talos config to a node [IP=required] [MODE=auto]
     cmds:
       - task: down
-      - minijinja-cli {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}.yaml.j2 | op inject | talosctl --nodes {{.IP}} apply-config --mode {{.MODE}} --config-patch @{{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}/{{.IP}}.yaml --file /dev/stdin
+      - minijinja-cli {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}.yaml.j2 | op inject | talosctl --nodes {{.IP}} apply-config --mode {{.MODE}} --config-patch @{{.TALOS_DIR}}/nodes/{{.IP}}.yaml --file /dev/stdin
       - talosctl --nodes {{.IP}} health
       - task: up
     vars:
       MODE: '{{.MODE | default "auto"}}'
       TALOS_MACHINE_TYPE:
-        sh: talosctl --nodes {{.IP}} get machinetypes --output jsonpath='{.spec}'
+        sh: talosctl --nodes {{.IP}} get machinetypes --output=jsonpath='{.spec}'
     requires:
       vars: [IP]
     preconditions:
       - talosctl --nodes {{.IP}} get machineconfig
-      - test -f {{.ROOT_DIR}}/.talos.env
       - test -f {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}.yaml.j2
-      - test -f {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}/{{.IP}}.yaml
+      - test -f {{.TALOS_DIR}}/nodes/{{.IP}}.yaml
       - test -f {{.ROOT_DIR}}/talosconfig
       - which minijinja-cli op talosctl
 
@@ -34,17 +33,16 @@ tasks:
       - task: up
     vars:
       TALOS_MACHINE_TYPE:
-        sh: talosctl --nodes {{.IP}} get machinetypes --output jsonpath='{.spec}'
+        sh: talosctl --nodes {{.IP}} get machinetypes --output=jsonpath='{.spec}'
       TALOS_IMAGE:
-        sh: minijinja-cli {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}.yaml.j2 | yq '.machine.install.image' -
+        sh: minijinja-cli {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}.yaml.j2 | yq '.machine.install.image'
     requires:
       vars: [IP]
     preconditions:
       - talosctl --nodes {{.IP}} get machineconfig
       - talosctl config info
-      - test -f {{.ROOT_DIR}}/.talos.env
       - test -f {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}.yaml.j2
-      - test -f {{.TALOS_DIR}}/{{.TALOS_MACHINE_TYPE}}/{{.IP}}.yaml
+      - test -f {{.TALOS_DIR}}/nodes/{{.IP}}.yaml
       - test -f {{.ROOT_DIR}}/talosconfig
       - which minijinja-cli talosctl yq
 
@@ -60,7 +58,6 @@ tasks:
     preconditions:
       - talosctl --nodes {{.RANDOM_CONTROLLER}} get machineconfig
       - talosctl config info
-      - test -f {{.ROOT_DIR}}/.talos.env
       - test -f {{.ROOT_DIR}}/talosconfig
       - which jq talosctl
 
@@ -78,7 +75,6 @@ tasks:
     preconditions:
       - talosctl --nodes {{.IP}} get machineconfig
       - talosctl config info
-      - test -f {{.ROOT_DIR}}/.talos.env
       - test -f {{.ROOT_DIR}}/talosconfig
       - which talosctl
 

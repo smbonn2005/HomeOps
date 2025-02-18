@@ -9,7 +9,7 @@ source "$(dirname "${0}")/lib/common.sh"
 
 function wait_for_crds() {
     local -r crds=(
-        "ciliuml2announcementpolicies" "ciliumloadbalancerippools"
+        "ciliuml2announcementpolicies" "ciliumbgppeeringpolicies" "ciliumloadbalancerippools"
     )
 
     for crd in "${crds[@]}"; do

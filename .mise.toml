@@ -1,7 +1,9 @@
 [env]
+_.file = '{{config_root}}/.talos.env'
 KUBERNETES_DIR = '{{config_root}}/kubernetes'
 KUBECONFIG = '{{config_root}}/kubeconfig'
 MINIJINJA_CONFIG_FILE = '{{config_root}}/.minijinja.toml'
+ROOT_DIR = '{{config_root}}'
 SOPS_AGE_KEY_FILE = '{{config_root}}/age.key'
 TALOSCONFIG = '{{config_root}}/talosconfig'
 
