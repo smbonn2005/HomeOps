@@ -1,10 +1,14 @@
 ---
-# Area
+# Areas
 - name: area/bootstrap
   color: "0e8a16"
 - name: area/github
   color: "0e8a16"
 - name: area/kubernetes
+  color: "0e8a16"
+- name: area/scripts
+  color: "0e8a16"
+- name: area/talos
   color: "0e8a16"
 - name: area/taskfile
   color: "0e8a16"
@@ -29,5 +33,7 @@
 - name: type/major
   color: "f6412d"
 # Uncategorized
+- name: community
+  color: "370fb2"
 - name: hold/upstream
   color: "ee0701"

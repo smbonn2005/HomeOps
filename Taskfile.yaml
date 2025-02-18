@@ -11,7 +11,9 @@ vars:
   SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
   TALOS_DIR: '{{.ROOT_DIR}}/talos'
 
-dotenv: ['{{.ROOT_DIR}}/.talos.env']
+dotenv:
+  - '{{.BOOTSTRAP_DIR}}/.env'
+  - '{{.KUBERNETES_DIR}}/components/system-upgrade/.env'
 
 env:
   KUBECONFIG: '{{.ROOT_DIR}}/kubeconfig'
