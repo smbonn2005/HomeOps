@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/qbittorrent
-              tag: 5.0.4@sha256:3a3ba4ef28c66c981bc1cd442a043507484da4398c224dae70b0c6cfe45f2420
+              tag: 5.0.3@sha256:fd12e4ac0700c46a928842bb5e5f9435d999ab8518a45007d00dbafb6804d60f
             env:
               TZ: America/New_York
               QBITTORRENT__PORT: &port 80
