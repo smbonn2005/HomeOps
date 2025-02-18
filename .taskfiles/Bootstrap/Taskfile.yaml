@@ -1,44 +1,19 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: "3"
+version: '3'
 
 tasks:
 
-  talos:
-    desc: Bootstrap Talos
-    cmds:
-      - for: { var: TALOS_NODES }
-        cmd: >
-          sops exec-file --input-type yaml --output-type yaml {{.ITEM}} "minijinja-cli {}"
-          | talosctl --nodes {{base .ITEM | replace ".sops.yaml.j2" ""}} apply-config --insecure --file /dev/stdin
-      - until talosctl --nodes {{.TALOS_CONTROLLER}} bootstrap; do sleep 5; done
-      - talosctl kubeconfig --nodes {{.TALOS_CONTROLLER}} --force --force-context-name main {{.KUBERNETES_DIR}}
-    vars:
-      TALOS_CONTROLLER:
-        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
-      TALOS_NODES:
-        sh: ls {{.KUBERNETES_DIR}}/bootstrap/talos/*.j2
-    preconditions:
-      - talosctl config info
-      - test -f {{.KUBERNETES_DIR}}/talosconfig
-      - which jq minijinja-cli sops talosctl
-
-  apps:
-    desc: Bootstrap Apps [ROOK_DISK=required]
+  default:
+    desc: Bootstrap Talos nodes and Cluster apps [ROOK_DISK=required]
     summary: |
       IMPORTANT: ROOK_DISK must be set to the disk model used across all the nodes (e.g. Micron_7450_MTFDKBA800TFS)
-    prompt: Bootstrap apps into the Talos cluster?
-    cmds:
-      - bash {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
-      - helmfile --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+    cmd: bash {{.SCRIPTS_DIR}}/installation.sh
     env:
       ROOK_DISK: '{{.ROOK_DISK}}'
     requires:
       vars: [ROOK_DISK]
     preconditions:
-      - op --version
       - talosctl config info
-      - test -f {{.KUBERNETES_DIR}}/talosconfig
-      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
-      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
-      - which helmfile op talosctl
+      - test -f {{.ROOT_DIR}}/talosconfig
+      - test -f {{.SCRIPTS_DIR}}/installation.sh

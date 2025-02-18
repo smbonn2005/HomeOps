@@ -1,9 +1,21 @@
 [env]
-KUBERNETES_DIR = '{{config_root}}/kubernetes'
+# File paths
 KUBECONFIG = '{{config_root}}/kubeconfig'
 MINIJINJA_CONFIG_FILE = '{{config_root}}/.minijinja.toml'
 SOPS_AGE_KEY_FILE = '{{config_root}}/age.key'
-TALOSCONFIG = '{{config_root}}/kubernetes/talosconfig'
+TALOSCONFIG = '{{config_root}}/talosconfig'
+
+# Directory paths
+ROOT_DIR = '{{config_root}}'
+BOOTSTRAP_DIR = '{{config_root}}/bootstrap'
+KUBERNETES_DIR = '{{config_root}}/kubernetes'
+SCRIPTS_DIR = '{{config_root}}/scripts'
+TALOS_DIR = '{{config_root}}/talos'
+
+# Included file paths
+_.file = [
+  '{{env.KUBERNETES_DIR}}/apps/system-upgrade/.env'
+]
 
 [tools]
 # Operations tools

@@ -2,13 +2,19 @@
 # Area
 area/bootstrap:
   - changed-files:
-      - any-glob-to-any-file: kubernetes/bootstrap/**/*
+      - any-glob-to-any-file: "bootstrap/**/*"
 area/github:
   - changed-files:
       - any-glob-to-any-file: .github/**/*
 area/kubernetes:
   - changed-files:
       - any-glob-to-any-file: kubernetes/**/*
+area/scripts:
+  - changed-files:
+      - any-glob-to-any-file: "scripts/**/*"
+area/talos:
+  - changed-files:
+      - any-glob-to-any-file: "talos/**/*"
 area/taskfile:
   - changed-files:
       - any-glob-to-any-file: .taskfiles/**/*

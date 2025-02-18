@@ -1,3 +1,10 @@
+{% for namespace in ["cert-manager", "kube-system", "flux-system"] %}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ namespace }}
+{% endfor %}
 ---
 apiVersion: v1
 kind: Secret
