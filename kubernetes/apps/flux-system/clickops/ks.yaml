@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/gatus/guarded
+    - ../../../../components/gatus/guarded
   path: ./kubernetes/apps/flux-system/clickops/app
   prune: true
   sourceRef:
