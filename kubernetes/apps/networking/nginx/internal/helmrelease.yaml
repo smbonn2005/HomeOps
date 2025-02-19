@@ -31,7 +31,7 @@ spec:
           value: "America/New_York"
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "internal.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "internal.smbonn.me"
           lbipam.cilium.io/ips: "192.168.1.222"
         externalTrafficPolicy: Cluster
       ingressClassResource:
@@ -70,7 +70,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "cert-manager/${SECRET_DOMAIN/./-}-tls"
+        default-ssl-certificate: "cert-manager/smbonn-me-tls"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

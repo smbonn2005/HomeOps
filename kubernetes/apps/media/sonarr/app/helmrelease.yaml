@@ -98,7 +98,7 @@ spec:
           gethomepage.dev/widget.url: http://sonarr.media
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_SONARR_KEY}}`}}"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.smbonn.me"
             paths:
               - path: /
                 pathType: Prefix
@@ -116,7 +116,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: ${SECRET_NFS_SERVER}
-        path: ${SECRET_NFS_MEDIA}
+        server: 192.168.1.4
+        path: /mnt/Main_Pool/Media
         globalMounts:
           - path: /media

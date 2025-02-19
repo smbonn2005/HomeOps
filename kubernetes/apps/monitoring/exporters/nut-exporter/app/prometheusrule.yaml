@@ -81,7 +81,7 @@ spec:
           targetLabel: server
       params:
         server:
-          - ${PI_IP}
+          - 192.168.1.248
       path: /ups_metrics
       port: metrics
       scheme: http

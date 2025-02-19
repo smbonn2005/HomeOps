@@ -42,21 +42,22 @@ spec:
               repository: ghcr.io/pterodactyl/panel
               tag: v1.11.10@sha256:6c9d060396c0a2c273aa5573460ed51f9176016dac59608b414a3cb02b0cc30c
             env:
-              DB_HOST: ${SECRET_MARIADB_URL}
+              DB_HOST: mariadb.databases.svc.cluster.local
               DB_PORT: 3306
               DB_DATABASE: "panel"
               DB_USERNAME: "pterodactyl"
-              DB_PASSWORD: ${PTERODACTYL_MARIADB_PASSWORD}
-              REDIS_HOST: ${SECRET_REDIS_URL}
+              REDIS_HOST: redis.databases.svc.cluster.local
               CACHE_DRIVER: "redis"
               SESSION_DRIVER: "redis"
               QUEUE_DRIVER: "redis"
-              APP_URL: "https://pterodactyl.${SECRET_DOMAIN}"
+              APP_URL: "https://pterodactyl.smbonn.me"
               APP_ENV: "production"
               APP_ENVIRONMENT_ONLY: "false"
               APP_TIMEZONE: America/New_York
-              APP_SERVICE_AUTHOR: ${PTERODACTYL_APP_EMAIL}
               TRUSTED_PROXIES: "*"
+            envFrom:
+              - secretRef:
+                  name: pterodactyl-secret
             resources:
               requests:
                 cpu: 50m
@@ -73,7 +74,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.smbonn.me
           nginx.ingress.kubernetes.io/enable-cors: "true"
           nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
           nginx.ingress.kubernetes.io/cors-allow-headers: "*"
@@ -90,7 +91,7 @@ spec:
           gethomepage.dev/widget.url: http://pterodactyl.default
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_PTERODACTYL_KEY}}`}}"
         hosts:
-          - host: &host "pterodactyl.${SECRET_DOMAIN}"
+          - host: &host "pterodactyl.smbonn.me"
             paths:
               - path: /
                 pathType: Prefix

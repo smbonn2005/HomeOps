@@ -25,7 +25,7 @@ ports:
     port: 9000
 endpoints:
   - addresses:
-      - "${SECRET_PROJECTS_IP}"
+      - "192.168.1.97"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -36,11 +36,11 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: external.smbonn.me
 spec:
   ingressClassName: external
   rules:
-    - host: projects.${SECRET_DOMAIN}
+    - host: projects.smbonn.me
       http:
         paths:
           - path: /hooks/

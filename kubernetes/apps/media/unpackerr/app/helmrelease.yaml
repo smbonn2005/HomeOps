@@ -78,7 +78,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: ${SECRET_NFS_SERVER}
-        path: ${SECRET_NFS_MEDIA}
+        server: 192.168.1.4
+        path: /mnt/Main_Pool/Media
         globalMounts:
           - path: /media

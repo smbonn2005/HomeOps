@@ -36,7 +36,7 @@ spec:
       dashboard:
         ingressClassName: internal
         host:
-          name: &host rook.${SECRET_DOMAIN}
+          name: &host rook.smbonn.me
           path: /
         tls:
           - hosts: [*host]
@@ -212,9 +212,9 @@ spec:
             gethomepage.dev/name: Rook-Ceph
             gethomepage.dev/description: K3S Cluster Storage
             gethomepage.dev/group: Infrastructure
-            gethomepage.dev/href: http://rook.${SECRET_DOMAIN}
+            gethomepage.dev/href: http://rook.smbonn.me
           host:
-            name: &host rgw.${SECRET_DOMAIN}
+            name: &host rgw.smbonn.me
             path: /
           tls:
             - hosts: [*host]

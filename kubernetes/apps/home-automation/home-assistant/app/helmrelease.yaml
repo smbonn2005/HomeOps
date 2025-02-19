@@ -42,7 +42,7 @@ spec:
               HASS_HTTP_TRUSTED_PROXY_1: 192.168.1.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
               HASS_UNIT_SYSTEM: imperial
-              HASS_EXTERNAL_URL: https://hass.${SECRET_DOMAIN}
+              HASS_EXTERNAL_URL: https://hass.smbonn.me
             envFrom:
               - secretRef:
                   name: home-assistant-secret
@@ -99,7 +99,7 @@ spec:
         nameOverride: *app
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: hass.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: hass.smbonn.me
           lbipam.cilium.io/ips: 192.168.1.95
         ports:
           http:
@@ -116,7 +116,7 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.smbonn.me
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/name: Home-Assistant
@@ -126,7 +126,7 @@ spec:
           gethomepage.dev/widget.url: http://home-assistant.home-automation:8123
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_HASS_TOKEN}}`}}"
         hosts:
-          - host: &host hass.${SECRET_DOMAIN}
+          - host: &host hass.smbonn.me
             paths:
               - path: /
                 service:
@@ -138,7 +138,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host-code hass-code.${SECRET_DOMAIN}
+          - host: &host-code hass-code.smbonn.me
             paths:
               - path: /
                 service:
