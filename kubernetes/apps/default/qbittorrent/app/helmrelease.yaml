@@ -85,7 +85,7 @@ spec:
           gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}`}}"
           gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}`}}"
         hosts:
-          - host: &host qb.${SECRET_DOMAIN}
+          - host: &host qb.smbonn.me
             paths:
               - path: /
                 pathType: Prefix
@@ -103,8 +103,8 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: ${SECRET_NFS_SERVER}
-        path: ${SECRET_NFS_MEDIA}
+        server: 192.168.1.4
+        path: /mnt/Main_Pool/Media
         globalMounts:
           - path: /media
       incomplete:

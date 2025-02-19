@@ -36,7 +36,7 @@ spec:
               TZ: "America/New_York"
               # not used
               __PORT: &port 3000
-              __HOST: &host "clickops.${SECRET_DOMAIN}"
+              __HOST: &host "clickops.smbonn.me"
             probes:
               liveness: &probe
                 enabled: true
@@ -88,7 +88,7 @@ spec:
           gethomepage.dev/name: ClickOps
           gethomepage.dev/description: Flux Reconciliation Checker
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.smbonn.me"
             paths:
               - path: /
                 pathType: Prefix

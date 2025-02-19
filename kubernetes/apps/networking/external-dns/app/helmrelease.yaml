@@ -28,11 +28,11 @@ spec:
     fullnameOverride: *app
     provider: cloudflare
     env:
-      - name: CF_API_TOKEN
+      - name: &name CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
-            key: api-token
+            name: &secret external-dns-secret
+            key: *name
     extraArgs:
       - --ingress-class=external
       - --cloudflare-proxied
@@ -42,8 +42,8 @@ spec:
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["${SECRET_DOMAIN}"]
+    domainFilters: ["smbonn.me"]
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-secret
+      secret.reloader.stakater.com/reload: *secret

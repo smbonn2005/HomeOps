@@ -120,7 +120,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.smbonn.me
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Observability
           gethomepage.dev/name: Gatus
@@ -128,7 +128,7 @@ spec:
           gethomepage.dev/widget.type: gatus
           gethomepage.dev/widget.url: http://gatus.monitoring
         hosts:
-          - host: &host status.${SECRET_DOMAIN}
+          - host: &host status.smbonn.me
             paths:
               - path: /
                 service:

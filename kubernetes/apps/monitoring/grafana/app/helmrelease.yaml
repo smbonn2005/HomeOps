@@ -33,7 +33,7 @@ spec:
       existingSecret: grafana-admin-secret
     env:
       GF_EXPLORE_ENABLED: true
-      GF_SERVER_ROOT_URL: "https://grafana.${SECRET_DOMAIN}"
+      GF_SERVER_ROOT_URL: "https://grafana.smbonn.me"
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -257,7 +257,7 @@ spec:
         gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_GRAFANA_USERNAME}}`}}'
         gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}`}}'
       hosts:
-        - &host "grafana.${SECRET_DOMAIN}"
+        - &host "grafana.smbonn.me"
       tls:
         - hosts: [*host]
     persistence:

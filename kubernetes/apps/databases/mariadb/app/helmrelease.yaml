@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     auth:
-      rootPassword: "${MARIADB_ROOT_PASSWORD}"
+      existingSecret: mariadb-secret
     metrics:
       enabled: true
       resourcesPreset: small

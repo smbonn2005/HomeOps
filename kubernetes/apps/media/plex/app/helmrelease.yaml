@@ -41,7 +41,7 @@ spec:
               tag: 1.41.4.9463-630c9f557@sha256:5c43d187274fbe5b2a252e40e33279aee9dd6f15007ecda97cb13534274e9f7a
             env:
               TZ: America/New_York
-              ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              ADVERTISE_IP: "https://{{ .Release.Name }}.smbonn.me"
             envFrom:
               - secretRef:
                   name: plex-secret
@@ -81,7 +81,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.smbonn.me
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: plex.png
@@ -91,7 +91,7 @@ spec:
           gethomepage.dev/widget.url: http://plex.media:32400
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_PLEX_KEY}}`}}"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.smbonn.me"
             paths:
               - path: /
                 service:
@@ -117,8 +117,8 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: "${SECRET_NFS_SERVER}"
-        path: "${SECRET_NFS_MEDIA}"
+        server: "192.168.1.4"
+        path: "/mnt/Main_Pool/Media"
         globalMounts:
           - path: /media
             readOnly: true

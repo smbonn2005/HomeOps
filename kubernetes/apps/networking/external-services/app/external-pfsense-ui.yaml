@@ -25,7 +25,7 @@ ports:
     port: 80
 endpoints:
   - addresses:
-      - "${SECRET_PFSENSE_IP}"
+      - "192.168.1.1"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -48,7 +48,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: pfsense.${SECRET_DOMAIN}
+    - host: pfsense.smbonn.me
       http:
         paths:
           - path: /

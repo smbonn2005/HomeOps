@@ -38,7 +38,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: https://s3.${SECRET_DOMAIN}
+      endpointURL: https://s3.smbonn.me
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres16-v5

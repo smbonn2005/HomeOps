@@ -65,7 +65,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mosquitto.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: mosquitto.smbonn.me
           lbipam.cilium.io/ips: 192.168.1.96
         externalTrafficPolicy: Local
         ports:

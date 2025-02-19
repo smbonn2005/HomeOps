@@ -95,7 +95,7 @@ spec:
           gethomepage.dev/widget.url: http://prowlarr.media
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_PROWLARR_KEY}}`}}"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.smbonn.me"
             paths:
               - path: /
                 pathType: Prefix

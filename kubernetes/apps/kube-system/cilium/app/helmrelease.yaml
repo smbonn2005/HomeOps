@@ -62,7 +62,7 @@ spec:
             gethomepage.dev/group: Observability
             gethomepage.dev/description: Network Monitoring Dashboard
           hosts:
-            - &host hubble.${SECRET_DOMAIN}
+            - &host hubble.smbonn.me
           tls:
             - hosts:
                 - *host

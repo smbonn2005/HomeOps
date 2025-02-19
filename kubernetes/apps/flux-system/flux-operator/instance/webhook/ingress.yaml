@@ -5,11 +5,11 @@ metadata:
   name: flux-webhook
   namespace: flux-system
   annotations:
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.smbonn.me"
 spec:
   ingressClassName: external
   rules:
-    - host: &host "flux-webhook.${SECRET_DOMAIN}"
+    - host: &host "flux-webhook.smbonn.me"
       http:
         paths:
           - path: /hook/

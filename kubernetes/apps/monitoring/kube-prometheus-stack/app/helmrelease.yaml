@@ -38,7 +38,7 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - &host-alert-manager alert-manager.${SECRET_DOMAIN}
+          - &host-alert-manager alert-manager.smbonn.me
         paths:
           - /
         pathType: Prefix
@@ -105,7 +105,7 @@ spec:
           gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitoring:9090
         pathType: Prefix
         hosts:
-          - &host prometheus.${SECRET_DOMAIN}
+          - &host prometheus.smbonn.me
         tls:
           - hosts:
               - *host

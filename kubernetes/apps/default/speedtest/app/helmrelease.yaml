@@ -78,7 +78,7 @@ spec:
           gethomepage.dev/widget.type: speedtest
           gethomepage.dev/widget.url: http://speedtest.default
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.smbonn.me"
             paths:
               - path: /
                 pathType: Prefix
