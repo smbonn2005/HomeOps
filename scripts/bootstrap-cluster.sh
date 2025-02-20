@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
+set -Eeuo pipefail
 
-set -euo pipefail
-
-# shellcheck disable=SC2155
-export ROOT_DIR="$(git rev-parse --show-toplevel)"
-# shellcheck disable=SC1091
 source "$(dirname "${0}")/lib/common.sh"
+export ROOT_DIR="$(git rev-parse --show-toplevel)"
 
 # Apply the Talos configuration to all the nodes
 function apply_talos_config() {
@@ -32,22 +29,17 @@ function apply_talos_config() {
 
         log debug "Talos nodes discovered" "nodes=${nodes}"
 
-        # Inject secrets into the talos node templates
-        if ! resources=$(minijinja-cli "${file}" | op inject 2>/dev/null) || [[ -z "${resources}" ]]; then
-            log fatal "Failed to inject secrets" "file=${file}"
-        fi
-
         # Apply the Talos configuration
         for node in ${nodes}; do
             log debug "Applying Talos node configuration" "node=${node}"
 
-            node_patch_file="${ROOT_DIR}/talos/nodes/${node}.yaml"
-
-            if [[ ! -f ${node_patch_file} ]]; then
-                log fatal "No Talos node file found" "file=${node_patch_file}"
+            if ! machine_config=$(bash "${ROOT_DIR}/scripts/render-machine-config.sh" "${file}" "${ROOT_DIR}/talos/nodes/${node}.yaml.j2" 2>/dev/null) || [[ -z "${machine_config}" ]]; then
+                log fatal "Failed to render Talos node configuration" "node=${node}"
             fi
 
-            if ! output=$(echo "${resources}" | talosctl --nodes "${node}" apply-config --config-patch "@${node_patch_file}" --insecure --file /dev/stdin 2>&1);
+            log info "Talos node configuration rendered successfully" "node=${node}"
+
+            if ! output=$(echo "${machine_config}" | talosctl --nodes "${node}" apply-config --insecure --file /dev/stdin 2>&1);
             then
                 if [[ "${output}" == *"certificate required"* ]]; then
                     log warn "Talos node is already configured, skipping apply of config" "node=${node}"
@@ -205,7 +197,9 @@ function apply_helm_releases() {
 }
 
 function main() {
-    # Verifications before bootstrapping the cluster
+    # shellcheck disable=SC2034
+    local -r LOG_LEVEL="debug"
+
     check_env KUBERNETES_VERSION ROOK_DISK TALOS_VERSION
     check_cli helmfile jq kubectl kustomize minijinja-cli op talosctl yq
 
