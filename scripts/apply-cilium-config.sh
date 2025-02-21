@@ -30,7 +30,7 @@ function apply_config() {
 }
 
 function main() {
-    wait_for_crds "ciliuml2announcementpolicies" "ciliumbgppeeringpolicies" "ciliumloadbalancerippools"
+    wait_for_crds "ciliuml2announcementpolicies" "ciliumloadbalancerippools"
     apply_config
 }
 
