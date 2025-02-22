@@ -8,6 +8,7 @@ components:
 resources:
   - ./bookstack/ks.yaml
   - ./homepage/ks.yaml
+  - ./mealie/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./pterodactyl/ks.yaml
   - ./speedtest/ks.yaml
