@@ -73,6 +73,7 @@ spec:
           gethomepage.dev/widget.type: mealie
           gethomepage.dev/widget.url: http://mealie.default
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_MEALIE_KEY}}`}}"
+          gethomepage.dev/widget.version: "2"
         hosts:
           - host: &host mealie.smbonn.me
             paths:
