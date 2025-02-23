@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mealie
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      mealie:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/smbonn2005/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: mealie-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mealie-recipes/mealie
+              tag: v2.6.0@sha256:500e42e59eb89c7837d3b17274c99f0126de607a9c545b616d13eeb7d7df0cd3
+            env:
+              TZ: "America/New_York"
+              BASE_URL: https://mealie.smbonn.me
+              DB_ENGINE: postgres
+            envFrom: *envFrom
+            resources:
+              requests:
+                memory: 250Mi
+                cpu: 50m
+              limits:
+                memory: 500Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 9000
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Mealie
+          gethomepage.dev/icon: mealie.png
+          gethomepage.dev/widget.type: mealie
+          gethomepage.dev/widget.url: http://mealie.default
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_MEALIE_KEY}}`}}"
+        hosts:
+          - host: &host mealie.smbonn.me
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts: [*host]
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data
