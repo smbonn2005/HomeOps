@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: onepassword-store
-      namespace: external-secrets
+    - name: external-secrets-stores
+      namespace: kube-system
   interval: 30m
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/app
   prune: true
