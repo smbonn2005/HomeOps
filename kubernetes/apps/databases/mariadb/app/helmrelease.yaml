@@ -24,6 +24,7 @@ spec:
       retries: 3
   values:
     auth:
+      usePasswordFiles: "false"
       existingSecret: mariadb-secret
     metrics:
       enabled: true
