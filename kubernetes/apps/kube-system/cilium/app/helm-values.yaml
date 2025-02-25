@@ -36,13 +36,14 @@ localRedirectPolicy: true
 operator:
   dashboards:
     enabled: true
+    annotations:
+      grafana_folder: Cilium
   prometheus:
     enabled: true
     serviceMonitor:
       enabled: true
   replicas: 2
   rollOutPods: true
-  tolerations: []
 prometheus:
   enabled: true
   serviceMonitor:
@@ -50,6 +51,8 @@ prometheus:
     trustCRDsExist: true
 dashboards:
   enabled: true
+  annotations:
+    grafana_folder: Cilium
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
