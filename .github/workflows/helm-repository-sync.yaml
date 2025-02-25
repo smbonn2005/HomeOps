@@ -19,11 +19,11 @@ jobs:
       all_changed_and_modified_files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Get Changed Files
         id: changed-files
-        uses: tj-actions/changed-files@v45
+        uses: tj-actions/changed-files@dcc7a0cba800f454d79fff4b993e8c3555bcc0a8 # v45
         with:
           files: kubernetes/**/helmrelease.yaml
 
@@ -34,7 +34,7 @@ jobs:
     if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Install flux
         run: curl -fsSL https://fluxcd.io/install.sh | bash
