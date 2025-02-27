@@ -2,7 +2,6 @@
 # File paths
 KUBECONFIG = '{{config_root}}/kubeconfig'
 MINIJINJA_CONFIG_FILE = '{{config_root}}/.minijinja.toml'
-SOPS_AGE_KEY_FILE = '{{config_root}}/age.key'
 TALOSCONFIG = '{{config_root}}/talosconfig'
 
 # Directory paths
@@ -24,7 +23,6 @@ _.file = [
 "aqua:cloudflare/cloudflared" = "2025.2.0"
 "aqua:FiloSottile/age" = "1.2.1"
 "aqua:fluxcd/flux2" = "2.4.0"
-"aqua:getsops/sops" = "3.9.4"
 "aqua:go-task/task" = "3.41.0"
 "aqua:helm/helm" = "3.17.1"
 "aqua:helmfile/helmfile" = "0.171.0"

@@ -34,11 +34,3 @@ metadata:
   namespace: kube-system
 stringData:
   token: op://HomeLab/1password/OP_CONNECT_TOKEN
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: sops-age
-  namespace: flux-system
-stringData:
-  age.agekey: op://HomeLab/sops/SOPS_PRIVATE_KEY
