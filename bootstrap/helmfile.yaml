@@ -2,8 +2,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/helmfile
 
 helmDefaults:
-  force: true
-  timeout: 600
   wait: true
   waitForJobs: true
 
@@ -80,4 +78,3 @@ releases:
     version: 0.17.0
     values: ['{{ requiredEnv "ROOT_DIR" }}/apps/flux-system/flux-operator/instance/helm-values.yaml']
     needs: ['flux-system/flux-operator']
-    wait: false
