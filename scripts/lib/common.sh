@@ -12,7 +12,6 @@ function log() {
         [info]=2
         [warn]=3
         [error]=4
-        [fatal]=5
     )
 
     # Get the current log level's priority
@@ -29,11 +28,10 @@ function log() {
 
     # Define log colors
     local -A colors=(
+        [debug]="\033[1m\033[38;5;63m"  # Blue
         [info]="\033[1m\033[38;5;87m"   # Cyan
         [warn]="\033[1m\033[38;5;192m"  # Yellow
         [error]="\033[1m\033[38;5;198m" # Red
-        [debug]="\033[1m\033[38;5;63m"  # Blue
-        [fatal]="\033[1m\033[38;5;92m"  # Purple
     )
 
     # Fallback to "info" if the color for the given level is not defined
@@ -53,12 +51,18 @@ function log() {
         done
     fi
 
-    # Print the log message
-    printf "%s %b%s%b %s %b\n" "$(date --iso-8601=seconds)" \
-        "${color}" "${level^^}" "\033[0m" "${msg}" "${data}"
+    # Determine output stream based on log level
+    local output_stream="/dev/stdout"
+    if [[ "$level" == "error" ]]; then
+        output_stream="/dev/stderr"
+    fi
 
-    # Exit if the log level is fatal
-    if [[ "$level" == "fatal" ]]; then
+    # Print the log message
+    printf "%s %b%s%b %s %b\n" "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+        "${color}" "${level^^}" "\033[0m" "${msg}" "${data}" > "${output_stream}"
+
+    # Exit if the log level is error
+    if [[ "$level" == "error" ]]; then
         exit 1
     fi
 }
@@ -75,7 +79,7 @@ function check_env() {
     done
 
     if [ ${#missing[@]} -ne 0 ]; then
-        log fatal "Missing required env variables" "envs=${missing[*]}"
+        log error "Missing required env variables" "envs=${missing[*]}"
     fi
 
     log debug "Env variables are set" "envs=${envs[*]}"
@@ -93,35 +97,23 @@ function check_cli() {
     done
 
     if [ ${#missing[@]} -ne 0 ]; then
-        log fatal "Missing required deps" "deps=${missing[*]}"
+        log error "Missing required deps" "deps=${missing[*]}"
     fi
 
     log debug "Deps are installed" "deps=${deps[*]}"
 }
 
-# Wait for CRDs to be available
-function wait_for_crds() {
-    local crds=("${@}")
-
-    for crd in "${crds[@]}"; do
-        until kubectl get crd "${crd}" &>/dev/null; do
-            log info "CRD is not available. Retrying in 10 seconds..." "crd=${crd}"
-            sleep 10
-        done
-    done
-}
-
 # Render a template using minijinja and inject secrets using op
 function render_template() {
-    local -r input_file="${1}"
+    local -r file="${1}"
     local output
 
-    if [[ ! -f "${input_file}" ]]; then
-        log fatal "File does not exist" "file=${input_file}"
+    if [[ ! -f "${file}" ]]; then
+        log error "File does not exist" "file=${file}"
     fi
 
-    if ! output=$(minijinja-cli "${input_file}" | op inject 2>/dev/null) || [[ -z "${output}" ]]; then
-        log fatal "Failed to render config" "file=${input_file}"
+    if ! output=$(minijinja-cli "${file}" | op inject 2>/dev/null) || [[ -z "${output}" ]]; then
+        log error "Failed to render config" "file=${file}"
     fi
 
     echo "${output}"
