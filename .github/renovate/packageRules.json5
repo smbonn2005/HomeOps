@@ -5,13 +5,13 @@
         "description": ["Loose versioning for non-semver packages"],
         "matchDatasources": ["docker"],
         "versioning": "loose",
-        "matchPackagePatterns": ["plex"]
+        "matchPackageNames": ["/plex/"]
       },
       {
         "description": ["Custom versioning for frigate"],
         "matchDatasources": ["docker"],
         "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-(?<compatibility>beta)(?<build>\\d+))?$",
-        "matchPackagePatterns": ["frigate"]
+        "matchPackageNames": ["/frigate/"]
       },
       {
         "description": ["Custom versioning for miniflux"],
@@ -23,7 +23,7 @@
         "description": ["Custom versioning for minio"],
         "matchDatasources": ["docker"],
         "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
-        "matchPackagePatterns": ["minio"]
+        "matchPackageNames": ["/minio/"]
       }
     ]
   }
