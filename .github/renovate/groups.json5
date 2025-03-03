@@ -43,7 +43,7 @@
     {
       "description": ["Volsync Group"],
       "groupName": "volsync",
-      "matchPackagePNames": ["/volsync/"],
+      "matchPackageNames": ["/volsync/"],
       "matchDatasources": ["docker", "github-releases", "helm"],
       "matchUpdateTypes": ["minor", "patch"],
       "group": {
