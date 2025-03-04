@@ -32,24 +32,29 @@ function main() {
     check_cli minijinja-cli op yq
 
     if [[ -z "${NODE_BASE}" || -z "${NODE_PATCH}" ]]; then
-        log fatal "Both NODE_BASE and NODE_PATCH are required"
+        log error "Missing arguments"
     fi
 
     if ! op user get --me &>/dev/null; then
-        log fatal "Failed to authenticate with 1Password CLI"
+        log error "Failed to authenticate with 1Password CLI"
     fi
 
-    local node_base node_patch machine_config
+    local base patch machine_config
 
-    node_base=$(render_template "${NODE_BASE}")
-    node_patch=$(render_template "${NODE_PATCH}")
+    if ! base=$(render_template "${NODE_BASE}") || [[ -z "${base}" ]]; then
+        exit 1
+    fi
+
+    if ! patch=$(render_template "${NODE_PATCH}") || [[ -z "${patch}" ]]; then
+        exit 1
+    fi
 
     TMPFILE=$(mktemp)
-    echo "${node_patch}" > "${TMPFILE}"
+    echo "${patch}" > "${TMPFILE}"
 
     # shellcheck disable=SC2016
-    if ! machine_config=$(echo "${node_base}" | yq --exit-status eval-all '. as $item ireduce ({}; . * $item )' - "${TMPFILE}" 2>/dev/null) || [[ -z "${machine_config}" ]]; then
-        log fatal "Failed to merge configs"
+    if ! machine_config=$(echo "${base}" | yq --exit-status eval-all '. as $item ireduce ({}; . * $item )' - "${TMPFILE}" 2>/dev/null) || [[ -z "${machine_config}" ]]; then
+        log error "Failed to merge configs" "base=$(basename "${NODE_BASE}")" "patch=$(basename "${NODE_PATCH}")"
     fi
 
     echo "${machine_config}"

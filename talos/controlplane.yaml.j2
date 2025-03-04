@@ -27,19 +27,16 @@ machine:
     disableManifestsDirectory: true
   network:
     interfaces:
-      - routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.1.1
+      - deviceSelector:
+          hardwareAddr: 88:ae:dd:*
         mtu: 1500
-        dhcp: false
+        dhcp: true
         vip:
           ip: 192.168.1.48
     nameservers:
       - 192.168.1.1
     disableSearchDomain: true
   install:
-    diskSelector:
-      model: Samsung SSD 870
     extraKernelArgs:    # Performance hacks
       - apparmor=0                    # Less security, faster
       - init_on_alloc=0               # Less security, faster
@@ -47,8 +44,6 @@ machine:
       - mitigations=off               # Less security, faster
       - security=none                 # Less security, faster
       - talos.auditd.disabled=1       # Less security, faster
-    # i915, intel-ucode, thunderbolt
-    image: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2:{{ ENV.TALOS_VERSION }}
     wipe: false
   files:
     # Spegel
@@ -128,6 +123,13 @@ cluster:
       - 10.43.0.0/16
   coreDNS:
     disabled: true
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
   extraManifests:
     {% for crd in [
         "alertmanagerconfigs", "alertmanagers", "podmonitors", "probes", "prometheusagents",
