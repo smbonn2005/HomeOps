@@ -42,50 +42,41 @@ spec:
           - hosts: [*host]
     toolbox:
       enabled: true
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
-      osd_class_update_on_start = false
     cephClusterSpec:
+      cephConfig:
+        global:
+          bdev_enable_discard: "true" # quote
+          bdev_async_discard: = "true" # quote (TODO: bdev_async_discard_threads with 19.2.1)
+          osd_class_update_on_start: "false" # quote
+          device_failure_prediction_mode: local # requires mgr module
+        mgr:
+          mgr/crash/warn_recent_interval: "7200" # 2h
       cephVersion:
         image: quay.io/ceph/ceph:v19.2.0@sha256:200087c35811bf28e8a8073b15fa86c07cce85c575f1ccd62d1d6ddbfdc6770a
-      network:
-        provider: host
-        connections:
-          requireMsgr2: true
-      resources:
-        mgr:
-          requests:
-            cpu: 100m
-            memory: 512Mi
-          limits:
-            memory: 2Gi
-        mon:
-          requests:
-            cpu: 50m
-            memory: 512Mi
-          limits:
-            memory: 1Gi
-        osd:
-          requests:
-            cpu: 400m
-            memory: 2Gi
-          limits:
-            memory: 6Gi
-        mgr-sidecar:
-          requests:
-            cpu: 50m
-            memory: 128Mi
-          limits:
-            memory: 256Mi
       crashCollector:
         disable: false
+      csi:
+        readAffinity:
+          enabled: true
       dashboard:
         enabled: true
         urlPrefix: /
         ssl: false
         prometheusEndpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+      mgr:
+        modules:
+          - name: diskprediction_local
+            enabled: true
+          - name: insights
+            enabled: true
+          - name: pg_autoscaler
+            enabled: true
+          - name: rook
+            enabled: true
+      network:
+        provider: host
+        connections:
+          requireMsgr2: true
       storage:
         useAllNodes: true
         useAllDevices: true
@@ -105,9 +96,10 @@ spec:
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           volumeBindingMode: Immediate
+          mountOptions: ["discard"]
           parameters:
             imageFormat: "2"
-            imageFeatures: layering
+            imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
             csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
