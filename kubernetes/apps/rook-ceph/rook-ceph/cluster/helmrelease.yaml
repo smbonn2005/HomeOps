@@ -120,7 +120,9 @@ spec:
       name: csi-ceph-blockpool
       isDefault: false
       deletionPolicy: Delete
-    # cephFileSystems:
+    # NOTE: After disabling the filesystem, the filesystem can be removed with the following commands:
+    # ceph fs fail ceph-filesystem && ceph fs rm ceph-filesystem --yes-i-really-mean-it
+    cephFileSystems: []
     #   - name: &cephFileSystemName ceph-filesystem
     #     spec:
     #       metadataPool:
@@ -171,7 +173,7 @@ spec:
     #   name: csi-ceph-filesystem
     #   isDefault: false
     #   deletionPolicy: Delete
-    # cephObjectStores:
+    cephObjectStores: []
     #   - name: ceph-objectstore
     #     spec:
     #       metadataPool:
