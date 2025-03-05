@@ -52,7 +52,7 @@ prometheus:
 dashboards:
   enabled: true
   annotations:
-    grafana_folder: Default
+    grafana_folder: default
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
