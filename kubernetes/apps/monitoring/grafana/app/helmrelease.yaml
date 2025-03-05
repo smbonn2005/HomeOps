@@ -34,6 +34,8 @@ spec:
       analytics:
         check_for_updates: false
         check_for_plugin_updates: false
+      news:
+        news_feed_enabled: false
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -86,6 +88,9 @@ spec:
           revision: 6
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        cnpg-dashboard:
+          url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/v1.21.0/docs/src/samples/monitoring/grafana-dashboard.json
+          datasource: Prometheus
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
@@ -158,6 +163,11 @@ spec:
           # renovate: depName="Prometheus"
           gnetId: 19105
           revision: 7
+          datasource: Prometheus
+        redis:
+          # renovate: depName="Redis"
+          gnetId: 11835
+          revision: 1
           datasource: Prometheus
         smartctl-exporter:
           # renovate: depName="SMARTctl Exporter Dashboard"

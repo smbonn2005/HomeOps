@@ -37,7 +37,7 @@ operator:
   dashboards:
     enabled: true
     annotations:
-      grafana_folder: Cilium
+      grafana_folder: Default
   prometheus:
     enabled: true
     serviceMonitor:
@@ -52,7 +52,7 @@ prometheus:
 dashboards:
   enabled: true
   annotations:
-    grafana_folder: Cilium
+    grafana_folder: Default
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
