@@ -3,7 +3,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: smartctl-exporter
+  name: redis-exporter
   namespace: monitoring
 spec:
   interval: 1h
@@ -12,4 +12,4 @@ spec:
     operation: copy
   ref:
     tag: 0.13.0
-  url: oci://ghcr.io/prometheus-community/charts/prometheus-smartctl-exporter
+  url: oci://ghcr.io/prometheus-community/charts/prometheus-redis-exporter
