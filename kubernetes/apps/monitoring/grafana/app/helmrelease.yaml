@@ -90,7 +90,8 @@ spec:
             - { name: DS_PROMETHEUS, value: Prometheus }
         cnpg-dashboard:
           url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/v1.21.0/docs/src/samples/monitoring/grafana-dashboard.json
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
@@ -168,7 +169,8 @@ spec:
           # renovate: depName="Redis"
           gnetId: 11835
           revision: 1
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         smartctl-exporter:
           # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
