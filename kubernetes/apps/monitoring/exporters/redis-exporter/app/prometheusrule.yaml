@@ -12,7 +12,8 @@ spec:
           annotations:
             description: Redis Exporter has disappeared from Prometheus target discovery.
             summary: Redis Exporter is down.
-          expr: absent(up{service="{{ template "prometheus-redis-exporter.fullname" . }}"} == 1)
+          expr: |
+            absent(up{job=~".*nut-exporter.*"} == 1)
           for: 5m
           labels:
             severity: critical
