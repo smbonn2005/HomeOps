@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app redis-exporter
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: redis-exporter
+    namespace: monitoring
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: monitoring
+  values:
+    fullnameOverride: *app
+    redisAddress: redis://redis.databases.svc.cluster.local:6379
+    serviceMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: false

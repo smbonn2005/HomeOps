@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: redis-exporter
+spec:
+  groups:
+    - name: redis-exporter.rules
+      rules:
+        - alert: RedisExporterAbsent
+          annotations:
+            description: Redis Exporter has disappeared from Prometheus target discovery.
+            summary: Redis Exporter is down.
+          expr: absent(up{service="{{ template "prometheus-redis-exporter.fullname" . }}"} == 1)
+          for: 5m
+          labels:
+            severity: critical
