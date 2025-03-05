@@ -13,7 +13,41 @@ spec:
             description: Redis Exporter has disappeared from Prometheus target discovery.
             summary: Redis Exporter is down.
           expr: |
-            absent(up{job=~".*nut-exporter.*"} == 1)
+            absent(up{job=~".*redis-exporter.*"} == 1)
           for: 5m
           labels:
             severity: critical
+        #
+        # Ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-redis-exporter/values.yaml
+        #
+        # - alert: RedisDown
+        #   expr: redis_up{service="{{ template "prometheus-redis-exporter.fullname" . }}"} == 0
+        #   for: 2m
+        #   labels:
+        #     severity: error
+        #   annotations:
+        #     summary: Redis instance {{ "{{ $labels.instance }}" }} down
+        #     description: Redis instance {{ "{{ $labels.instance }}" }} is down.
+        # - alert: RedisMemoryHigh
+        #   expr: >
+        #     redis_memory_used_bytes{service="{{ template "prometheus-redis-exporter.fullname" . }}"} * 100
+        #     /
+        #     redis_memory_max_bytes{service="{{ template "prometheus-redis-exporter.fullname" . }}"}
+        #     > 90 <= 100
+        #   for: 2m
+        #   labels:
+        #     severity: error
+        #   annotations:
+        #     summary: Redis instance {{ "{{ $labels.instance }}" }} is using too much memory
+        #     description: |
+        #       Redis instance {{ "{{ $labels.instance }}" }} is using {{ "{{ $value }}" }}% of its available memory.
+        # - alert: RedisKeyEviction
+        #   expr: |
+        #     increase(redis_evicted_keys_total{service="{{ template "prometheus-redis-exporter.fullname" . }}"}[5m]) > 0
+        #   for: 1s
+        #   labels:
+        #     severity: error
+        #   annotations:
+        #     summary: Redis instance {{ "{{ $labels.instance }}" }} has evicted keys
+        #     description: |
+        #       Redis instance {{ "{{ $labels.instance }}" }} has evicted {{ "{{ $value }}" }} keys in the last 5 minutes.
