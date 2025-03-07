@@ -27,6 +27,8 @@ spec:
     - name: snapshot-controller
       namespace: storage
   values:
+    image:
+      repository: ghcr.io/rook/ceph
     csi:
       cephFSKernelMountOptions: ms_mode=prefer-crc
       # NOTE: Enable the driver and shapshotter if you want to use CephFS
