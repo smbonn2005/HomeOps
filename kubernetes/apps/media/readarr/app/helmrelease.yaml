@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/readarr-develop
-              tag: 0.4.11.2747@sha256:02d2fc90cbad2eff0caffe7aacfbe67aedd3984affc6c48e740c7c1a2d3140ff
+              tag: 0.4.12.2753@sha256:28038296c4872d234b7a6912f4be4e68a691a634cec899053c3a771fa6ed22c7
             env:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
