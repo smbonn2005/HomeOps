@@ -4,12 +4,30 @@
     {
       "description": ["Actions Runner Controller Group"],
       "groupName": "Actions Runner Controller",
-      "matchPackageNames": ["/gha-runner-scale-set/"],
+      "matchPackageNames": ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
       "matchDatasources": ["docker", "helm"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": true
+    },
+    {
+      "description": ["CoreDNS Group"],
+      "groupName": "CoreDNS",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/coredns/"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
+    },
+    {
+      "description": ["External Secrets Operator Group"],
+      "groupName": "External Secrets Operator",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/external-secrets/"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
     {
       "description": ["Flux Operator Group"],
@@ -33,12 +51,21 @@
     {
       "description": ["Rook-Ceph Group"],
       "groupName": "Rook-Ceph",
-      "matchPackageNames": ["/rook.ceph/"],
+      "matchPackageNames": ["/rook-ceph/", "/rook-ceph-cluster/"],
       "matchDatasources": ["helm"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": true
+    },
+    {
+      "description": ["Spegel Group"],
+      "groupName": "Spegel",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/spegel/"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     },
     {
       "description": ["Volsync Group"],
