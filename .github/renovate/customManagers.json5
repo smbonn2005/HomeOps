@@ -6,6 +6,7 @@
       "description": ["Process YAML custom dependencies"],
       "fileMatch": [
         "(^|/).+\\.env$",
+        "(^|/).+\\.sh$",
         "(^|/).+\\.j2$",
         "(^|/).+\\.ya?ml$"
       ],
