@@ -38,7 +38,7 @@ spec:
   postBuild:
     substituteFrom:
       - kind: ConfigMap
-        name: system-upgrade-plan-versions
+        name: versions
   prune: true
   sourceRef:
     kind: GitRepository
