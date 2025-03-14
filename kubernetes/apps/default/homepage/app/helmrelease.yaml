@@ -32,6 +32,7 @@ spec:
               tag: v1.0.0@sha256:c33ccb1f850c178bf424cd19dca87f0dc796be3e40927ea1c7416809cd6c71c6
             env:
               TZ: America/New_York
+              HOMEPAGE_ALLOWED_HOSTS: home.smbonn.me
             envFrom:
               - secretRef:
                   name: homepage-secret
