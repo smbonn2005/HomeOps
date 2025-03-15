@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   # - ./cephobjectstoreuser.yaml
   - ./helmrelease.yaml
+  - ./helmrepository.yaml
