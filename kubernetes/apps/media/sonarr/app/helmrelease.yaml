@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/sonarr-develop
-              tag: 4.0.13.2934@sha256:69a8b831f4b79113955a73d4c2ef480c7637a329ec853750775eb21157ad30c6
+              tag: 4.0.14.2938@sha256:4310dda24ff45f63139049f80cb85a2024ec1a9ecff6006fffa17ddfbba57eb5
             env:
               TZ: America/New_York
               SONARR__APP__INSTANCENAME: Sonarr
