@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/radarr-develop
-              tag: 5.20.0.9752@sha256:6d38e7436d8a3976e9f90fb08effabbef410fe4188517d9138a7a64a40bff7db
+              tag: 5.20.1.9773@sha256:849deadf958b5978bc2c56bfc6a3f8c9a1300f0ff3a2db7a10da995c9d934942
             env:
               TZ: America/New_York
               RADARR__APP__INSTANCENAME: Radarr
