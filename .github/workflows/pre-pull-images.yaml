@@ -45,7 +45,7 @@ jobs:
           ref: "${{ matrix.branches == 'default' && github.event.repository.default_branch || '' }}"
 
       - name: Gather Images
-        uses: docker://ghcr.io/allenporter/flux-local:main@sha256:6be99df0f58bbe8af71e66efe76a1e3a0228abda39c7e200fb997434d4cf6cc7
+        uses: docker://ghcr.io/allenporter/flux-local:main@sha256:80829620d6518910ad25e4618d3503be45976be45706da065e0b5eddcae29519
         with:
           args: >-
             get cluster
