@@ -79,9 +79,9 @@ spec:
       resources:
         crashcollector:
           limits:
-            memory: "60m"
+            memory: "60Mi"
           requests:
-            memory: "60m"
+            memory: "60Mi"
         osd:
           limits:
             memory: "3Gi"
