@@ -3,12 +3,12 @@
   "extends": [
     ":skipStatusChecks",
     "github>smbonn2005/renovate-config",
-    "github>smbonn2005/HomeOps//.github/renovate/allowedVersions.json5",
-    "github>smbonn2005/HomeOps//.github/renovate/commitMessage.json5",
-    "github>smbonn2005/HomeOps//.github/renovate/customManagers.json5",
-    "github>smbonn2005/HomeOps//.github/renovate/grafanaDashboards.json5",
-    "github>smbonn2005/HomeOps//.github/renovate/groups.json5",
-    "github>smbonn2005/HomeOps//.github/renovate/packageRules.json5"
+    "github>smbonn2005/HomeOps//.renovate/allowedVersions.json5",
+    "github>smbonn2005/HomeOps//.renovate/commitMessage.json5",
+    "github>smbonn2005/HomeOps//.renovate/customManagers.json5",
+    "github>smbonn2005/HomeOps//.renovate/grafanaDashboards.json5",
+    "github>smbonn2005/HomeOps//.renovate/groups.json5",
+    "github>smbonn2005/HomeOps//.renovate/packageRules.json5"
   ],
   "ignorePaths": ["**/resources/**"],
   "flux": {
