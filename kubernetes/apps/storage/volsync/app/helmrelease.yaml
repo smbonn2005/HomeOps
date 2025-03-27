@@ -24,7 +24,7 @@ spec:
     manageCRDs: true
     image: &image
       repository: ghcr.io/smbonn2005/volsync
-      tag: 0.12.0@sha256:72acb709d22fa46edc4d333a7b5c72c8d8a8dc03d1a4e1b081a604b1cdad156b
+      tag: 0.12.1@sha256:bef297a4bca9e8818f1becc4f974d0f8d12195c0c564d2d13dc602fa92e36247
     restic:
       <<: *image
     metrics:
