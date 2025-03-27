@@ -5,7 +5,7 @@
       "description": ["Actions Runner Controller Group"],
       "groupName": "Actions Runner Controller",
       "matchPackageNames": ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
-      "matchDatasources": ["docker", "helm"],
+      "matchDatasources": ["docker"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
@@ -50,8 +50,8 @@
     {
       "description": ["Flux Operator Group"],
       "groupName": "Flux Operator",
-      "matchPackageNames": ["/flux-operator/", "/flux-instance/"],
       "matchDatasources": ["docker"],
+      "matchPackageNames": ["/flux-operator/", "/flux-instance/"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       }
@@ -59,22 +59,20 @@
     {
       "description": ["Intel Device Plugins Group"],
       "groupName": "Intel-Device-Plugins",
-      "matchPackageNames": ["/intel-device-plugins/"],
-      "matchDatasources": ["helm"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/intel-device-plugins-operator/", "/intel-device-plugins-gpu/"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
-      },
-      "separateMinorPatch": true
+      }
     },
     {
       "description": ["Rook-Ceph Group"],
       "groupName": "Rook-Ceph",
+      "matchDatasources": ["docker"],
       "matchPackageNames": ["/rook-ceph/", "/rook-ceph-cluster/"],
-      "matchDatasources": ["helm"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
-      },
-      "separateMinorPatch": true
+      }
     },
     {
       "description": ["Spegel Group"],
