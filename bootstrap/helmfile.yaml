@@ -84,7 +84,7 @@ releases:
     namespace: kube-system
     atomic: true
     chart: external-secrets/external-secrets
-    version: 0.15.0
+    version: 0.15.1
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/kube-system/external-secrets/app/helm-values.yaml']
     needs: ['cert-manager/cert-manager']
 
