@@ -11,6 +11,4 @@ spec:
     operation: copy
   ref:
     tag: v1.16.6
-  url: oci://ghcr.io/home-operations/charts-mirror/rook-ceph
-  verify:
-    provider: cosign
+  url: oci://ghcr.io/rook/rook-ceph
