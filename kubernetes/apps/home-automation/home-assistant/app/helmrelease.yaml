@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/home-assistant
-              tag: 2025.3.4@sha256:365cf15aaad61a1108382658c98ea8e5793e8f9196e6418a6b5c3ca4909f74f6
+              tag: 2025.4.1@sha256:95325ce4d15aaf90e8097db7910a6a50d8804226cda5e624853cfe7ff0f41884
             env:
               TZ: America/New_York
               HASS_HTTP_TRUSTED_PROXY_1: 192.168.1.0/24
