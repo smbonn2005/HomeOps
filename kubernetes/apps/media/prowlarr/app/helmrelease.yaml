@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/prowlarr-develop
-              tag: 1.33.1.4997@sha256:ff7eb844d00e323f262c8c127cc1cc94cf6db26ea3ef541c20e9bc6ac68a0e8f
+              tag: 1.33.2.5002@sha256:dda8872d70e15bf32cec73c8227aa47bc4302d92e1d8738c0dba4e00370470f7
             env:
               TZ: America/New_York
               PROWLARR__APP__INSTANCENAME: Prowlarr
