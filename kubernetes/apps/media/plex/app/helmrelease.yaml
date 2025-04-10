@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/smbonn2005/plex
-              tag: 1.41.5.9522-a96edc606@sha256:aeef921d1723e3bf367cba199e7df311f7d58bc84dcee758e92920df3c663564
+              tag: 1.41.6.9685-d301f511a@sha256:8038c3f89e1a49dc41c51f8fd178ccb535c25ce57ca74e2d8deaae25f2aff718
             env:
               TZ: America/New_York
               ADVERTISE_IP: "https://{{ .Release.Name }}.smbonn.me"
