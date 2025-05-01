@@ -40,6 +40,7 @@ machine:
     disableSearchDomain: true
   install:
     extraKernelArgs:    # Performance hacks
+      - -selinux                      # Less security, faster
       - apparmor=0                    # Less security, faster
       - init_on_alloc=0               # Less security, faster
       - init_on_free=0                # Less security, faster
