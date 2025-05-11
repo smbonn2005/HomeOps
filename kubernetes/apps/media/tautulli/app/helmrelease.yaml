@@ -28,8 +28,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/smbonn2005/tautulli
-              tag: 2.15.2@sha256:0e64f67c6513b78a0ec471890e7154f812bf4eb1abce2794090a4ab5d9e6d91b
+              repository: ghcr.io/home-operations/tautulli
+              tag: 2.15.2@sha256:cb8e3a4c2873edf7baa433e126f022f19eb43f256b65b2de3e8525dc2e4dc18e
             env:
               TZ: America/New_York
             command: ["/usr/local/bin/python", "Tautulli.py"]

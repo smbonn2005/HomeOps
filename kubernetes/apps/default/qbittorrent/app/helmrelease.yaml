@@ -30,8 +30,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/smbonn2005/qbittorrent
-              tag: 5.1.0@sha256:7ec33d426692bed3e3d9bdd051c6e6aec37e97f84eb5e2664e070bec0a6ffdf6
+              repository: ghcr.io/home-operations/qbittorrent
+              tag: 5.1.0@sha256:fe26058628e9eb57b542204b76443b7304ed8820151d51b5c285e1828ca175a0
             env:
               TZ: America/New_York
               QBT_WEBUI_PORT: &port 80
