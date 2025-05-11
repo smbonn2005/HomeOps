@@ -22,8 +22,6 @@ spec:
   values:
     fullnameOverride: *name
     replicaCount: 1
-  # TODO: Remove on 0.11.0
-  # Ref: https://github.com/actions/actions-runner-controller/pull/3729
   postRenderers:
     - kustomize:
         patches:

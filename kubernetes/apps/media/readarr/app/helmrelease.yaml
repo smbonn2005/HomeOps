@@ -32,17 +32,17 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/smbonn2005/readarr-develop
-              tag: 0.4.15.2787@sha256:42f0072341d0b093e0513c7e26eb8bbaae0bc8a8fd507d935b15fea03b9ba9cb
+              repository: ghcr.io/home-operations/readarr
+              tag: 0.4.15.2787@sha256:0ec0299f60127cd5e73f6e0218d717dfc34c62f461309ee5b37cd075df2dbcd7
             env:
-              RADARR__APP__INSTANCENAME: Radarr
-              RADARR__APP__THEME: dark
-              RADARR__AUTH__METHOD: External
-              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              RADARR__LOG__DBENABLED: "False"
-              RADARR__LOG__LEVEL: info
-              RADARR__SERVER__PORT: &port 80
-              RADARR__UPDATE__BRANCH: develop
+              READARR__APP__INSTANCENAME: Readarr
+              READARR__APP__THEME: dark
+              READARR__AUTH__METHOD: External
+              READARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              READARR__LOG__DBENABLED: "False"
+              READARR__LOG__LEVEL: info
+              READARR__SERVER__PORT: &port 80
+              READARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: readarr-secret
