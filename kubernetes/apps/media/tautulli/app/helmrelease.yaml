@@ -32,6 +32,7 @@ spec:
               tag: 2.15.2@sha256:cb8e3a4c2873edf7baa433e126f022f19eb43f256b65b2de3e8525dc2e4dc18e
             env:
               TZ: America/New_York
+              TAUTULLI__PORT: &port 80
             probes:
               liveness: &probes
                 enabled: true
@@ -39,7 +40,7 @@ spec:
                 spec:
                   httpGet:
                     path: /status
-                    port: &port 80
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
