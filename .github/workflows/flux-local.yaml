@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Run flux-local test
-        uses: docker://ghcr.io/allenporter/flux-local:v7.5.2@sha256:cdb652d9557d1f65c3fa72e5d1ea785508ffbc11223d64ae8f01cd06074fbce7
+        uses: docker://ghcr.io/allenporter/flux-local:v7.5.4@sha256:72dbdeabca1eb4d1a053c78dfa0d1d8e2a4c4aee2c8d3938db1a382d22b0a6f9
         with:
           args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/flux/cluster -v
 
@@ -65,7 +65,7 @@ jobs:
           path: default
 
       - name: Run flux-local diff
-        uses: docker://ghcr.io/allenporter/flux-local:v7.5.2@sha256:cdb652d9557d1f65c3fa72e5d1ea785508ffbc11223d64ae8f01cd06074fbce7
+        uses: docker://ghcr.io/allenporter/flux-local:v7.5.4@sha256:72dbdeabca1eb4d1a053c78dfa0d1d8e2a4c4aee2c8d3938db1a382d22b0a6f9
         with:
           args: >-
             diff ${{ matrix.resources }}
