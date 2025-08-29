@@ -22,7 +22,7 @@ spec:
     image:
       registry: ghcr.io
       repository: k8s-gateway/k8s_gateway
-      tag: 1.5.2@sha256:b989a0112c1da63ed57fb538ec7a3b788cb71589f1d94ce9b831e5ccc7babd4f
+      tag: 1.6.0@sha256:12eaf84047a6aeee831e51a7c553f7fb74cc04408db426376b1eadfb3087b365
       pullPolicy: IfNotPresent
     fullnameOverride: k8s-gateway
     domain: "smbonn.me"
