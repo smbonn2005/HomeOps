@@ -76,27 +76,6 @@ spec:
         deviceFilter: nvme0n1
         config:
           osdsPerDevice: "1"
-      resources:
-        crashcollector:
-          limits:
-            memory: "60Mi"
-          requests:
-            memory: "60Mi"
-        osd:
-          limits:
-            memory: "3Gi"
-          requests:
-            memory: "2Gi"
-        mds:
-          limits:
-            memory: "2Gi"
-          requests:
-            memory: "2Gi"
-        mgr:
-          limits:
-            memory: "2Gi"
-          requests:
-            memory: "2Gi"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
