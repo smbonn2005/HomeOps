@@ -108,6 +108,7 @@ spec:
         replicas: 3
         replicaExternalLabelName: __replica__
         scrapeInterval: 30s
+        externalUrl: "https://prometheus.smbonn.me"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
