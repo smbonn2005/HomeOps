@@ -23,11 +23,11 @@ spec:
       existingSecret: mariadb-secret
     metrics:
       enabled: true
-      resourcesPreset: small
+      resourcesPreset: nano
       serviceMonitor:
         enabled: true
     primary:
-      resourcesPreset: small
+      resourcesPreset: nano
       persistence:
         enabled: true
         existingClaim: *app
