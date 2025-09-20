@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/tuppr.home-operations.com/talosupgrade_v1alpha1.json
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: TalosUpgrade
+metadata:
+  name: controllers
+spec:
+  target:
+    image:
+      repository: factory.talos.dev/metal-installer
+      tag: ${TALOS_VERSION}
+    options:
+      rebootMode: powercycle
+    nodeSelectorExprs:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+  healthCheckExprs:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      wait: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
