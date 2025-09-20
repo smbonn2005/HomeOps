@@ -11,6 +11,6 @@ spec:
     operation: copy
   ref:
     tag: 4.13.0
-  url: oci://ghcr.io/home-operations/charts-mirror/ingress-nginx
+  url: oci://registry.k8s.io/ingress-nginx/charts/ingress-nginx
   verify:
     provider: cosign
