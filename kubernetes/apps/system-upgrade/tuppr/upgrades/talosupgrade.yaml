@@ -11,7 +11,7 @@ spec:
       tag: ${TALOS_VERSION}
     options:
       rebootMode: powercycle
-    nodeSelectorExprs:
+    nodeSelectorTerms:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
   healthCheckExprs:
