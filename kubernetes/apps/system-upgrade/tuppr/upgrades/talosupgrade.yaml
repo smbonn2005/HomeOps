@@ -3,18 +3,13 @@
 apiVersion: tuppr.home-operations.com/v1alpha1
 kind: TalosUpgrade
 metadata:
-  name: controllers
+  name: cluster
 spec:
-  image:
-    repository: factory.talos.dev/metal-installer
-    tag: ${TALOS_VERSION}
-  upgradePolicy:
+  talos:
+    version: ${TALOS_VERSION}
+  policy:
     debug: true
     rebootMode: powercycle
-  nodeLabelSelector:
-    matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: Exists
   healthChecks:
     - # Nodes are ready
       apiVersion: v1
