@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./helmrepository.yaml
-  # - ./mutatingadmissionpolicy.yaml
+  - ./mutatingadmissionpolicy.yaml
   - ./prometheusrule.yaml
