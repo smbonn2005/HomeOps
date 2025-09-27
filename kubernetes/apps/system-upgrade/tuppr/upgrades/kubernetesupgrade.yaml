@@ -9,10 +9,6 @@ spec:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     version: v1.33.4
   healthChecks:
-    - # Nodes are ready
-      apiVersion: v1
-      kind: Node
-      expr: status.conditions.filter(c, c.type == "Ready").all(c, c.status == "True")
     - # No active VolSync replications
       apiVersion: volsync.backube/v1alpha1
       kind: ReplicationSource
