@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
+    - ../../../../components/defaults
   path: ./kubernetes/apps/home-automation/wyoming-whisper/app
   prune: true
   sourceRef:

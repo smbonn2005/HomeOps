@@ -9,16 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: intel-device-plugin-operator
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      strategy: rollback
-      retries: 3
   dependsOn:
     - name: node-feature-discovery
       namespace: kube-system

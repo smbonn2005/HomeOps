@@ -12,6 +12,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
+    - ../../../../components/defaults
   path: ./kubernetes/apps/media/tautulli/app
   prune: true
   sourceRef:

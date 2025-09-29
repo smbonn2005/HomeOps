@@ -12,6 +12,7 @@ spec:
   components:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
+    - ../../../../components/defaults
   path: ./kubernetes/apps/default/pterodactyl/app
   prune: true
   sourceRef:

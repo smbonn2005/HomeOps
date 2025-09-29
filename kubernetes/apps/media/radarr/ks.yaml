@@ -12,6 +12,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
+    - ../../../../components/defaults
   dependsOn:
     - name: external-secrets-stores
       namespace: kube-system

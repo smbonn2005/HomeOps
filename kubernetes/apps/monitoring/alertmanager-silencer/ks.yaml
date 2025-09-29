@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/defaults
   path: ./kubernetes/apps/monitoring/alertmanager-silencer/app
   prune: true
   sourceRef:
