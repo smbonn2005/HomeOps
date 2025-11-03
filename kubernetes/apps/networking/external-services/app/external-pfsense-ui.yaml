@@ -45,6 +45,7 @@ metadata:
     gethomepage.dev/widget.username: '{{HOMEPAGE_VAR_PFSENSE_USERNAME}}'
     gethomepage.dev/widget.password: '{{HOMEPAGE_VAR_PFSENSE_PASSWORD}}'
     gethomepage.dev/widget.wan: igb0
+    gethomepage.dev/widget.version: 2
 spec:
   ingressClassName: internal
   rules:
