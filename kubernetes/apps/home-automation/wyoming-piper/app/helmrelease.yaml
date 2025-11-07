@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: rhasspy/wyoming-piper
-              tag: 1.6.3
+              tag: 2.1.2
             args:
               - --voice
               - en-us-lessac-low
