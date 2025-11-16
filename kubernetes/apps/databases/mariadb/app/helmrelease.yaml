@@ -10,8 +10,6 @@ spec:
     kind: OCIRepository
     name: mariadb
   values:
-    image:
-        repository: bitnamilegacy/mariadb
     auth:
       usePasswordFiles: false
       existingSecret: mariadb-secret
