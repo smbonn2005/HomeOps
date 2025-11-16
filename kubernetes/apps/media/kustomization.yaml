@@ -12,5 +12,4 @@ resources:
   - ./tautulli/ks.yaml
   - ./prowlarr/ks.yaml
   - ./doplarr/ks.yaml
-  - ./readarr/ks.yaml
   - ./unpackerr/ks.yaml
