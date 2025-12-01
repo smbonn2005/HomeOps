@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: lscr.io/linuxserver/speedtest-tracker
-              tag: 1.9.0@sha256:cfdb348daea9fa2e191a8589914d7f4fb86f4051c1a9b376113d45a3c979c5b2
+              tag: 1.10.3@sha256:7a0af49937e7a6003e98582acaa6c647136e2776121e34749dd1f23d74a535e7
             env:
               DISPLAY_TIMEZONE: America/New_York
               DB_CONNECTION: pgsql
