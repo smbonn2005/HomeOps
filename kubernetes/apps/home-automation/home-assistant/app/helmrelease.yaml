@@ -52,7 +52,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.106.3
+              tag: 4.107.0
             env:
               TZ: "America/New_York"
               HASS_SERVER: http://localhost:8123
