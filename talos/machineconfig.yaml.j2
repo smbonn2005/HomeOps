@@ -81,7 +81,7 @@ machine:
         dhcp: true
         mtu: 1500
 #        vip:
-#          ip: 192.168.1.48
+#          ip: 192.168.1.48                   ## Not Specified anymore (Gateway API???)
 #    disableSearchDomain: true
 
   nodeLabels:
@@ -111,25 +111,7 @@ machine:
     vm.nr_hugepages: "1024"                   # PostgreSQL
   token: op://HomeLab/talos/MACHINE_TOKEN
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Is this still needed?????
   certSANs:
     - 127.0.0.1
     - 192.168.1.48
