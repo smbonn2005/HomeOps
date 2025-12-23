@@ -10,7 +10,7 @@ spec:
     kind: OCIRepository
     name: app-template
   dependsOn:
-    - name: nginx-external
+    - name: envoy-external
       namespace: networking
   values:
     controllers:
