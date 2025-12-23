@@ -21,17 +21,14 @@ spec:
         forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts:
-          - &host-alert-manager alert-manager.smbonn.me
-        paths:
-          - /
-        pathType: Prefix
-        tls:
-          - hosts:
-              - *host-alert-manager
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - alert-manager.smbonn.me
+          parentRefs:
+            - name: envoy-internal
+              namespace: networking
       alertmanagerSpec:
         useExistingSecret: true
         configSecret: alertmanager-secret
@@ -79,23 +76,22 @@ spec:
       enabled: true
       endpoints: *cp
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/app: kube-prometheus-stack-prometheus-operator
-          gethomepage.dev/icon: prometheus.png
-          gethomepage.dev/name: Prometheus
-          gethomepage.dev/group: Observability
-          gethomepage.dev/widget.type: prometheus
-          gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitoring:9090
-        pathType: Prefix
-        hosts:
-          - &host prometheus.smbonn.me
-        tls:
-          - hosts:
-              - *host
+      route:
+        main:
+          enabled: true
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/app: kube-prometheus-stack-prometheus-operator
+            gethomepage.dev/icon: prometheus.png
+            gethomepage.dev/name: Prometheus
+            gethomepage.dev/group: Observability
+            gethomepage.dev/widget.type: prometheus
+            gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitoring:9090
+          hostnames:
+            - prometheus.smbonn.me
+          parentRefs:
+            - name: envoy-internal
+              namespace: networking
       prometheusSpec:
         resources:
           requests:

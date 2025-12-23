@@ -73,9 +73,8 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: radarr.png
@@ -84,16 +83,11 @@ spec:
           gethomepage.dev/widget.type: radarr
           gethomepage.dev/widget.url: http://radarr.media
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_RADARR_KEY}}`}}"
-        hosts:
-          - host: &host "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          -  "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
     persistence:
       config:
         enabled: true

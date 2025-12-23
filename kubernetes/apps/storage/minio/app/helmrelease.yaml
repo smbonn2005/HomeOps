@@ -64,7 +64,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 9001
+            port: &port 9001
           s3:
             port: *api-port
     serviceMonitor:
@@ -76,26 +76,29 @@ spec:
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: &host "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: &s3host s3.smbonn.me
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: s3
-        tls:
-          - hosts:
-              - *host
-              - *s3host
+        hostnames:
+          - "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - name: app
+                namespace: storage
+                port: *port
+      s3:
+        hostnames:
+          - s3.smbonn.me
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - name: app
+                namespace: storage
+                port: *api-port
     persistence:
       data:
         enabled: true
