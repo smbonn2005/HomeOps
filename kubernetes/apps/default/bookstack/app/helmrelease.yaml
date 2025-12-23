@@ -49,26 +49,20 @@ spec:
         controller: *app
         ports:
           http:
-            port: 80
-    ingress:
+            port: &port 80
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/bookstack.png
           gethomepage.dev/name: Bookstack
           gethomepage.dev/group: Observability
           gethomepage.dev/description: Documentation and Wiki
-        hosts:
-          - host: &host "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
     persistence:
       config:
         existingClaim: *app

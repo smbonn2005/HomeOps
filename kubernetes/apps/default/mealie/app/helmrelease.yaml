@@ -48,10 +48,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: 9000
-    ingress:
+            port: &port 9000
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
@@ -61,15 +60,11 @@ spec:
           gethomepage.dev/widget.url: http://mealie.default:9000
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_MEALIE_KEY}}`}}"
           gethomepage.dev/widget.version: "2"
-        hosts:
-          - host: &host mealie.smbonn.me
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - mealie.smbonn.me
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
     persistence:
       data:
         existingClaim: *app

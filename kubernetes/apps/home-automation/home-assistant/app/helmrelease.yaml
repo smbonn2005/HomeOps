@@ -49,30 +49,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
-          codeserver:
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.106.3
-            env:
-              TZ: "America/New_York"
-              HASS_SERVER: http://localhost:8123
-              HASS_TOKEN:
-                valueFrom:
-                  secretKeyRef:
-                    name: home-assistant-secret
-                    key: HASS_VSCODE_TOKEN
-            args:
-              - --auth
-              - none
-              - --disable-telemetry
-              - --disable-update-check
-              - --user-data-dir
-              - /config/.vscode
-              - --extensions-dir
-              - /config/.vscode
-              - --port
-              - "8080"
-              - /config
         pod:
           securityContext:
             runAsUser: 568
@@ -83,27 +59,17 @@ spec:
     service:
       app:
         controller: *app
-        nameOverride: *app
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: hass.smbonn.me
           lbipam.cilium.io/ips: 192.168.1.95
         ports:
           http:
+            appProtocol: kubernetes.io/ws
             port: 8123
-      codeserver:
-        controller: *app
-        type: ClusterIP
-        ports:
-          http:
-            enabled: true
-            port: 8080
-    ingress:
+    route:
       app:
-        enabled: true
-        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.smbonn.me
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/name: Home-Assistant
@@ -112,27 +78,11 @@ spec:
           gethomepage.dev/widget.type: homeassistant
           gethomepage.dev/widget.url: http://home-assistant.home-automation:8123
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_HASS_TOKEN}}`}}"
-        hosts:
-          - host: &host hass.smbonn.me
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
-      codeserver:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host-code hass-code.smbonn.me
-            paths:
-              - path: /
-                service:
-                  identifier: codeserver
-                  port: http
-        tls:
-          - hosts: [*host-code]
+        hostnames:
+          -  hass.smbonn.me
+        parentRefs:
+          - name: envoy-external
+            namespace: networking
     persistence:
       config:
         enabled: true

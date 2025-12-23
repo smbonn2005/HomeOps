@@ -203,9 +203,7 @@ spec:
       autoMount: true
     serviceMonitor:
       enabled: true
-    ingress:
-      enabled: true
-      ingressClassName: internal
+    route:
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/icon: grafana.png
@@ -215,10 +213,11 @@ spec:
         gethomepage.dev/widget.url: http://grafana.monitoring
         gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_GRAFANA_USERNAME}}`}}'
         gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}`}}'
-      hosts:
-        - &host "grafana.smbonn.me"
-      tls:
-        - hosts: [*host]
+      hostnames:
+        - grafana.smbonn.me
+      parentRefs:
+        - name: envoy-internal
+          namespace: networking
     persistence:
       enabled: false
     testFramework:
