@@ -76,18 +76,22 @@ spec:
           - name: envoy-external
             namespace: networking
         rules:
-          - filters:
-              - type: ResponseHeaderModifier
-                responseHeaderModifier:
-                  add:
-                    - name: Access-control-Allow-Origin
-                      value: "*"
-                    - name: Access-Control-Allow-Methods
-                      value: "GET, PUT, POST, DELETE, OPTIONS"
-                    - name: Access-Control-Allow-Headers
-                      value: "*"
-                    - name: Access-Control-Max-Age
-                      value: "100"
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            cors:
+              allowOrigin:
+                - "*"
+              allowMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - OPTIONS
+              allowHeaders:
+                - "*"
+              maxAge: "100"
     persistence:
       data:
         enabled: true
