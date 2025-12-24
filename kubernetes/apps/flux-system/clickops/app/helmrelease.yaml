@@ -58,8 +58,7 @@ spec:
         supplementalGroups: [10000]
         seccompProfile: { type: RuntimeDefault }
     serviceAccount:
-      create: true
-      name: *app
+      clickops: {}
     service:
       app:
         controller: *app

@@ -119,8 +119,7 @@ spec:
           - name: envoy-external
             namespace: networking
     serviceAccount:
-      create: true
-      name: gatus
+      gatus: {}
     persistence:
       config:
         type: emptyDir
