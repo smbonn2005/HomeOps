@@ -85,7 +85,7 @@ spec:
             namespace: networking
         rules:
           - backendRefs:
-              - name: app
+              - name: minio
                 namespace: storage
                 port: *port
       s3:
@@ -96,7 +96,7 @@ spec:
             namespace: networking
         rules:
           - backendRefs:
-              - name: app
+              - name: minio
                 namespace: storage
                 port: *api-port
     persistence:
