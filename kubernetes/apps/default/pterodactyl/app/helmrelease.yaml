@@ -60,11 +60,6 @@ spec:
     route:
       app:
         annotations:
-          # nginx.ingress.kubernetes.io/enable-cors: "true"
-          # nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
-          # nginx.ingress.kubernetes.io/cors-allow-headers: "*"
-          # nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-          # nginx.ingress.kubernetes.io/cors-max-age: "100"
           # nginx.ingress.kubernetes.io/configuration-snippet: |
           #   more_set_input_headers X-Forwarded-Proto "https";
           #   more_set_headers X-Forwarded-Proto "https";
@@ -80,6 +75,23 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: networking
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  add:
+                    - name: Access-control-Allow-Origin
+                      value: "*"
+                    - name: Access-Control-Allow-Methods
+                      value: "GET, PUT, POST, DELETE, OPTIONS"
+                    - name: Access-Control-Allow-Headers
+                      value: "*"
+                    - name: Access-Control-Max-Age
+                      value: "100"
     persistence:
       data:
         enabled: true
