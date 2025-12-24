@@ -76,11 +76,7 @@ spec:
           - name: envoy-external
             namespace: networking
         rules:
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /
-            filters:
+          - filters:
               - type: ResponseHeaderModifier
                 responseHeaderModifier:
                   add:
