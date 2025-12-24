@@ -78,7 +78,7 @@ spec:
           gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}`}}"
           gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}`}}"
         hostnames:
-          - "{{ .Release.Name }}.smbonn.me"
+          - qb.smbonn.me
         parentRefs:
           - name: envoy-internal
             namespace: networking
