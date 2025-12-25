@@ -58,7 +58,7 @@ spec:
       kind: Service
       name: unifi
   validation:
-    hostname: "UDM SE"
+    hostname: udm-se
     caCertificateRefs:
       # TODO: currently there's no way to disable cert validation on Gateway API
       - group: ""
