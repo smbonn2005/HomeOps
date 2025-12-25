@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   # - ./external-apollo.yaml
   - ./external-nas-ui.yaml
-  # - ./external-xen-ui.yaml
+  - ./external-xen-ui.yaml
   # - ./external-pfsense-ui.yaml
   # - ./external-wings.yaml
   # - ./external-projects.yaml
