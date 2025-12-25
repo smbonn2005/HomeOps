@@ -58,36 +58,54 @@ spec:
       kind: Service
       name: unifi
   validation:
-    hostname: udm-se
+    hostname: unifi.local
     caCertificateRefs:
       # TODO: currently there's no way to disable cert validation on Gateway API
       - group: ""
         kind: ConfigMap
-        name: unifi-tls-cert
+        name: unifi-ca-cert
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: unifi-tls-cert
+  name: unifi-ca-cert
 data:
   ca.crt: |-
     -----BEGIN CERTIFICATE-----
-    MIIDNTCCAh2gAwIBAgIJQyHFj2H3OcP4MA0GCSqGSIb3DQEBCwUAMBYxFDASBgNV
-    BAMTC3VuaWZpLmxvY2FsMB4XDTI0MTExMjIyMTYwOFoXDTI3MDIxNTIyMTYwOFow
+    MIIDNTCCAh2gAwIBAgIJFTRiVp35xAKxMA0GCSqGSIb3DQEBCwUAMBYxFDASBgNV
+    BAMTC3VuaWZpLmxvY2FsMB4XDTIzMTIxNDE0MTQxOVoXDTI2MDMxODE0MTQxOVow
     FjEUMBIGA1UEAxMLdW5pZmkubG9jYWwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
-    ggEKAoIBAQCwNMaJJyUw3Ct6lppNzscEab3VkF8IQxgs9owd/wUk3pccbJvww6tI
-    d3tmMrLaT+4g61g0Q46Kek9u8xiWpG6yCaZzuCyQ/ixD5p9W8SaMjpxvEWqJh/MN
-    JURcc7elvGcVWCq3hb0uySXvL4uUaIlaICieINH/i9eE/JPpFiJlH4gqAYIrBW95
-    NOZOq6LZIqAMb9ySZTh/K+gUYaA7BD483G8yWLY6E1hWwpMNuC9+YcRxoktIueME
-    OKMlrehs8skyifdiogP8k4ME43oTyOSjxFZpMQH2Ay/be6uhwDJ1kxhmQ5BswZhB
-    oZ5BUOf5k17nrmmGRf9ldxcLYivYEBfRAgMBAAGjgYUwgYIwCwYDVR0PBAQDAgL0
+    ggEKAoIBAQCisSdak6P2UCsBXzRwCikpavrLQ6ASzxRoGw6qDd/QKBkV2FjsMNJM
+    BZcVNDRcygRSSst0d+7cp5CTolvysZg2rW/xzgF5FovmYA758RxFmQiOoNDzeQOS
+    0xNCZTMVfjYMP86+AmjrnxbUKydWku0Z3U70FbjK4etyGd8xnZxQgxguXCHdHbuU
+    fvzf0qTBywhEwZ+1GZSK+8PCMujxq5j+qdASSIpESzzKDxSMsRNZ7QMEPofbtlJf
+    X32jYJrcYHjK1iQjJ0QEQhYoINyUzbwy6HuS3AQXo5XyHVQLgVBNiMkR6moT1T9P
+    5QRz+V+8I3sUSbboeSgrI2Yz8Py+WzVPAgMBAAGjgYUwgYIwCwYDVR0PBAQDAgL0
     MDEGA1UdJQQqMCgGCCsGAQUFBwMBBggrBgEFBQcDAgYIKwYBBQUHAwMGCCsGAQUF
     BwMIMEAGA1UdEQQ5MDeCC3VuaWZpLmxvY2Fsgglsb2NhbGhvc3SCBVs6OjFdhwR/
-    AAABhxD+gAAAAAAAAAAAAAAAAAABMA0GCSqGSIb3DQEBCwUAA4IBAQCh3GKR4sCZ
-    GDnqeMvhl+oOG1bXQuN1QfE2NQZeWBwD6TvpH2Evww30cTv6Vm3ItNRl69dCThHA
-    4lvUf/joOO3C2rEMHVsZa0p/AV4NzN5psil5QyzeMnRrzstjoRS6VUDIjIdhq5CK
-    ZQP44tJkrL88dIYx0EP0Gn1FAryVykXzBizLBGxfEzOnPS+eRqKKScQK28kqq9hd
-    TWiPMo016kNfBRsA+ANpVkVUCb91LDdvbpguVxG/TQoxSyR4QNcVaGp+byHSN03Y
-    VWubaBzYEKhMSDKMipEclDZ6HU8B9ggoSivE9VOeZXrJXquPrhSVlCmcMTSDbKmu
-    1Twl219Q/Uf0
+    AAABhxD+gAAAAAAAAAAAAAAAAAABMA0GCSqGSIb3DQEBCwUAA4IBAQCWwbiSDDHZ
+    GNTyWCZ0HymG/V/qwsx9BAz0QZQhnVKNDR59exM1tVTAIDjTUlJwdqHYIRVbAVmt
+    L11V2uHYzBR+7M84krhIa7uGH0Jv/c+gvCL0FeKT9WtAJ7lF4+E3tgJhqLafhCjs
+    Xgsg0SF363dYT806e1LX06+aInK53c5e11tVBhppJvjFhWsUj5woG/p9ECujb3q/
+    tOa5pNKpcieAR4vyE1IQvXqv2qJJPrEJGXFyfjZ4O8swJT9H/QEesGWwJCT3buJ7
+    pBFK+wO1Tn2X792y6khg7EsFANgCqtfqRnr47xdtY6wt29RxU4rDzI6oFpqqXFA3
+    9kgPJRk3/gxj
     -----END CERTIFICATE-----
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: unifi-backend
+  namespace: network
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: unifi
+  useClientProtocol: true
+  connection:
+    bufferLimit: 8Mi
+  timeout:
+    http:
+      requestTimeout: 0s
+      connectionIdleTimeout: 3600s
