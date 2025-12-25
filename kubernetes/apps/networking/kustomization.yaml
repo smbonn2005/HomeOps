@@ -10,5 +10,5 @@ resources:
   - ./cloudflared/ks.yaml
   - ./envoy-gateway/ks.yaml
   - ./external-dns/ks.yaml
-  # - ./external-services/ks.yaml
+  - ./external-services/ks.yaml
   - ./unifi-dns/ks.yaml
