@@ -36,7 +36,7 @@ metadata:
     gethomepage.dev/name: TrueNAS
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/widget.type: truenas
-    gethomepage.dev/widget.url: http://fs01.smbonn.me
+    gethomepage.dev/widget.url: https://fs01.smbonn.me
     gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_FS01_KEY}}'
 spec:
   hostnames:
