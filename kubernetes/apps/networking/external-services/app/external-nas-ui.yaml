@@ -3,14 +3,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nas-ui
-  namespace: networking
 spec:
   type: ClusterIP
   ports:
-    - name: https
+    - name: http
       protocol: TCP
-      port: 443
-      targetPort: 443
+      port: 80
+      targetPort: http
 ---
 apiVersion: v1
 kind: Endpoints
@@ -20,8 +19,8 @@ subsets:
   - addresses:
       - ip: "192.168.1.4"
     ports:
-      - name: https
-        port: 443
+      - name: http
+        port: 80
         protocol: TCP
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -40,47 +39,44 @@ metadata:
     gethomepage.dev/widget.url: http://fs01.smbonn.me
     gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_FS01_KEY}}'
 spec:
+  hostnames:
+    - fs01.smbonn.me
   parentRefs:
     - name: envoy-internal
       namespace: networking
-  hostnames:
-    - fs01.smbonn.me
+      port: 443
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
+    - backendRefs:
         - name: nas-ui
-          port: 443
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: BackendTLSPolicy
-metadata:
-  name: nas-backend-tls
-spec:
-  targetRefs:
-    - group: ""
-      kind: Service
-      name: nas-ui
-  validation:
-    wellKnownCACertificates: System
-    hostname: smbonn.me
----
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
-metadata:
-  name: nas-backend
-  namespace: networking
-spec:
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: nas-ui
-  useClientProtocol: true
-  connection:
-    bufferLimit: 8Mi
-  timeout:
-    http:
-      requestTimeout: 0s
-      connectionIdleTimeout: 3600s
+          port: 80
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: BackendTLSPolicy
+# metadata:
+#   name: nas-backend-tls
+# spec:
+#   targetRefs:
+#     - group: ""
+#       kind: Service
+#       name: nas-ui
+#   validation:
+#     wellKnownCACertificates: System
+#     hostname: smbonn.me
+# ---
+# apiVersion: gateway.envoyproxy.io/v1alpha1
+# kind: BackendTrafficPolicy
+# metadata:
+#   name: nas-backend
+#   namespace: networking
+# spec:
+#   targetRefs:
+#     - group: gateway.networking.k8s.io
+#       kind: HTTPRoute
+#       name: nas-ui
+#   useClientProtocol: true
+#   connection:
+#     bufferLimit: 8Mi
+#   timeout:
+#     http:
+#       requestTimeout: 0s
+#       connectionIdleTimeout: 3600s
