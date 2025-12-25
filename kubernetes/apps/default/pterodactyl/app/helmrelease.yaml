@@ -89,7 +89,7 @@ spec:
                   - OPTIONS
                 allowHeaders:
                   - "*"
-                maxAge: "100"
+                maxAge: 100
     persistence:
       data:
         enabled: true
