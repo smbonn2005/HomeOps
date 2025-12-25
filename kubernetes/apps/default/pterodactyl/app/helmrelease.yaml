@@ -76,6 +76,10 @@ spec:
           - name: envoy-external
             namespace: networking
         # rules:
+        #   - matches:
+        #       - path:
+        #           type: PathPrefix
+        #           value: /
         #   - filters:
         #     - type: CORS
         #       cors:
