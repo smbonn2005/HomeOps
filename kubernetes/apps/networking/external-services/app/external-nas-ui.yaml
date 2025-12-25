@@ -7,11 +7,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - name: https
+    - name: http
       protocol: TCP
-      port: 443
-      targetPort: 443
-      appProtocol: https
+      port: 80
+      targetPort: 80
 ---
 apiVersion: v1
 kind: Endpoints
@@ -21,8 +20,8 @@ subsets:
   - addresses:
       - ip: "192.168.1.4"
     ports:
-      - name: https
-        port: 443
+      - name: http
+        port: 80
         protocol: TCP
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -53,7 +52,7 @@ spec:
             value: /
       backendRefs:
         - name: nas-ui
-          port: 443
+          port: 80
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: BackendTLSPolicy
