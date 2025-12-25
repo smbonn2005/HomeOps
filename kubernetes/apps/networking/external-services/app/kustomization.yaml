@@ -8,4 +8,4 @@ resources:
   - ./external-xen-ui.yaml
   # - ./external-wings.yaml
   # - ./external-projects.yaml
-  # - ./external-unifi.yaml
+  - ./external-unifi.yaml
