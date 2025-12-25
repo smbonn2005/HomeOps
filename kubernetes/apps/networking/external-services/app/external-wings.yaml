@@ -5,48 +5,37 @@ metadata:
   name: wings
   namespace: networking
 spec:
+  type: ClusterIP
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
-      targetPort: 443
+      targetPort: https
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+apiVersion: v1
+kind: Endpoints
 metadata:
   name: wings
-  namespace: networking
-  labels:
-    kubernetes.io/service-name: wings
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: http
-    protocol: TCP
-    port: 443
-endpoints:
+subsets:
   - addresses:
-      - "192.168.1.210"
+      - ip: "192.168.1.210"
+    ports:
+      - name: https
+        protocol: TCP
+        port: 443
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
   name: &app wings
-  namespace: networking
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
-  annotations:
-    external-dns.alpha.kubernetes.io/target: external.smbonn.me
 spec:
-  ingressClassName: external
+  hostnames:
+    - wings.smbonn.me
+  parentRefs:
+    - name: envoy-internal
+      namespace: networking
+      port: 443
   rules:
-    - host: wings.smbonn.me
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: *app
-                port:
-                  number: 80
+    - backendRefs:
+        - name: wings
+          port: 80
