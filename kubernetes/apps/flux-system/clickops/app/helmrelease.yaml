@@ -58,27 +58,22 @@ spec:
         supplementalGroups: [10000]
         seccompProfile: { type: RuntimeDefault }
     serviceAccount:
-      create: true
-      name: *app
+      clickops: {}
     service:
       app:
         controller: *app
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Observability
           gethomepage.dev/name: ClickOps
           gethomepage.dev/description: Flux Reconciliation Checker
-        hosts:
-          - host: "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking

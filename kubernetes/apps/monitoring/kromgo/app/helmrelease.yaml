@@ -70,20 +70,13 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.smbonn.me
-        hosts:
-          - host: &host "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-external
+            namespace: networking
     persistence:
       config-file:
         type: configMap

@@ -78,18 +78,13 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: &host "zigbee.smbonn.me"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - zigbee.smbonn.me
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
     persistence:
       config:
         enabled: true

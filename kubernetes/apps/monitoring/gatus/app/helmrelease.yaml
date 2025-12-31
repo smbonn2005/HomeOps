@@ -46,7 +46,7 @@ spec:
           app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.33.0@sha256:bf249f4d7cf69e825457ade2ebc3d11168d73527ef1657a653119a0d9da97a4a
+              tag: v5.33.1@sha256:7121b5916c069eac6e266875d4984ec9262d84bd1274963939b358b32476d25b
             env:
               TZ: America/New_York
               GATUS_CONFIG_PATH: /config
@@ -103,9 +103,8 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.smbonn.me
           gethomepage.dev/enabled: "true"
@@ -114,18 +113,13 @@ spec:
           gethomepage.dev/icon: gatus.png
           gethomepage.dev/widget.type: gatus
           gethomepage.dev/widget.url: http://gatus.monitoring
-        hosts:
-          - host: &host status.smbonn.me
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - status.smbonn.me
+        parentRefs:
+          - name: envoy-external
+            namespace: networking
     serviceAccount:
-      create: true
-      name: gatus
+      gatus: {}
     persistence:
       config:
         type: emptyDir

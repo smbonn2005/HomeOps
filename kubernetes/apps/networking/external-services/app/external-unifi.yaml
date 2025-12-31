@@ -3,48 +3,109 @@ apiVersion: v1
 kind: Service
 metadata:
   name: unifi
-  namespace: networking
 spec:
+  type: ClusterIP
   ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: https
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: unifi
+subsets:
+  - addresses:
+      - ip: "192.168.1.1"
+    ports:
+      - name: https
+        protocol: TCP
+        port: 443
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: &app unifi
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: unifi.png
+    gethomepage.dev/name: Unifi UDM SE
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/widget.type: unifi
+    gethomepage.dev/widget.url: https://unifi.smbonn.me
+    gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_UNIFI_KEY}}'
+spec:
+  hostnames:
+    - unifi.smbonn.me
+  parentRefs:
+    - name: envoy-internal
+      namespace: networking
+      port: 443
+  rules:
+    - backendRefs:
+        - name: unifi
+          port: 443
+---
+apiVersion: gateway.networking.k8s.io/v1alpha3
+kind: BackendTLSPolicy
 metadata:
   name: unifi
   namespace: networking
-  labels:
-    kubernetes.io/service-name: unifi
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: http
-    protocol: TCP
-    port: 8080
-endpoints:
-  - addresses:
-      - "192.168.1.5"
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: &app unifi
-  namespace: networking
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
 spec:
-  ingressClassName: internal
-  rules:
-    - host: unifi.smbonn.me
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: *app
-                port:
-                  number: 8080
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: unifi
+  validation:
+    hostname: unifi.local
+    caCertificateRefs:
+      # TODO: currently there's no way to disable cert validation on Gateway API
+      - group: ""
+        kind: ConfigMap
+        name: unifi-tls-cert
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unifi-tls-cert
+data:
+  ca.crt: |-
+    -----BEGIN CERTIFICATE-----
+    MIIDNTCCAh2gAwIBAgIJQyHFj2H3OcP4MA0GCSqGSIb3DQEBCwUAMBYxFDASBgNV
+    BAMTC3VuaWZpLmxvY2FsMB4XDTI0MTExMjIyMTYwOFoXDTI3MDIxNTIyMTYwOFow
+    FjEUMBIGA1UEAxMLdW5pZmkubG9jYWwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+    ggEKAoIBAQCwNMaJJyUw3Ct6lppNzscEab3VkF8IQxgs9owd/wUk3pccbJvww6tI
+    d3tmMrLaT+4g61g0Q46Kek9u8xiWpG6yCaZzuCyQ/ixD5p9W8SaMjpxvEWqJh/MN
+    JURcc7elvGcVWCq3hb0uySXvL4uUaIlaICieINH/i9eE/JPpFiJlH4gqAYIrBW95
+    NOZOq6LZIqAMb9ySZTh/K+gUYaA7BD483G8yWLY6E1hWwpMNuC9+YcRxoktIueME
+    OKMlrehs8skyifdiogP8k4ME43oTyOSjxFZpMQH2Ay/be6uhwDJ1kxhmQ5BswZhB
+    oZ5BUOf5k17nrmmGRf9ldxcLYivYEBfRAgMBAAGjgYUwgYIwCwYDVR0PBAQDAgL0
+    MDEGA1UdJQQqMCgGCCsGAQUFBwMBBggrBgEFBQcDAgYIKwYBBQUHAwMGCCsGAQUF
+    BwMIMEAGA1UdEQQ5MDeCC3VuaWZpLmxvY2Fsgglsb2NhbGhvc3SCBVs6OjFdhwR/
+    AAABhxD+gAAAAAAAAAAAAAAAAAABMA0GCSqGSIb3DQEBCwUAA4IBAQCh3GKR4sCZ
+    GDnqeMvhl+oOG1bXQuN1QfE2NQZeWBwD6TvpH2Evww30cTv6Vm3ItNRl69dCThHA
+    4lvUf/joOO3C2rEMHVsZa0p/AV4NzN5psil5QyzeMnRrzstjoRS6VUDIjIdhq5CK
+    ZQP44tJkrL88dIYx0EP0Gn1FAryVykXzBizLBGxfEzOnPS+eRqKKScQK28kqq9hd
+    TWiPMo016kNfBRsA+ANpVkVUCb91LDdvbpguVxG/TQoxSyR4QNcVaGp+byHSN03Y
+    VWubaBzYEKhMSDKMipEclDZ6HU8B9ggoSivE9VOeZXrJXquPrhSVlCmcMTSDbKmu
+    1Twl219Q/Uf0
+    -----END CERTIFICATE-----
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: unifi-backend
+  namespace: network
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: unifi
+  useClientProtocol: true
+  connection:
+    bufferLimit: 8Mi
+  timeout:
+    http:
+      requestTimeout: 0s
+      connectionIdleTimeout: 3600s

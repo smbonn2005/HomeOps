@@ -56,9 +56,8 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: tautulli.png
@@ -68,16 +67,11 @@ spec:
           gethomepage.dev/widget.url: http://tautulli.media:80
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_TAUTULLI_KEY}}`}}"
           gethomepage.dev/widget.enableUser: "true"
-        hosts:
-          - host: &host "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
     persistence:
       config:
         enabled: true

@@ -63,13 +63,10 @@ spec:
         controller: *app
         ports:
           http:
-            port: 32400
-    ingress:
+            port: &port 32400
+    route:
       app:
-        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.smbonn.me
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: plex.png
           gethomepage.dev/name: Plex
@@ -77,15 +74,11 @@ spec:
           gethomepage.dev/widget.type: plex
           gethomepage.dev/widget.url: http://plex.media:32400
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_PLEX_KEY}}`}}"
-        hosts:
-          - host: &host "{{ .Release.Name }}.smbonn.me"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - "{{ .Release.Name }}.smbonn.me"
+        parentRefs:
+          - name: envoy-external
+            namespace: networking
     persistence:
       config:
         existingClaim: *app

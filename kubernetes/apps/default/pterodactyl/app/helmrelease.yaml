@@ -56,20 +56,13 @@ spec:
         controller: *app
         ports:
           http:
-            port: 80
-    ingress:
+            port: &port 80
+    route:
       app:
-        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.smbonn.me
-          nginx.ingress.kubernetes.io/enable-cors: "true"
-          nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
-          nginx.ingress.kubernetes.io/cors-allow-headers: "*"
-          nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-          nginx.ingress.kubernetes.io/cors-max-age: "100"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            more_set_input_headers X-Forwarded-Proto "https";
-            more_set_headers X-Forwarded-Proto "https";
+          # nginx.ingress.kubernetes.io/configuration-snippet: |
+          #   more_set_input_headers X-Forwarded-Proto "https";
+          #   more_set_headers X-Forwarded-Proto "https";
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: pterodactyl.png
           gethomepage.dev/name: Pterodactyl
@@ -77,16 +70,30 @@ spec:
           gethomepage.dev/widget.type: pterodactyl
           gethomepage.dev/widget.url: http://pterodactyl.default
           gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_PTERODACTYL_KEY}}`}}"
-        hosts:
-          - host: &host "pterodactyl.smbonn.me"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
+        hostnames:
+          - pterodactyl.smbonn.me
+        parentRefs:
+          - name: envoy-external
+            namespace: networking
+        # rules:
+        #   - matches:
+        #       - path:
+        #           type: PathPrefix
+        #           value: /
+        #   - filters:
+        #     - type: CORS
+        #       cors:
+        #         allowOrigins:
+        #           - "*"
+        #         allowMethods:
+        #           - GET
+        #           - PUT
+        #           - POST
+        #           - DELETE
+        #           - OPTIONS
+        #         allowHeaders:
+        #           - "*"
+        #         maxAge: 100
     persistence:
       data:
         enabled: true
