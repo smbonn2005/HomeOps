@@ -60,9 +60,6 @@ spec:
     route:
       app:
         annotations:
-          # nginx.ingress.kubernetes.io/configuration-snippet: |
-          #   more_set_input_headers X-Forwarded-Proto "https";
-          #   more_set_headers X-Forwarded-Proto "https";
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: pterodactyl.png
           gethomepage.dev/name: Pterodactyl
@@ -75,25 +72,31 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: networking
-        # rules:
-        #   - matches:
-        #       - path:
-        #           type: PathPrefix
-        #           value: /
-        #   - filters:
-        #     - type: CORS
-        #       cors:
-        #         allowOrigins:
-        #           - "*"
-        #         allowMethods:
-        #           - GET
-        #           - PUT
-        #           - POST
-        #           - DELETE
-        #           - OPTIONS
-        #         allowHeaders:
-        #           - "*"
-        #         maxAge: 100
+        rules:
+          - filters:
+            - type: RequestHeaderModifier
+              requestHeaderModifier:
+                set:
+                  - name: X-Forwarded-Proto
+                    value: https
+            - type: ResponseHeaderModifier
+              responseHeaderModifier:
+                set:
+                  - name: X-Forwarded-Proto
+                    value: https
+            - type: CORS
+              cors:
+                allowOrigins:
+                  - "*"
+                allowMethods:
+                  - GET
+                  - PUT
+                  - POST
+                  - DELETE
+                  - OPTIONS
+                allowHeaders:
+                  - "*"
+                maxAge: 100
     persistence:
       data:
         enabled: true
