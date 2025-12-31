@@ -5,10 +5,12 @@ name: Schemas
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: 0 0 * * *
   push:
-    branches: ["main"]
-    paths: [".github/workflows/schemas.yaml"]
+    branches:
+      - main
+    paths:
+      - .github/workflows/schemas.yaml
 
 env:
   UV_SYSTEM_PYTHON: "1"

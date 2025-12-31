@@ -9,6 +9,9 @@ spec:
   chartRef:
     kind: OCIRepository
     name: flux-operator
-  valuesFrom:
-    - kind: ConfigMap
-      name: flux-operator-helm-values
+  values:
+    serviceMonitor:
+      create: true
+    web:
+      networkPolicy:
+        create: false
