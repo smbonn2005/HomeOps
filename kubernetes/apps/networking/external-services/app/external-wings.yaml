@@ -11,19 +11,18 @@ spec:
       port: 80
       targetPort: 443
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+apiVersion: v1
+kind: Endpoints
 metadata:
   name: wings
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: http
-    protocol: TCP
-    port: 443
-endpoints:
+subsets:
   - addresses:
-      - "192.168.1.210"
+      - ip: "192.168.1.210"
+    ports:
+      - name: http
+        appProtocol: http
+        protocol: TCP
+        port: 443
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
