@@ -1,27 +1,19 @@
 ---
 autoDirectNodeRoutes: true
-bpf:
-  datapathMode: netkit
-  masquerade: true
-  preallocateMaps: true
-  tproxy: true
-bpfClockProbe: true
 bgpControlPlane:
   enabled: true
+bpf:
+  masquerade: false
 cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-cni:
-  exclusive: false
-dashboards:
-  enabled: true
-  annotations:
-    grafana_folder: default
+cluster:
+  id: 1
+  name: home-kubernetes
 # NOTE: This might need to be set if you have more than one active NIC on your hosts
 # devices:
 #   - eno0
-enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
 envoy:
@@ -40,7 +32,6 @@ l2announcements:
 loadBalancer:
   algorithm: maglev
   mode: dsr
-  serviceTopology: true
 localRedirectPolicy: true
 operator:
   dashboards:
@@ -53,13 +44,15 @@ operator:
       enabled: true
   replicas: 2
   rollOutPods: true
-pmtuDiscovery:
-  enabled: true
 prometheus:
   enabled: true
   serviceMonitor:
     enabled: true
     trustCRDsExist: true
+dashboards:
+  enabled: true
+  annotations:
+    grafana_folder: default
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
@@ -72,8 +65,6 @@ securityContext:
       - IPC_LOCK
       - SYS_ADMIN
       - SYS_RESOURCE
-      - PERFMON
-      - BPF
       - DAC_OVERRIDE
       - FOWNER
       - SETGID
@@ -82,6 +73,3 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
-socketLB:
-  enabled: true
-  hostNamespaceOnly: true
