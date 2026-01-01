@@ -14,9 +14,6 @@ cgroup:
   hostRoot: /sys/fs/cgroup
 cni:
   exclusive: false
-cluster:
-  id: 1
-  name: home-kubernetes
 dashboards:
   enabled: true
   annotations:

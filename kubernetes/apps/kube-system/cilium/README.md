@@ -4,18 +4,18 @@
 
 ```sh
 router bgp 65001
+  bgp router-id 192.168.1.1
   no bgp ebgp-requires-policy
+
   neighbor k8s peer-group
   neighbor k8s remote-as 65010
+  neighbor k8s activate
+  neighbor k8s soft-reconfiguration inbound
+
   neighbor 192.168.1.20 peer-group k8s
   neighbor 192.168.1.21 peer-group k8s
-  neighbor 192.168.2.22 peer-group k8s
-!
+  neighbor 192.168.1.22 peer-group k8s
+
   address-family ipv4 unicast
-    neighbor k8s activate
-    neighbor k8s soft-reconfiguration inbound
-    neighbor k8s prefix-list k8s-services in
-  exit-address-family
-!
-ip prefix-list k8s-services seq 10 permit 192.168.1.0/24 le 32
+    neighbor k8s next-hop-self
 ```
