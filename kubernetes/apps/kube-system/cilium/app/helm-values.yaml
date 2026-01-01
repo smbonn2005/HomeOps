@@ -12,6 +12,8 @@ cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
+cni:
+  exclusive: false
 cluster:
   id: 1
   name: home-kubernetes
@@ -37,10 +39,11 @@ k8sServicePort: 7445
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
-  enabled: true
+  enabled: false
 loadBalancer:
   algorithm: maglev
   mode: dsr
+  serviceTopology: true
 localRedirectPolicy: true
 operator:
   dashboards:
@@ -53,6 +56,8 @@ operator:
       enabled: true
   replicas: 2
   rollOutPods: true
+pmtuDiscovery:
+  enabled: true
 prometheus:
   enabled: true
   serviceMonitor:
@@ -70,6 +75,8 @@ securityContext:
       - IPC_LOCK
       - SYS_ADMIN
       - SYS_RESOURCE
+      - PERFMON
+      - BPF
       - DAC_OVERRIDE
       - FOWNER
       - SETGID
@@ -78,3 +85,6 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+socketLB:
+  enabled: true
+  hostNamespaceOnly: true
