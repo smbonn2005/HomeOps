@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/volsync
     - ../../../../components/defaults
   path: ./kubernetes/apps/default/bookstack/app
@@ -26,5 +25,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: *app
       VOLSYNC_CAPACITY: 1Gi
