@@ -50,10 +50,13 @@ metadata:
   name: envoy-external
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname external.smbonn.me
-    # gatus.home-operations.com/endpoint: |-
-    #   client:
-    #     dns-resolver: tcp://1.1.1.1:53
-    #   group: external
+    gatus.home-operations.com/endpoint: |-
+      alerts:
+        - type: discord
+      client:
+        dns-resolver: tcp://1.1.1.1:53
+      group: external
+      interval: 1m
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -85,12 +88,15 @@ metadata:
   name: envoy-internal
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname internal.smbonn.me
-    # gatus.home-operations.com/endpoint: |-
-    #   group: internal
-    #   guarded: true
-    #   ui:
-    #     hide-hostname: true
-    #     hide-url: true
+    gatus.home-operations.com/endpoint: |-
+      alerts:
+        - type: discord
+      group: internal
+      guarded: true
+      interval: 1m
+      ui:
+        hide-hostname: true
+        hide-url: true
 spec:
   gatewayClassName: envoy
   infrastructure:

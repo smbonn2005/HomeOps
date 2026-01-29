@@ -54,6 +54,8 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mosquitto.smbonn.me
           lbipam.cilium.io/ips: 192.168.1.96
+          gatus.home-operations.com/endpoint: |-
+            group: services
         externalTrafficPolicy: Local
         ports:
           mqtt:

@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/volsync
     - ../../../../components/defaults
   dependsOn:
@@ -31,5 +30,3 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 100Gi
       VOLSYNC_CACHE_CAPACITY: 20Gi
-      GATUS_SUBDOMAIN: *app
-      GATUS_URL_PATH: /web/index.html

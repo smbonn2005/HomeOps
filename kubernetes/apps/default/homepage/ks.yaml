@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/defaults
   dependsOn:
     - name: external-secrets-stores
@@ -28,4 +27,3 @@ spec:
   postBuild:
     substitute:
       APP: homepage
-      GATUS_SUBDOMAIN: home

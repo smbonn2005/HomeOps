@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/volsync
     - ../../../../components/defaults
   path: ./kubernetes/apps/media/tautulli/app
@@ -27,4 +26,3 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 15Gi
-      GATUS_SUBDOMAIN: *app
