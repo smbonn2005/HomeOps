@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pterodactyl/panel
-              tag: v1.11.11@sha256:3ad185c83818944cfd4dba4dcefbca5ffb64655aaa63363f8f76ce41cd19873f
+              tag: v1.12.0@sha256:f55c53194aaed5deccb403b181567cf1e220564141faba3a35392ddcc9567100
             env:
               DB_HOST: mariadb.databases.svc.cluster.local
               DB_PORT: 3306
@@ -60,9 +60,6 @@ spec:
     route:
       app:
         annotations:
-          # nginx.ingress.kubernetes.io/configuration-snippet: |
-          #   more_set_input_headers X-Forwarded-Proto "https";
-          #   more_set_headers X-Forwarded-Proto "https";
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: pterodactyl.png
           gethomepage.dev/name: Pterodactyl
@@ -76,11 +73,17 @@ spec:
           - name: envoy-external
             namespace: networking
         # rules:
-        #   - matches:
-        #       - path:
-        #           type: PathPrefix
-        #           value: /
         #   - filters:
+        #     - type: RequestHeaderModifier
+        #       requestHeaderModifier:
+        #         set:
+        #           - name: X-Forwarded-Proto
+        #             value: https
+        #     - type: ResponseHeaderModifier
+        #       responseHeaderModifier:
+        #         set:
+        #           - name: X-Forwarded-Proto
+        #             value: https
         #     - type: CORS
         #       cors:
         #         allowOrigins:

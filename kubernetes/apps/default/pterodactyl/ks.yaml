@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/volsync
     - ../../../../components/defaults
   path: ./kubernetes/apps/default/pterodactyl/app
@@ -27,4 +26,3 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
-      GATUS_SUBDOMAIN: *app

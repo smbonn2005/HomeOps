@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mealie-recipes/mealie
-              tag: v3.9.1@sha256:8c5c7765ca5f7f3070f08482aca8102c2b43193777fe958e06d86b153ec18f5f
+              tag: v3.10.2@sha256:58b54bca4c729fcc7f272cfac5086623866430956838de3f5d763fcaf9e64115
             env:
               TZ: "America/New_York"
               BASE_URL: https://mealie.smbonn.me

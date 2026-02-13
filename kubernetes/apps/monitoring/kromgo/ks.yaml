@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/defaults
   path: ./kubernetes/apps/monitoring/kromgo/app
   prune: true
@@ -25,5 +24,3 @@ spec:
   postBuild:
     substitute:
       APP: kromgo
-      GATUS_SUBDOMAIN: kromgo
-      GATUS_STATUS: "404"

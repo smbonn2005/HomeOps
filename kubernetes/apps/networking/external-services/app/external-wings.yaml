@@ -3,14 +3,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: wings
-  namespace: networking
 spec:
   type: ClusterIP
   ports:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: http
+      targetPort: 443
 ---
 apiVersion: v1
 kind: Endpoints
@@ -21,18 +20,22 @@ subsets:
       - ip: "192.168.1.210"
     ports:
       - name: http
+        appProtocol: http
         protocol: TCP
-        port: 80
+        port: 443
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: &app wings
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      conditions: ["[STATUS] == 401"]
 spec:
   hostnames:
     - wings.smbonn.me
   parentRefs:
-    - name: envoy-internal
+    - name: envoy-external
       namespace: networking
       port: 443
   rules:
