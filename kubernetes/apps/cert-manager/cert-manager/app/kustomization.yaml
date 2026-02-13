@@ -8,9 +8,3 @@ resources:
   - ./helmrepository.yaml
   - ./issuers.yaml
   - ./prometheusrule.yaml
-configMapGenerator:
-  - name: cert-manager-helm-values
-    files:
-      - values.yaml=./helm-values.yaml
-configurations:
-  - kustomizeconfig.yaml

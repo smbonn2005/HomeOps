@@ -7,9 +7,3 @@ resources:
   - ./helmrepository.yaml
   - ./prometheusrule.yaml
   - ./webhook
-configMapGenerator:
-  - name: flux-instance-helm-values
-    files:
-      - values.yaml=./helm-values.yaml
-configurations:
-  - kustomizeconfig.yaml

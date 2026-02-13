@@ -7,9 +7,3 @@ resources:
   - ./helmrepository.yaml
   # - ./networking.yaml
   - ./networks.yaml
-configMapGenerator:
-  - name: cilium-helm-values
-    files:
-      - values.yaml=./helm-values.yaml
-configurations:
-  - kustomizeconfig.yaml
