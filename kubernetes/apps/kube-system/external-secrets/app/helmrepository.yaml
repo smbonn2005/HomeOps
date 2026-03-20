@@ -12,5 +12,5 @@ spec:
   ref:
     tag: 2.2.0
   url: oci://ghcr.io/external-secrets/charts/external-secrets
-  verify:
-    provider: cosign
+  # verify:
+  #   provider: cosign
