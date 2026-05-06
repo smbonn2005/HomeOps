@@ -35,6 +35,7 @@ spec:
               MATCHERS_4: alertname=CephNodeDiskspaceWarning device=/dev/sda6
               MATCHERS_5: alertname=CephNodeDiskspaceWarning mountpoint=/etc/nfsmount.conf
               MATCHERS_6: alertname=KubeCPUOvercommit
+              MATCHERS_7: alertname=KubeClientCertificateExpiration
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
