@@ -25,7 +25,7 @@ spec:
                 bus: virtio
           interfaces:
             - name: podnet
-              masquade: {}
+              masquerade: {}
         resources:
           limits:
             memory: 4Gi
