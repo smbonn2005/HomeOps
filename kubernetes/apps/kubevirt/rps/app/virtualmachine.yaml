@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/kubevirt.io/virtualmachine_v1.json
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: &app rps
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: *app
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: false
+        devices:
+          disks:
+            - name: rps
+              disk:
+                bus: virtio
+          interfaces:
+            - name: podnet
+              masquade: {}
+        resources:
+          limits:
+            memory: 4Gi
+          requests:
+            cpu: 500m
+            memory: 2Gi
+      networks:
+        - name: podnet
+          pod: {}
+      volumes:
+        - name: rps
+          persistentVolumeClaim:
+            name: rps
+  dataVolumeTemplates:
+    - metadata:
+        name: rps
+      spec:
+        source:
+          http:
+            url: "https://releases.ubuntu.com/26.04/ubuntu-26.04-live-server-amd64.iso"
+        storage:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 32Gi
+          storageClassName: ceph-block
