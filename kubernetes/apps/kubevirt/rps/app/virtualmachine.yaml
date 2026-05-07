@@ -23,6 +23,9 @@ spec:
             - name: rps
               disk:
                 bus: virtio
+            - name: cloudinit
+              disk:
+                bus: virtio
           interfaces:
             - name: podnet
               masquerade: {}
@@ -39,6 +42,10 @@ spec:
         - name: rps
           persistentVolumeClaim:
             claimName: rps
+        - name: cloudinit
+          cloudInitNoCloud:
+            secretRef:
+              name: rps-cloudinit
   dataVolumeTemplates:
     - metadata:
         name: rps
