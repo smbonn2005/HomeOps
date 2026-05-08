@@ -2,7 +2,7 @@
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume
 metadata:
-  name: ubuntu-26.04-server
+  name: ubuntu-server
 spec:
   source:
     http:

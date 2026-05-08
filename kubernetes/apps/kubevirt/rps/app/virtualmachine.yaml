@@ -50,7 +50,7 @@ spec:
             claimName: rps
         - name: ubuntu-os
           dataVolume:
-            name: ubuntu-26.04-server
+            name: ubuntu-server
         - name: cloudinit
           cloudInitNoCloud:
             secretRef:
