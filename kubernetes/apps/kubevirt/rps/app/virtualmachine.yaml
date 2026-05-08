@@ -21,13 +21,18 @@ spec:
         devices:
           disks:
             - name: rps
+              bootOrder: 1
+              disk:
+                bus: virtio
+            - name: ubuntu-os
+              bootOrder: 2
               disk:
                 bus: virtio
             - name: cloudinit
               disk:
                 bus: virtio
           interfaces:
-            - name: podnet
+            - name: default
               masquerade: {}
         resources:
           limits:
@@ -36,27 +41,16 @@ spec:
             cpu: 500m
             memory: 2Gi
       networks:
-        - name: podnet
+        - name: default
           pod: {}
       volumes:
         - name: rps
           persistentVolumeClaim:
             claimName: rps
+        - name: ubuntu-os
+          dataVolume:
+            name: ubuntu-server
         - name: cloudinit
           cloudInitNoCloud:
             secretRef:
               name: rps-cloudinit
-  dataVolumeTemplates:
-    - metadata:
-        name: rps
-      spec:
-        source:
-          http:
-            url: "https://releases.ubuntu.com/26.04/ubuntu-26.04-live-server-amd64.iso"
-        storage:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 32Gi
-          storageClassName: ceph-block
