@@ -7,7 +7,7 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./helmrepository.yaml
-  - ./scrapeconfigs
+  # - ./scrapeconfigs
   - ./prometheusrules
 labels:
   - pairs:
