@@ -14,20 +14,11 @@ spec:
       domain:
         cpu:
           cores: 2
-        firmware:
-          bootloader:
-            efi:
-              secureBoot: false
         devices:
           disks:
-            - name: rps
-              bootOrder: 1
+            - name: ubuntu-os
               disk:
                 bus: virtio
-            - name: ubuntu-os
-              bootOrder: 2
-              cdrom:
-                bus: sata
             - name: cloudinit
               disk:
                 bus: virtio
@@ -45,9 +36,6 @@ spec:
         - name: default
           pod: {}
       volumes:
-        - name: rps
-          persistentVolumeClaim:
-            claimName: rps
         - name: ubuntu-os
           dataVolume:
             name: ubuntu-server
@@ -55,3 +43,17 @@ spec:
           cloudInitNoCloud:
             secretRef:
               name: rps-cloudinit
+  dataVolumeTemplates:
+    - metadata:
+        name: ubuntu-server
+      spec:
+        source:
+          http:
+            url: https://cloud-images.ubuntu.com/releases/resolute/release/ubuntu-26.04-server-cloudimg-amd64.vmdk
+        storage:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 35Gi
+          storageClassName: ceph-block

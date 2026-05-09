@@ -6,7 +6,6 @@ resources:
   - endpoint.yaml
   - externalsecret.yaml
   - httproute.yaml
-  - pvc.yaml
   - service.yaml
-  - ubuntu-image.yaml
+  - storageprofile.yaml
   - virtualmachine.yaml
