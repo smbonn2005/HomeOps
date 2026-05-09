@@ -12,7 +12,6 @@ spec:
     - name: http
       port: 80
       protocol: TCP
-      targetPort: 80
+      targetPort: 9000
   selector:
     kubevirt.io/vm: rps
-  type: LoadBalancer
