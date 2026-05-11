@@ -36,6 +36,8 @@ spec:
               MATCHERS_5: alertname=CephNodeDiskspaceWarning mountpoint=/etc/nfsmount.conf
               MATCHERS_6: alertname=KubeCPUOvercommit
               MATCHERS_7: alertname=KubeClientCertificateExpiration
+              MATCHERS_8: alertname=CDIDefaultStorageClassDegraded
+              MATCHERS_9: alertname=CDIStorageProfilesIncomplete
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
