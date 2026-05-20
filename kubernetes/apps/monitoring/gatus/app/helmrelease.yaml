@@ -72,6 +72,7 @@ spec:
               limits:
                 memory: 256Mi
         pod:
+          automountServiceAccountToken: true
           dnsConfig:
             options:
               - { name: ndots, value: "1" }
@@ -119,8 +120,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: networking
-    serviceAccount:
-      gatus: {}
     persistence:
       config:
         type: emptyDir
