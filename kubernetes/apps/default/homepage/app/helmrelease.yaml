@@ -33,6 +33,8 @@ spec:
                 memory: 200M
               limits:
                 memory: 2G
+        pod:
+          automountServiceAccountToken: true
     service:
       app:
         controller: *app
@@ -64,5 +66,3 @@ spec:
             path: /app/config/settings.yaml
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
-    serviceAccount:
-      homepage: {}
