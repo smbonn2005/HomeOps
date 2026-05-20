@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: mariadb
+    - name: mariadb-cluster
       namespace: databases
     - name: volsync
       namespace: storage
@@ -31,7 +31,7 @@ spec:
               PUID: 1000
               PGID: 1000
               APP_URL: https://bookstack.smbonn.me
-              DB_HOST: mariadb.databases.svc.cluster.local
+              DB_HOST: maxscale.databases.svc.cluster.local
               DB_PORT: 3306
               DB_DATABASE: "bookstackapp"
               DB_USERNAME: "bookstack"
