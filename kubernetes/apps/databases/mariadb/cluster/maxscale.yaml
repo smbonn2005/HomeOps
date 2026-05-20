@@ -1,0 +1,55 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MaxScale
+metadata:
+  name: maxscale
+spec:
+  replicas: 2
+  mariaDbRef:
+    name: mariadb
+  # Trigger a switchover by declaring the desired primary server
+  # primaryServer: mariadb-repl-0
+  services:
+    - name: rw-router
+      router: readwritesplit
+      listener:
+        port: 3306
+  monitor:
+    interval: 2s
+    cooperativeMonitoring: majority_of_all
+    params:
+      disable_master_failback: "false"
+      available_when_donor: "false"
+      disable_master_role_setting: "false"
+  admin:
+    port: 8989
+    guiEnabled: true
+  config:
+    sync:
+      database: mysql
+      interval: 5s
+      timeout: 10s
+  auth:
+    generate: false
+    adminUsername: mariadb-operator
+    adminPasswordSecretKeyRef:
+      generate: false
+      name: mariadb-root-secret
+      key: password
+  kubernetesService:
+    type: LoadBalancer
+    metadata:
+      annotations:
+        lbipam.cilium.io/ips: 192.168.1.12
+  guiKubernetesService:
+    type: LoadBalancer
+    metadata:
+      annotations:
+        lbipam.cilium.io/ips: 192.168.1.13
+        gatus.home-operations.com/endpoint: |-
+          group: services
+  connection:
+    secretName: mxs-galera-conn
+    port: 3306
+  metrics:
+    enabled: true
+  requeueInterval: 1h
