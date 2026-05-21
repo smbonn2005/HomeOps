@@ -56,5 +56,3 @@ spec:
     enabled: true
     serverCASecretRef:
       name: mariadb-ca
-    serverCertSecretRef:
-      name: mariadb-server-cert
