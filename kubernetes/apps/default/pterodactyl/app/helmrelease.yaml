@@ -27,7 +27,7 @@ spec:
               repository: ghcr.io/pterodactyl/panel
               tag: v1.12.2@sha256:dd2687b00a532117fe25a88a8acbb34a6fb23a9ca59a76a405735e3cb729efca
             env:
-              DB_HOST: maxscale.databases.svc.cluster.local
+              DB_HOST: mariadb.databases.svc.cluster.local
               DB_PORT: 3306
               DB_DATABASE: "panel"
               DB_USERNAME: "pterodactyl"
