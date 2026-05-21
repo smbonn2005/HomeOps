@@ -33,8 +33,8 @@ spec:
     adminUsername: mariadb-operator
     adminPasswordSecretKeyRef:
       generate: false
-      name: mariadb-root-secret
-      key: password
+      name: mariadb-secret
+      key: mariadb-root-password
   kubernetesService:
     type: LoadBalancer
     metadata:
