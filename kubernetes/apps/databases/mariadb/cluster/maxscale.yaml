@@ -47,9 +47,6 @@ spec:
         lbipam.cilium.io/ips: 192.168.1.13
         gatus.home-operations.com/endpoint: |-
           group: services
-  connection:
-    secretName: mxs-galera-conn
-    port: 3306
   metrics:
     enabled: true
   requeueInterval: 1h
