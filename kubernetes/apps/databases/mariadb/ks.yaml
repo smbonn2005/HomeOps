@@ -37,12 +37,9 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/defaults
-    - ../../../../components/volsync
   dependsOn:
     - name: mariadb-operator
       namespace: databases
-    - name: volsync
-      namespace: storage
   path: "./kubernetes/apps/databases/mariadb/cluster"
   prune: true
   sourceRef:
