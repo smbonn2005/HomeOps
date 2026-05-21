@@ -19,3 +19,7 @@ resources:
   - ./users/bookstack.yaml
   - ./databases/bookstack.yaml
   - ./grants/bookstack.yaml
+
+  # MaxScale
+  - ./users/maxscale.yaml
+  - ./grants/maxscale.yaml
