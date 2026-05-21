@@ -24,8 +24,8 @@ spec:
   mariaDbRef:
     name: mariadb
   privileges:
-    - "SELECT"
-  database: "mysql.*"
+    - "SELECT, SHOW DATABASES, SHOW VIEW"
+  database: "*"
   table: "*"
   username: maxscale-server
 ---
