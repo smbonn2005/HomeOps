@@ -1,0 +1,14 @@
+---
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: bookstack
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: bookstackapp
+  table: "*"
+  username: bookstack

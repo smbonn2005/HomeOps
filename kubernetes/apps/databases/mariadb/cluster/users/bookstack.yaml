@@ -1,0 +1,12 @@
+---
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: bookstack
+spec:
+  mariaDbRef:
+    name: mariadb
+  passwordSecretKeyRef:
+    name: bookstack-secret
+    key: bookstack-mariadb-password
+  maxUserConnections: 20

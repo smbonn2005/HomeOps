@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/mariadb_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb
+spec:
+  rootPasswordSecretKeyRef:
+    name: mariadb-secret
+    key: mariadb-root-password
+  storage:
+    size: 5Gi
+    storageClassName: openebs-hostpath
+  replicas: 3
+  galera:
+    enabled: true
+    recovery:
+      podSyncTimeout: 30m0s
+      clusterBootstrapTimeout: 40m0s
+  metrics:
+    enabled: true
+  service:
+    type: LoadBalancer
+    metadata:
+      annotations:
+        lbipam.cilium.io/ips: 192.168.1.11
+        gatus.home-operations.com/endpoint: |-
+          group: services
+  myCnf: |
+    [mariadb]
+    transaction_isolation = READ-COMMITTED

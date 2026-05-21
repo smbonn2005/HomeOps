@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - ./backup.yaml --- Not deploying yet, waiting for Garage deployment ---
+  - ./externalsecret.yaml
+  - ./httproute.yaml
+  - ./mariadb.yaml
+  - ./maxscale.yaml
+
+  # Databases
+  # Pterodactyl
+  - ./users/pterodactyl.yaml
+  - ./databases/pterodactyl.yaml
+  - ./grants/pterodactyl.yaml
+
+  # Bookstack
+  - ./users/bookstack.yaml
+  - ./databases/bookstack.yaml
+  - ./grants/bookstack.yaml
