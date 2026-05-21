@@ -17,6 +17,8 @@ spec:
     recovery:
       podSyncTimeout: 30m0s
       clusterBootstrapTimeout: 40m0s
+  maxScaleRef:
+    name: maxscale
   metrics:
     enabled: true
   service:
