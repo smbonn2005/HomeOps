@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/user_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: maxscale-monitor
+spec:
+  mariaDbRef:
+    name: mariadb
+  passwordSecretKeyRef:
+    name: maxscale-monitor
+    key: password
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/user_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: maxscale-server
+spec:
+  mariaDbRef:
+    name: mariadb
+  passwordSecretKeyRef:
+    name: maxscale-server
+    key: password
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/user_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: maxscale-client
+spec:
+  mariaDbRef:
+    name: mariadb
+  passwordSecretKeyRef:
+    name: maxscale-client
+    key: password
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/user_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: maxscale-sync
+spec:
+  mariaDbRef:
+    name: mariadb
+  passwordSecretKeyRef:
+    name: maxscale-sync
+    key: password

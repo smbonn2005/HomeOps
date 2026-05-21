@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: maxscale-monitor
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "REPLICATION CLIENT, REPLICATION SLAVE, SLAVE MONITOR"
+  database: "*"
+  table: "*"
+  username: maxscale-monitor
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: maxscale-server
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "SELECT"
+  database: "mysql.*"
+  table: "*"
+  username: maxscale-server
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: maxscale-client
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: "*"
+  table: "*"
+  username: maxscale-client
+  grantOption: true
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: maxscale-sync
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: "mysql.*"
+  table: "*"
+  username: maxscale-sync
