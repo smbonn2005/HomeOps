@@ -5,9 +5,7 @@ kind: Kustomization
 resources:
   # - ./backup.yaml --- Not deploying yet, waiting for Garage deployment ---
   - ./externalsecret.yaml
-  - ./httproute.yaml
   - ./mariadb.yaml
-  - ./maxscale.yaml
 
   # Databases
   # Pterodactyl
