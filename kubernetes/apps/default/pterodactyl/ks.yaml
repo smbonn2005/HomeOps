@@ -12,6 +12,9 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/defaults
+  dependsOn:
+    - name: mariadb-cluster
+      namespace: databases
   path: ./kubernetes/apps/default/pterodactyl/app
   prune: true
   sourceRef:

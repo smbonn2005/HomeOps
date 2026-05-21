@@ -12,8 +12,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: mariadb-cluster
-      namespace: databases
     - name: volsync
       namespace: storage
   values:
