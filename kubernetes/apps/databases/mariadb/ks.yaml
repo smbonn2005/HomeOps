@@ -13,7 +13,7 @@ spec:
     - ../../../../components/defaults
   dependsOn:
     - name: external-secrets-stores
-      namespace: external-secrets
+      namespace: kube-system
   path: "./kubernetes/apps/databases/mariadb/app"
   prune: true
   sourceRef:
