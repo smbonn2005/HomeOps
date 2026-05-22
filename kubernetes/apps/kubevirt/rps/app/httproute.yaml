@@ -6,7 +6,7 @@ metadata:
   name: &app rps
   annotations:
     gatus.home-operations.com/endpoint: |
-      path:
+      url: https://projects.smbonn.me/
 spec:
   hostnames:
     - projects.smbonn.me
