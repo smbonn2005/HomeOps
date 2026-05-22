@@ -13,15 +13,15 @@ spec:
   rules:
     - backendRefs:
         - name: rps
-          port: 80
-      matches:
-      - path:
-          type: PathPrefix
-          value: /hooks/
-    - backendRefs:
-        - name: rps
           port: 8080
       matches:
         - path:
             type: PathPrefix
             value: /
+    - backendRefs:
+        - name: rps
+          port: 80
+      matches:
+      - path:
+          type: PathPrefix
+          value: /hooks/
