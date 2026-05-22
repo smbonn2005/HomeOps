@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: &app rps
   gatus.home-operations.com/endpoint: |
-    path:
+    path: /
 spec:
   hostnames:
     - projects.smbonn.me
