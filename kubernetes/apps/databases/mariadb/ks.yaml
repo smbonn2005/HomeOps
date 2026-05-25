@@ -14,7 +14,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: kube-system
-  path: "./kubernetes/apps/databases/mariadb/app"
+  path: ./kubernetes/apps/databases/mariadb/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -40,7 +40,7 @@ spec:
   dependsOn:
     - name: mariadb-operator
       namespace: databases
-  path: "./kubernetes/apps/databases/mariadb/cluster"
+  path: ./kubernetes/apps/databases/mariadb/cluster
   prune: true
   sourceRef:
     kind: GitRepository
