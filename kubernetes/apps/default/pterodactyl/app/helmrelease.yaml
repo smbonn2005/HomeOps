@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pterodactyl/panel
-              tag: v1.12.3@sha256:d9efe340f19ad4d9d62c9a52e6e05b231296875cbe30fec760172c590a4456c3
+              tag: v1.12.4@sha256:9fa0023ccba0f56b27a8839e33dea3cfe60fd559f8ac689fd758e24ce6420448
             env:
               DB_HOST: mariadb.databases.svc.cluster.local
               DB_PORT: 3306
