@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kiranshila/doplarr
-              tag: v3.7.0@sha256:8939a0d3f2081eb815abe3a4f8df7d3c7d16046e7931ac88ac841f16a9680179
+              tag: v3.8.0@sha256:54646923c667169619c0e93c3048120f32643791ed36452066f0839e714811c9
             envFrom:
               - secretRef:
                   name: doplarr-secret
