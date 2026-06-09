@@ -49,7 +49,7 @@ This is a mono repository for my home infrastructure and Kubernetes cluster. I t
 
 ## ⛵ Kubernetes
 
-There is a template over at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template) if you wanted to try and follow along with some of the practices I use here.
+There is a template over at [onedr0p/cluster-template](https://github.com/onedr0p/cluster-template) if you wanted to try and follow along with some of the practices I use here.
 
 ### Installation
 
