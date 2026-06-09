@@ -106,7 +106,7 @@ spec:
     route:
       app:
         annotations:
-          gatus.home-operations.com/enabled: "false"
+          gatus.home-operations.com/enabled: "true"
           external-dns.alpha.kubernetes.io/target: external.smbonn.me
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Observability

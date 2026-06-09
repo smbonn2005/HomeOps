@@ -22,7 +22,7 @@ _... managed with Flux, Renovate and GitHub Actions_ 🤖
 
 [![Home-Internet](https://img.shields.io/endpoint?url=https%3A%2F%2Fhealthchecks.io%2Fb%2F2%2F9987a9c6-309d-4b1c-9433-a057b7c2c42f.shields&style=for-the-badge&logo=ubiquiti&logoColor=white&label=Home%20Internet)](https://status.smbonn.me)&nbsp;&nbsp;
 [![Status-Page](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.smbonn.me%2Fapi%2Fv1%2Fendpoints%2Fexternal_gatus%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=statuspage&logoColor=white&label=Status%20Page)](https://status.smbonn.me/endpoints/external_gatus)&nbsp;&nbsp;
-[![Plex](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.smbonn.me%2Fapi%2Fv1%2Fendpoints%2Fexternal_plex%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=plex&logoColor=white&label=Plex)](https://status.jory.dev/endpoints/external_plex)
+[![Plex](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.smbonn.me%2Fapi%2Fv1%2Fendpoints%2Fexternal_plex%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=plex&logoColor=white&label=Plex)](https://status.smbonn.me/endpoints/external_plex)
 
 </div>
 
