@@ -5,6 +5,8 @@ kind: MariaDB
 metadata:
   name: mariadb
 spec:
+  updateStrategy:
+    autoUpdateDataPlane: true
   rootPasswordSecretKeyRef:
     name: mariadb-secret
     key: mariadb-root-password
