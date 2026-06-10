@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - ./helmrelease.yaml
-  - ./helmrepository.yaml
+  - ./ocirepository.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: node-feature-discovery
