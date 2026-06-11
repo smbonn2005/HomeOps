@@ -7,8 +7,8 @@ on:
     branches:
       - main
     paths:
-      - renovaterc.json5
-      - renovate/**.json5
+      - .renovaterc.json5
+      - .renovate/**.json5
   schedule:
     - cron: "20 * * * *" # 20 past every hour
   workflow_dispatch:
