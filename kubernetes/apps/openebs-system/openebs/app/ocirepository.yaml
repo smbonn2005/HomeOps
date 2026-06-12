@@ -11,6 +11,6 @@ spec:
     operation: copy
   ref:
     tag: 4.4.0
-  url: oci://ghcr.io/home-operations/charts-mirror/openebs
+  url: oci://ghcr.io/openebs/charts/openebs
   verify:
     provider: cosign
