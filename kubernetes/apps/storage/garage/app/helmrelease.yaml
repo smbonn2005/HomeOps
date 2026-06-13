@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: garage
+  name: &app garage
 spec:
   interval: 1h
   chartRef:
@@ -19,7 +20,7 @@ spec:
               repository: docker.io/dxflrs/garage
               tag: v2.3.0@sha256:866bd13ed2038ba7e7190e840482bc27234c4afaf77be8cfa439ae088c1e4690
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/New_York
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -41,7 +42,7 @@ spec:
       app:
         ports:
           s3:
-            port: 3900
+            port: &port 3900
           api:
             port: 3903
     route:
@@ -50,28 +51,53 @@ spec:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 403"]
         hostnames:
-          - "s3.${SECRET_DOMAIN_INTERNAL}"
+          - s3.smbonn.me
         parentRefs:
           - name: envoy-internal
             namespace: networking
         rules:
           - backendRefs:
-              - identifier: app
-                port: s3
+              - name: *app
+                port: *port
+    configMaps:
+      config:
+        data:
+          configuration.toml: |
+            metadata_dir = "/meta"
+            data_dir = "/data"
+            db_engine = "lmdb"
+            metadata_auto_snapshot_interval = "6h"
+
+            replication_factor = 1
+            compression_level = 2
+
+            rpc_bind_addr = "[::]:3901"
+            rpc_public_addr = "127.0.0.1:3901"
+
+            [s3_api]
+            s3_region = "us-east-1"
+            api_bind_addr = "[::]:3900"
+            root_domain = ".s3.smbonn.me"
+
+            [admin]
+            api_bind_addr = "[::]:3903"
     persistence:
       config:
-        type: secret
-        name: garage-secret
+        enabled: true
+        type: configMap
+        name: garage
         globalMounts:
           - path: /etc/garage.toml
-            subPath: garage.toml
-            readOnly: true
+            subPath: configuration.toml
       data:
-        existingClaim: "{{ .Release.Name }}"
-        advancedMounts:
-          garage:
-            app:
-              - path: /data
-                subPath: data
-              - path: /meta
-                subPath: meta
+        type: nfs
+        server: fs01.smbonn.me
+        path: /mnt/Main_Pool/Garage/data
+        globalMounts:
+          - path: /data
+      meta:
+        type: nfs
+        server: fs01.smbonn.me
+        path: /mnt/Main_Pool/Garage/meta
+        globalMounts:
+          - path: /meta

@@ -15,7 +15,7 @@ spec:
     - name: external-secrets-stores
       namespace: kube-system
   path: ./kubernetes/apps/storage/garage/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -24,7 +24,31 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app garage-webui
+  namespace: &namespace storage
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/defaults
+  dependsOn:
+    - name: garage
+      namespace: storage
+  path: ./kubernetes/apps/storage/garage/webui
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  wait: true
+  interval: 30m
+  timeout: 5m
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: *app
