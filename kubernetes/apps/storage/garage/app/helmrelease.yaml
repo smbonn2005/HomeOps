@@ -94,13 +94,13 @@ spec:
             subPath: configuration.toml
       data:
         type: nfs
-        server: fs01.smbonn.me
+        server: "192.168.1.4"
         path: /mnt/Main_Pool/Backups/Garage/data
         globalMounts:
           - path: /data
       meta:
         type: nfs
-        server: fs01.smbonn.me
+        server: "192.168.1.4"
         path: /mnt/Main_Pool/Backups/Garage/meta
         globalMounts:
           - path: /meta
