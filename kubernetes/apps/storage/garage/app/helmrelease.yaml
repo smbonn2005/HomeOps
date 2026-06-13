@@ -61,6 +61,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
+                namespace: storage
                 port: *port
     configMaps:
       config:
