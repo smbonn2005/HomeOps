@@ -25,7 +25,7 @@ spec:
               API_ADMIN_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: garage
+                    name: garage-secret
                     key: GARAGE_ADMIN_TOKEN
             envFrom:
               - secretRef:
