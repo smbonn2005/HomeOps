@@ -50,9 +50,6 @@ spec:
             port: 3903
     route:
       app:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 403"]
         hostnames:
           - s3.smbonn.me
         parentRefs:
