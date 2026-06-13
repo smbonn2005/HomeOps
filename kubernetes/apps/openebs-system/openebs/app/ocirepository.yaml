@@ -14,3 +14,6 @@ spec:
   url: oci://ghcr.io/openebs/charts/openebs
   verify:
     provider: cosign
+    matchOIDCIdentity:
+      - issuer: '^https://token.actions.githubusercontent.com$'
+        subject: '^https://github.com/openebs/openebs.*$'
