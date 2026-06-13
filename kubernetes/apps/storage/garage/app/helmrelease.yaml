@@ -95,12 +95,12 @@ spec:
       data:
         type: nfs
         server: fs01.smbonn.me
-        path: /mnt/Main_Pool/Garage/data
+        path: /mnt/Main_Pool/Backups/Garage/data
         globalMounts:
           - path: /data
       meta:
         type: nfs
         server: fs01.smbonn.me
-        path: /mnt/Main_Pool/Garage/meta
+        path: /mnt/Main_Pool/Backups/Garage/meta
         globalMounts:
           - path: /meta
