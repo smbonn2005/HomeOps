@@ -7,6 +7,7 @@ components:
   - ../../components/common
 resources:
   - ./fstrim/ks.yaml
+  - ./garage/ks.yaml
   - ./minio/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
