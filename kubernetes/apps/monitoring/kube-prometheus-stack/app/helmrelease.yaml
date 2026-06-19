@@ -45,6 +45,14 @@ spec:
       route:
         main:
           enabled: true
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/app: kube-prometheus-stack-prometheus-operator
+            gethomepage.dev/icon: prometheus.png
+            gethomepage.dev/name: Prometheus
+            gethomepage.dev/group: Observability
+            gethomepage.dev/widget.type: prometheus
+            gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitoring:9090
           hostnames:
             - prometheus.smbonn.me
           parentRefs:
