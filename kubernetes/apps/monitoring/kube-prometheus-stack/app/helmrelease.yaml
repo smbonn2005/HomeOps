@@ -80,7 +80,7 @@ spec:
       forceDeployDashboards: true
       operator:
         dashboardsConfigMapRefEnabled: true
-        folder: montitoring
+        folder: monitoring
         matchLabels:
           dashboards: grafana
     additionalPrometheusRulesMap:
