@@ -11,6 +11,8 @@ spec:
   interval: 1h
   values:
     fullnameOverride: gatus
+    podLabels:
+      app.kubernetes.io/name: gatus
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     gatus:
