@@ -66,6 +66,7 @@ spec:
         gethomepage.dev/group: Observability
         gethomepage.dev/pod-selector: "app=grafana"
         gethomepage.dev/widget.type: grafana
+        gethomepage.dev/widget.version: 2
         gethomepage.dev/widget.url: http://grafana-service.monitoring:3000
         gethomepage.dev/widget.alerts: alertmanager
         gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_GRAFANA_USERNAME}}`}}'
