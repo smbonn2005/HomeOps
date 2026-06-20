@@ -12,3 +12,4 @@ resources:
   - ./grafana-operator/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./silence-operator/ks.yaml
