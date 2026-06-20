@@ -6,7 +6,6 @@ namespace: monitoring
 components:
   - ../../components/common
 resources:
-  - ./alertmanager-silencer/ks.yaml
   - ./exporters
   - ./gatus/ks.yaml
   - ./grafana-operator/ks.yaml
