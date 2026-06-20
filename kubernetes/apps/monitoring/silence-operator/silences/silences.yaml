@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: kube-cpu-overcommit
+spec:
+  matchers:
+    - name: alertname
+      value: KubeCPUOvercommit
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: kube-client-certificate-expiration
+spec:
+  matchers:
+    - name: alertname
+      value: KubeClientCertificateExpiration
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: cdi-default-storage-class-degraded
+spec:
+  matchers:
+    - name: alertname
+      value: CDIDefaultStorageClassDegraded
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: cdi-storage-profiles-incomplete
+spec:
+  matchers:
+    - name: alertname
+      value: CDIStorageProfilesIncomplete
