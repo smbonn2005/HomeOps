@@ -63,7 +63,7 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
-      resources:
+      resources: # TODO: remove this when Ceph fixes the memory leak in the mgr module
         mgr:
           requests:
             cpu: 500m
