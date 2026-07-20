@@ -63,6 +63,13 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
+      resources:
+        mgr:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            memory: 2Gi
       storage:
         useAllNodes: true
         useAllDevices: true
