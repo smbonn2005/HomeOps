@@ -17,8 +17,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/golift/unpackerr
-              tag: 0.15.2@sha256:057e34740d26c34d81ec8e2faf8ec11f8dbfc77489b7a42826f52b37e5ee1b6c
+              repository: ghcr.io/unpackerr/unpackerr
+              tag: 0.15.2@sha256:89e13608521ece21dd300c39229fd595a55fbf4b8152771af5670a7455b5c747
             env:
               TZ: America/New_York
               UN_WEBSERVER_METRICS: "true"
