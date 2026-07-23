@@ -100,22 +100,6 @@ data:
         #       type: nextdns
         #       profile: {{HOMEPAGE_VAR_NEXTDNS_ID}}
         #       key: {{HOMEPAGE_VAR_NEXTDNS_API}}
-    # - Minecraft:
-    #     - Vibecraft:
-    #         icon: minecraft.png
-    #         widget:
-    #           type: minecraft
-    #           url: udp://${NAS_IP}:25565
-    #     - Skyblock:
-    #         icon: minecraft.png
-    #         widget:
-    #           type: minecraft
-    #           url: udp://${NAS_IP}:25566
-    #     - Create:
-    #         icon: minecraft.png
-    #         widget:
-    #           type: minecraft
-    #           url: udp://${NAS_IP}:25567
   settings.yaml: |
     title: Dashboard
     favicon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/heimdall.png
