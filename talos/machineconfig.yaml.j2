@@ -49,7 +49,7 @@ machine:
   install:
     diskSelector:
       model: Samsung SSD 870
-    image: factory.talos.dev/installer/f92cecb9f6acede2470b58eda86b66f51277ebf7aea88db6bd5a8b996e9ae9e2:v1.13.4 # i915, intel-ucode, thunderbolt
+    image: factory.talos.dev/installer/0a2f2667acd7c863ba2d3f64e3bf6b7532db4296629dfa69300ba6c21ed0510c:v1.13.4 # i915, intel-ucode, thunderbolt
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -113,8 +113,6 @@ cluster:
       - 10.42.0.0/16
     serviceSubnets:
       - 10.43.0.0/16
-    vip:
-      ip: 192.168.1.48
   secret: op://HomeLab/talos/CLUSTER_SECRET
   token: op://HomeLab/talos/CLUSTER_TOKEN
   {% if ENV.IS_CONTROLLER %}
@@ -203,3 +201,10 @@ apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
+{% if ENV.IS_CONTROLLER %}
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 192.168.1.48
+link: bond0
+{% endif %}
