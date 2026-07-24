@@ -4,7 +4,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - externalsecret.yaml
+  - externalsecret-volsync.yaml
   - httproute.yaml
+  - replicationdestination.yaml
+  - replicationsource.yaml
   - service.yaml
   - storageprofile-ceph.yaml
   - storageprofile-openebs.yaml
