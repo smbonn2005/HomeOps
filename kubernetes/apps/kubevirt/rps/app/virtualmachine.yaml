@@ -38,14 +38,14 @@ spec:
       volumes:
         - name: ubuntu-os
           dataVolume:
-            name: ubuntu-server
+            name: rps
         - name: cloudinit
           cloudInitNoCloud:
             secretRef:
               name: rps-cloudinit
   dataVolumeTemplates:
     - metadata:
-        name: ubuntu-server
+        name: rps
       spec:
         source:
           http:
@@ -53,6 +53,7 @@ spec:
         storage:
           accessModes:
             - ReadWriteOnce
+          volumeMode: Filesystem
           resources:
             requests:
               storage: 35Gi
