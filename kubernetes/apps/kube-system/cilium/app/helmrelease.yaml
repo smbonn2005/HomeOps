@@ -12,7 +12,7 @@ spec:
   values:
     autoDirectNodeRoutes: true
     bgpControlPlane:
-      enabled: false
+      enabled: true
     bpf:
       masquerade: false
     cgroup:
@@ -39,7 +39,7 @@ spec:
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
-      enabled: true
+      enabled: false
     loadBalancer:
       algorithm: maglev
       mode: dsr

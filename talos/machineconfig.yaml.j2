@@ -61,7 +61,7 @@ machine:
     image: ghcr.io/siderolabs/kubelet:v1.36.4
     nodeIP:
       validSubnets:
-        - 192.168.1.0/24
+        - 192.168.10.0/24
   nodeLabels:
     node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: main
@@ -96,7 +96,7 @@ cluster:
     {% endif %}
   clusterName: HomeOps
   controlPlane:
-    endpoint: https://192.168.1.48:6443
+    endpoint: https://192.168.10.48:6443
   discovery:
     enabled: true
     registries:
@@ -128,7 +128,7 @@ cluster:
         - level: Metadata
     certSANs:
       - 127.0.0.1
-      - 192.168.1.48
+      - 192.168.10.48
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
@@ -143,7 +143,7 @@ cluster:
     disabled: true
   etcd:
     advertisedSubnets:
-      - 192.168.1.0/24
+      - 192.168.10.0/24
     ca:
       crt: op://HomeLab/talos/CLUSTER_ETCD_CA_CRT
       key: op://HomeLab/talos/CLUSTER_ETCD_CA_KEY
@@ -205,6 +205,6 @@ timeout: 5m
 ---
 apiVersion: v1alpha1
 kind: Layer2VIPConfig
-name: 192.168.1.48
+name: 192.168.10.48
 link: bond0
 {% endif %}
