@@ -96,7 +96,7 @@ cluster:
     {% endif %}
   clusterName: HomeOps
   controlPlane:
-    endpoint: https://192.168.10.48:6443
+    endpoint: https://k8s.smbonn.me:6443
   discovery:
     enabled: true
     registries:
@@ -128,7 +128,7 @@ cluster:
         - level: Metadata
     certSANs:
       - 127.0.0.1
-      - 192.168.10.48
+      - k8s.smbonn.me
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
@@ -201,10 +201,3 @@ apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
-{% if ENV.IS_CONTROLLER %}
----
-apiVersion: v1alpha1
-kind: Layer2VIPConfig
-name: 192.168.10.48
-link: bond0
-{% endif %}
