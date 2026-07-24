@@ -20,6 +20,8 @@ spec:
       value: KubeClientCertificateExpiration
 ---
 # yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+# CephFS (RWX) is intentionally disabled (kubernetes/apps/rook-ceph/ceph-csi-drivers), so the
+# default ceph-block StorageClass can never satisfy CDI's smartclone+RWX check. Expected, not a fault.
 apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
@@ -28,13 +30,3 @@ spec:
   matchers:
     - name: alertname
       value: CDIDefaultStorageClassDegraded
----
-# yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
-apiVersion: observability.giantswarm.io/v1alpha2
-kind: Silence
-metadata:
-  name: cdi-storage-profiles-incomplete
-spec:
-  matchers:
-    - name: alertname
-      value: CDIStorageProfilesIncomplete

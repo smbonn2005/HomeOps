@@ -6,5 +6,6 @@ resources:
   - externalsecret.yaml
   - httproute.yaml
   - service.yaml
-  - storageprofile.yaml
+  - storageprofile-ceph.yaml
+  - storageprofile-openebs.yaml
   - virtualmachine.yaml
