@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/agones.dev/gameserver_v1.json
+apiVersion: agones.dev/v1
+kind: GameServer
+metadata:
+  name: simple-game-server
+spec:
+  ports:
+    - name: default
+      portPolicy: Dynamic
+      containerPort: 7654
+  template:
+    spec:
+      containers:
+        - name: simple-game-server
+          image: us-docker.pkg.dev/agones-images/examples/simple-game-server:0.43
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 20m
+            limits:
+              memory: 64Mi
+              cpu: 20m
