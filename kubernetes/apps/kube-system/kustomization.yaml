@@ -8,6 +8,8 @@ components:
 resources:
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
+  - ./etcd/etcd-defrag/etcd-defrag.yaml
+  - ./etcd/etcd-defrag/serviceaccount.yaml
   - ./external-secrets/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./metrics-server/ks.yaml
