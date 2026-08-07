@@ -11,7 +11,11 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/snapshot
     - ../../../../components/defaults
+  dependsOn:
+    - name: kopiur-repository
+      namespace: storage
   path: ./kubernetes/apps/default/qbittorrent/app
   prune: true
   sourceRef:
@@ -26,3 +30,5 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
+      KOPIUR_PUID: "568"
+      KOPIUR_PGID: "568"
