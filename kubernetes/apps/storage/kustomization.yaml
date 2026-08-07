@@ -8,5 +8,6 @@ components:
 resources:
   - ./fstrim/ks.yaml
   - ./garage/ks.yaml
+  - ./kopiur/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
