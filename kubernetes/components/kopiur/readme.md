@@ -2,21 +2,13 @@
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
 are deployed and healthy. `speedtest` (`apps/default/speedtest`) is the
-first app piloting these components, replacing its `components/volsync`
-usage — chosen because losing its backup history is low-stakes while
-Kopiur proves itself. Other apps should stay on `../volsync` until the
-speedtest pilot has been verified (snapshot taken, restore-via-populator
-confirmed on a PVC recreate) before rolling further.
+first app piloting these components — chosen because losing its backup
+history is low-stakes while Kopiur proves itself. Other apps should stay
+on `../volsync` until the speedtest pilot has been fully verified (a
+snapshot taken of real data, then a PVC recreated from it via the
+populator) before rolling further.
 
-This layout is adapted from a known-working production deployment of this
-chart, keeping the operator and repository in this repo's existing
-`storage` namespace instead of a dedicated `kopiur-system` one.
-Unlike VolSync (one restic repo per app, isolated by path prefix), Kopiur
-here uses a **single shared `ClusterRepository`** (`garage`, defined in
-`kubernetes/apps/storage/kopiur/repository`) — one secret, one bucket,
-referenced by every app's `SnapshotPolicy`.
-
-## Two components, two different places to add them
+## Four components
 
 - `./secret` — the shared `kopiur-repository-secret` `ExternalSecret`. Must
   be added once to **every namespace's top-level `kustomization.yaml`**
@@ -26,9 +18,39 @@ referenced by every app's `SnapshotPolicy`.
   `ClusterRepository` controller itself) *and* in each consuming
   namespace. This is why `kopiur-repository/ks.yaml` also pulls in
   `../../../../components/kopiur/secret`.
-- `./backup` — the per-app `SnapshotPolicy`/`SnapshotSchedule`/`Restore`/PVC,
-  added to an individual app's `ks.yaml` `components:`, same as VolSync's
-  component was.
+- `./snapshot` — just the `SnapshotPolicy`/`SnapshotSchedule` for an app,
+  targeting an existing PVC by name. Doesn't touch the PVC itself.
+- `./populate` — the PVC + `Restore` (populator mode) pair that provisions
+  a PVC from the latest snapshot for an app's `SnapshotPolicy`.
+- `./backup` — a convenience bundle of `./snapshot` + `./populate`, for a
+  brand new app with **no pre-existing PVC**.
+
+## Migrating an app off VolSync: snapshot first, then swap
+
+**Do not add `./backup` (or `./populate`) directly to an app that already
+has a VolSync-managed, bound PVC.** `PersistentVolumeClaim.spec.dataSourceRef`
+is immutable once a PVC is bound — Flux's dry-run will reject changing it
+from VolSync's `ReplicationDestination` to Kopiur's `Restore` in place, and
+because Flux applies a Kustomization's resources atomically, that single
+failure blocks the *entire* Kustomization (nothing gets pruned or created,
+not just the PVC). This is exactly what happened on the first speedtest
+attempt: `spec.dataSourceRef` dry-run failed and the whole apply aborted,
+which is a safe failure mode (the app keeps running on the old PVC), but
+it also means the migration has to happen in two steps:
+
+1. Add **`./volsync` and `./snapshot` together** (not `./backup`) to the
+   app's `ks.yaml`. This lets Kopiur back up the PVC VolSync still owns,
+   with no PVC changes at all. Confirm a real snapshot lands
+   (`kubectl kopiur snapshots list -n <ns>` or check the `SnapshotPolicy`
+   status) before moving on.
+2. Once a snapshot exists, swap `./volsync` → `./populate` (keep
+   `./snapshot`). Applying this requires deleting the existing PVC first
+   (scale the workload to 0, delete the PVC, then let Flux recreate it) —
+   the new `Restore` populator will find the snapshot from step 1 and
+   restore from it instead of starting empty. Check the underlying PV's
+   `persistentVolumeReclaimPolicy` before doing this: `Delete` means the
+   old volume's data is gone for good once the PVC is deleted, so step 1
+   isn't optional.
 
 ## Flux Kustomization
 
@@ -49,7 +71,7 @@ spec:
 ```
 
 and then call the components in your application's `ks.yaml` and the
-app's namespace `kustomization.yaml`:
+app's namespace `kustomization.yaml`. For a brand new app:
 
 ```yaml
 # apps/<namespace>/<app>/ks.yaml
@@ -60,6 +82,8 @@ spec:
     - ../../../../components/kopiur/backup
 ```
 
+For an app migrating off VolSync, see the two-step procedure above instead.
+
 ```yaml
 # apps/<namespace>/kustomization.yaml
 components:
@@ -69,7 +93,8 @@ components:
 ## Required `postBuild` vars
 
 - `APP`: The application name
-- `KOPIUR_CAPACITY`: The PVC size (also used as the mover's cache PVC size)
+- `KOPIUR_CAPACITY`: The PVC size (also used as the mover's cache PVC
+  size) — only needed when using `./populate` or `./backup`
 
 ## Optional `postBuild` vars
 
