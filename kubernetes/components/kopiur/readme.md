@@ -1,10 +1,12 @@
 # Kopiur Template
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
-are deployed. These per-app components (`./secret`, `./backup`) are not yet
-wired into any app — hold off referencing them from an app's `ks.yaml`
-until the operator has been confirmed healthy on the live cluster. See the
-VolSync equivalent at `../volsync` for the pattern this replaces.
+are deployed and healthy. `speedtest` (`apps/default/speedtest`) is the
+first app piloting these components, replacing its `components/volsync`
+usage — chosen because losing its backup history is low-stakes while
+Kopiur proves itself. Other apps should stay on `../volsync` until the
+speedtest pilot has been verified (snapshot taken, restore-via-populator
+confirmed on a PVC recreate) before rolling further.
 
 This layout is adapted from a known-working production deployment of this
 chart, keeping the operator and repository in this repo's existing
