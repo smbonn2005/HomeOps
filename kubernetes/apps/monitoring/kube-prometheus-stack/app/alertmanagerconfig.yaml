@@ -29,6 +29,7 @@ spec:
             matchType: =
     groupBy:
       - alertname
+      - namespace
       - job
     groupInterval: 5m
     groupWait: 1m
