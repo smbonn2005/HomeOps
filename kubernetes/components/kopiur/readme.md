@@ -1,12 +1,11 @@
 # Kopiur Template
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
-are deployed and healthy. `speedtest` (`apps/default/speedtest`) is the
-first app piloting these components — chosen because losing its backup
-history is low-stakes while Kopiur proves itself. Other apps should stay
-on `../volsync` until the speedtest pilot has been fully verified (a
-snapshot taken of real data, then a PVC recreated from it via the
-populator) before rolling further.
+are deployed and healthy. `speedtest` (`apps/default/speedtest`) piloted
+these components: a manual snapshot of its live VolSync-owned PVC
+succeeded, then it was cut over to `./backup` (VolSync removed, PVC
+recreated via the `Restore` populator) as the first full migration. Other
+apps should follow the same two-step procedure below before switching.
 
 ## Four components
 
