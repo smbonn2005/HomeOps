@@ -7,7 +7,7 @@
     "github>home-operations/renovate-presets//config/managerFilePatterns.json5",
     "github>home-operations/renovate-presets//config/registryAliases.json5",
     "github>home-operations/renovate-presets//managers/annotated.json5",
-    "github>home-operations/renovate-presets//managers/grafanaDashboards.json5",
+    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5",
     "github>home-operations/renovate-presets//managers/oci.json5",
     "github>home-operations/renovate-presets//overrides/changelogs.json5",
     "github>home-operations/renovate-presets//overrides/helmfile.json5",
