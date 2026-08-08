@@ -37,24 +37,9 @@ spec:
           pod: {}
       volumes:
         - name: ubuntu-os
-          dataVolume:
-            name: rps
+          persistentVolumeClaim:
+            claimName: rps
         - name: cloudinit
           cloudInitNoCloud:
             secretRef:
               name: rps-cloudinit
-  dataVolumeTemplates:
-    - metadata:
-        name: rps
-      spec:
-        source:
-          http:
-            url: https://cloud-images.ubuntu.com/releases/resolute/release/ubuntu-26.04-server-cloudimg-amd64.vmdk
-        storage:
-          accessModes:
-            - ReadWriteOnce
-          volumeMode: Filesystem
-          resources:
-            requests:
-              storage: 35Gi
-          storageClassName: ceph-block
