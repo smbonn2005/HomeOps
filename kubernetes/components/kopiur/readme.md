@@ -1,11 +1,11 @@
 # Kopiur Template
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
-are deployed and healthy. `speedtest` (`apps/default/speedtest`) piloted
-these components: a manual snapshot of its live VolSync-owned PVC
-succeeded, then it was cut over to `./backup` (VolSync removed, PVC
-recreated via the `Restore` populator) as the first full migration. Other
-apps should follow the same two-step procedure below before switching.
+are deployed and healthy. Every VolSync-backed app except `kubevirt/rps`
+is on step 1 (`./snapshot` alongside `./volsync`, verified backing up
+cleanly overnight). `speedtest` and `tautulli` have been fully cut over to
+`./backup`; the rest will follow the same two-step procedure below one at
+a time.
 
 ## Four components
 
