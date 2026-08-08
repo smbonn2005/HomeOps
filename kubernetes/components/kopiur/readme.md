@@ -1,19 +1,16 @@
 # Kopiur Template
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
-are deployed and healthy. Every app is on `./backup`/`./populate`, VolSync
-removed, except `kubevirt/rps`: CDI's `DataVolume` only supports its own
-fixed set of source types (confirmed against the live CRD schema, plus
+are deployed and healthy. VolSync has been fully removed — every app,
+including `kubevirt/rps`, is on `./backup`/`./populate`. For `rps`, CDI's
+`DataVolume` only supports its own fixed set of source types (confirmed
+against the live CRD schema, plus
 [cdi-populators.md](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/cdi-populators.md)) —
-it can't be pointed at a Kopiur `Restore`. Instead, `rps` dropped
+it can't be pointed at a Kopiur `Restore`. So `rps` dropped
 `dataVolumeTemplates` entirely and now references a plain,
 `./populate`-managed PVC directly via
 `volumes[].persistentVolumeClaim.claimName`, the same shape every other
-app uses. Its VolSync `ReplicationSource`/`ReplicationDestination` are
-deliberately still in place as a fallback (harmless — VolSync just backs
-up whatever PVC is named `rps`, regardless of how it's populated) until
-the Kopiur-populated boot is verified working; remove them in a follow-up
-once confirmed.
+app uses.
 
 ## Four components
 
@@ -32,32 +29,26 @@ once confirmed.
 - `./backup` — a convenience bundle of `./snapshot` + `./populate`, for a
   brand new app with **no pre-existing PVC**.
 
-## Migrating an app off VolSync: snapshot first, then swap
+## Changing a PVC's backing populator on an existing app: snapshot first, then swap
 
-**Do not add `./backup` (or `./populate`) directly to an app that already
-has a VolSync-managed, bound PVC.** `PersistentVolumeClaim.spec.dataSourceRef`
-is immutable once a PVC is bound — Flux's dry-run will reject changing it
-from VolSync's `ReplicationDestination` to Kopiur's `Restore` in place, and
-because Flux applies a Kustomization's resources atomically, that single
-failure blocks the *entire* Kustomization (nothing gets pruned or created,
-not just the PVC). This is exactly what happened on the first speedtest
-attempt: `spec.dataSourceRef` dry-run failed and the whole apply aborted,
-which is a safe failure mode (the app keeps running on the old PVC), but
-it also means the migration has to happen in two steps:
+`PersistentVolumeClaim.spec.dataSourceRef` is immutable once a PVC is
+bound — Flux's dry-run will reject changing it in place, and because Flux
+applies a Kustomization's resources atomically, that single failure blocks
+the *entire* Kustomization (nothing gets pruned or created, not just the
+PVC) — a safe failure mode (the app keeps running on the old PVC), but it
+means any such change has to happen in two steps:
 
-1. Add **`./volsync` and `./snapshot` together** (not `./backup`) to the
-   app's `ks.yaml`. This lets Kopiur back up the PVC VolSync still owns,
-   with no PVC changes at all. Confirm a real snapshot lands
-   (`kubectl kopiur snapshots list -n <ns>` or check the `SnapshotPolicy`
-   status) before moving on.
-2. Once a snapshot exists, swap `./volsync` → `./populate` (keep
-   `./snapshot`). Applying this requires deleting the existing PVC first
-   (scale the workload to 0, delete the PVC, then let Flux recreate it) —
-   the new `Restore` populator will find the snapshot from step 1 and
-   restore from it instead of starting empty. Check the underlying PV's
-   `persistentVolumeReclaimPolicy` before doing this: `Delete` means the
-   old volume's data is gone for good once the PVC is deleted, so step 1
-   isn't optional.
+1. Add `./snapshot` alongside whatever currently owns the PVC, no PVC
+   changes at all. Confirm a real snapshot lands (check the
+   `SnapshotPolicy` status, or trigger one manually with a `Snapshot` CR)
+   before moving on.
+2. Once a snapshot exists, add `./populate` (or swap to `./backup`) and
+   delete the existing PVC first (scale the workload to 0, delete the PVC,
+   then let Flux recreate it) — the new `Restore` populator will find the
+   snapshot from step 1 and restore from it instead of starting empty.
+   Check the underlying PV's `persistentVolumeReclaimPolicy` before doing
+   this: `Delete` means the old volume's data is gone for good once the
+   PVC is deleted, so step 1 isn't optional.
 
 ## Flux Kustomization
 
@@ -89,7 +80,8 @@ spec:
     - ../../../../components/kopiur/backup
 ```
 
-For an app migrating off VolSync, see the two-step procedure above instead.
+For an app that already has a bound PVC, see the two-step procedure above
+instead.
 
 ```yaml
 # apps/<namespace>/kustomization.yaml
