@@ -1,15 +1,19 @@
 # Kopiur Template
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
-are deployed and healthy. Every other VolSync-backed app is fully cut over
-to `./backup` (VolSync removed). `kubevirt/rps` is on step 1 only
-(`./snapshot` alongside its existing bespoke VolSync setup, not the shared
-`../volsync` component) — its disk PVC comes from a KubeVirt
-`dataVolumeTemplate` embedded in `virtualmachine.yaml`, not a plain
-`PersistentVolumeClaim`, so it can't use `./populate` the way every other
-app did. Cutting it over fully needs research into whether CDI's
-`DataVolume` can target a Kopiur `Restore` as a populator, ideally proven
-out against a throwaway VM first — not attempted yet.
+are deployed and healthy. Every app is on `./backup`/`./populate`, VolSync
+removed, except `kubevirt/rps`: CDI's `DataVolume` only supports its own
+fixed set of source types (confirmed against the live CRD schema, plus
+[cdi-populators.md](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/cdi-populators.md)) —
+it can't be pointed at a Kopiur `Restore`. Instead, `rps` dropped
+`dataVolumeTemplates` entirely and now references a plain,
+`./populate`-managed PVC directly via
+`volumes[].persistentVolumeClaim.claimName`, the same shape every other
+app uses. Its VolSync `ReplicationSource`/`ReplicationDestination` are
+deliberately still in place as a fallback (harmless — VolSync just backs
+up whatever PVC is named `rps`, regardless of how it's populated) until
+the Kopiur-populated boot is verified working; remove them in a follow-up
+once confirmed.
 
 ## Four components
 
