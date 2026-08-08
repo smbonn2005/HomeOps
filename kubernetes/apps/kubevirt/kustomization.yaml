@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: kubevirt
 components:
   - ../../components/common
+  - ../../components/kopiur/secret
 resources:
   - ./cdi/ks.yaml
   - ./operator/ks.yaml
