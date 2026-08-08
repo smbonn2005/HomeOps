@@ -33,4 +33,4 @@ spec:
   postBuild:
     substitute:
       APP: rps
-      KOPIUR_CAPACITY: 35Gi
+      KOPIUR_CAPACITY: 40Gi
