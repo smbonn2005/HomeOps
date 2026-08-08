@@ -1,9 +1,15 @@
 # Kopiur Template
 
 The `kopiur` operator + `ClusterRepository` (`kubernetes/apps/storage/kopiur`)
-are deployed and healthy. Every VolSync-backed app except `kubevirt/rps`
-is fully cut over to `./backup` (VolSync removed). `kubevirt/rps` uses a
-bespoke, non-component VolSync setup and needs its own migration plan.
+are deployed and healthy. Every other VolSync-backed app is fully cut over
+to `./backup` (VolSync removed). `kubevirt/rps` is on step 1 only
+(`./snapshot` alongside its existing bespoke VolSync setup, not the shared
+`../volsync` component) — its disk PVC comes from a KubeVirt
+`dataVolumeTemplate` embedded in `virtualmachine.yaml`, not a plain
+`PersistentVolumeClaim`, so it can't use `./populate` the way every other
+app did. Cutting it over fully needs research into whether CDI's
+`DataVolume` can target a Kopiur `Restore` as a populator, ideally proven
+out against a throwaway VM first — not attempted yet.
 
 ## Four components
 
