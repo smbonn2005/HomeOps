@@ -14,7 +14,7 @@ spec:
       namespace: databases
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
+    - name: kopiur
       namespace: storage
   values:
     controllers:
