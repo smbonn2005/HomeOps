@@ -6,6 +6,7 @@ metadata:
   name: zfs
 spec:
   allowCrossNamespaceImport: true
+  folder: storage
   instanceSelector:
     matchLabels:
       dashboards: grafana
