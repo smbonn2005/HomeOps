@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./grafanadashboard.yaml
   - ./nas-exporter.yaml
+  - ./prometheusrule.yaml
