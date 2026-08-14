@@ -6,6 +6,7 @@ resources:
   # - ./backup.yaml --- Not deploying yet, waiting for Garage deployment ---
   - ./externalsecret.yaml
   - ./mariadb.yaml
+  - ./prometheusrule.yaml
 
   # Databases
   # Pterodactyl
