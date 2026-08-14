@@ -1,0 +1,45 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: mariadb
+spec:
+  groups:
+    - name: mariadb.rules
+      rules:
+        - alert: MariadbGaleraClusterSizeDegraded
+          annotations:
+            summary: MariaDB Galera cluster size is {{ $value }} on {{ $labels.instance }}, below the expected 3 nodes.
+          expr: mysql_global_status_wsrep_cluster_size < 3
+          for: 5m
+          labels:
+            severity: warning
+        - alert: MariadbGaleraNotPrimaryComponent
+          annotations:
+            summary: MariaDB node {{ $labels.instance }} is not part of the Primary component and cannot safely serve reads/writes.
+          expr: mysql_global_status_wsrep_cluster_status != 1
+          for: 2m
+          labels:
+            severity: critical
+        - alert: MariadbGaleraNodeNotReady
+          annotations:
+            summary: MariaDB node {{ $labels.instance }} is not ready to accept queries.
+          expr: mysql_global_status_wsrep_ready != 1
+          for: 2m
+          labels:
+            severity: critical
+        - alert: MariadbGaleraNodeDisconnected
+          annotations:
+            summary: MariaDB node {{ $labels.instance }} is disconnected from the Galera cluster.
+          expr: mysql_global_status_wsrep_connected != 1
+          for: 2m
+          labels:
+            severity: critical
+        - alert: MariadbGaleraNodeNotSynced
+          annotations:
+            summary: MariaDB node {{ $labels.instance }} has not been in the Synced state for over 10 minutes.
+          expr: mysql_global_status_wsrep_local_state != 4
+          for: 10m
+          labels:
+            severity: warning
