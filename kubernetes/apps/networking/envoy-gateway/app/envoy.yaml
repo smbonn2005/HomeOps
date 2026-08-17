@@ -80,6 +80,17 @@ spec:
         certificateRefs:
           - kind: Secret
             name: smbonn-me-tls
+    - name: https-hass
+      hostname: hass.smbonn.me
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: smbonn-me-tls
 ---
 # yaml-language-server: $schema=https://cluster-schemas.smbonn.me/gateway.networking.k8s.io/gateway_v1.json
 apiVersion: gateway.networking.k8s.io/v1
@@ -193,3 +204,34 @@ spec:
           requestRedirect:
             scheme: https
             statusCode: 301
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: hass-http1-only
+spec:
+  # Home Assistant's companion app opens a persistent websocket (/api/websocket) using
+  # the classic Connection:Upgrade handshake, which HTTP/2 (and HTTP/3) don't support.
+  # Scoped to the hass-only listener (sectionName) so it doesn't affect h2/h3 elsewhere;
+  # ClientTrafficPolicy doesn't merge, so shared settings are duplicated from the `envoy` policy.
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-external
+      sectionName: https-hass
+  clientIPDetection:
+    xForwardedFor:
+      trustedCIDRs:
+        - 10.42.0.0/16
+  connection:
+    bufferLimit: 8Mi
+    maxAcceptPerSocketEvent: 0
+  tcpKeepalive: {}
+  timeout:
+    http:
+      requestReceivedTimeout: 0s
+  tls:
+    minVersion: "1.2"
+    alpnProtocols:
+      - http/1.1
