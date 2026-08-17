@@ -63,7 +63,7 @@ spec:
         hostnames:
           - mealie.smbonn.me
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: networking
     persistence:
       data:
