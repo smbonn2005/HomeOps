@@ -15,7 +15,7 @@ spec:
     s3:
       bucket: backups
       prefix: mariadb
-      endpoint: minio.minio.svc.cluster.local:9000
+      endpoint: minio.minio.svc.cluster.local:9000 # TODO: Need to configure & enable
       region:  us-east-1
       accessKeyIdSecretKeyRef:
         name: minio
