@@ -3,10 +3,11 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: Database
 metadata:
-  name: bookstackapp
+  name: acore_auth
   namespace: databases
 spec:
   mariaDbRef:
     name: mariadb
   characterSet: utf8
   collate: utf8_general_ci
+
