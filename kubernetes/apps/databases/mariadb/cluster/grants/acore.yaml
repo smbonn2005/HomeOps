@@ -1,0 +1,45 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: acore-auth
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: acore_auth
+  table: "*"
+  username: acore
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: acore-world
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: acore_world
+  table: "*"
+  username: acore
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: acore-characters
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: acore_characters
+  table: "*"
+  username: acore
