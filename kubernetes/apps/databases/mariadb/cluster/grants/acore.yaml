@@ -10,7 +10,7 @@ spec:
     name: mariadb
   privileges:
     - "ALL PRIVILEGES"
-  database: acore_auth
+  database: acore-auth
   table: "*"
   username: acore
 ---
@@ -25,7 +25,7 @@ spec:
     name: mariadb
   privileges:
     - "ALL PRIVILEGES"
-  database: acore_world
+  database: acore-world
   table: "*"
   username: acore
 ---
@@ -40,6 +40,6 @@ spec:
     name: mariadb
   privileges:
     - "ALL PRIVILEGES"
-  database: acore_characters
+  database: acore-characters
   table: "*"
   username: acore
