@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/mysql.oracle.com/innodbcluster_v2.json
+apiVersion: mysql.oracle.com/v2
+kind: InnoDBCluster
+metadata:
+  name: mysql
+spec:
+  secretName: mysql-secret
+  tlsUseSelfSigned: true
+  instances: 3
+  router:
+    instances: 1
+  datadirVolumeClaimTemplate:
+    accessModes:
+      - ReadWriteOnce
+    storageClassName: openebs-hostpath
+    resources:
+      requests:
+        storage: 20Gi
+  service:
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: 192.168.1.12
+      gatus.home-operations.com/endpoint: |-
+        group: services
+  metrics:
+    enable: true
+    image: prom/mysqld-exporter:v0.19.0
+    monitor: true
+    options:
+      - --collect.perf_schema.replication_group_members
+      - --collect.perf_schema.replication_group_member_stats
+  backupProfiles:
+    - name: s3
+      dumpInstance:
+        storage:
+          s3:
+            bucketName: backups
+            prefix: mysql
+            config: mysql-s3-backup-secret
+            profile: default
+            endpoint: garage.storage.svc.cluster.local:3900
+  backupSchedules:
+    - name: daily
+      schedule: "0 3 * * *"
+      timeZone: America/New_York
+      backupProfileName: s3
+      enabled: true
+      deleteBackupData: false
