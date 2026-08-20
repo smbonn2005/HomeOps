@@ -12,3 +12,6 @@ spec:
         kind: HelmRepository
         name: mysql-operator
   interval: 30m
+  values:
+    envs:
+      k8sClusterDomain: cluster.local
