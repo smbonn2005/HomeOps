@@ -19,6 +19,9 @@ spec:
             image:
               repository: public.ecr.aws/docker/library/mysql
               tag: 8.4.9
+            args:
+              - --ssl-cert=/certs/tls.crt
+              - --ssl-key=/certs/tls.key
             envFrom:
               - secretRef:
                   name: mysql-secret
@@ -33,6 +36,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
+          external-dns.alpha.kubernetes.io/hostname: mysql.smbonn.me
           lbipam.cilium.io/ips: 192.168.1.12
           gatus.home-operations.com/endpoint: |-
             group: services
@@ -46,3 +50,14 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /var/lib/mysql
+      tls:
+        enabled: true
+        type: secret
+        name: mysql-tls
+        globalMounts:
+          - path: /certs/tls.crt
+            subPath: tls.crt
+            readOnly: true
+          - path: /certs/tls.key
+            subPath: tls.key
+            readOnly: true
