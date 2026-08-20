@@ -21,6 +21,8 @@ spec:
               tag: 8.4.9
             args:
               - --tls-version=
+              - --mysql-native-password=ON
+              - --authentication-policy=mysql_native_password
             envFrom:
               - secretRef:
                   name: mysql-secret
