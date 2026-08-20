@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: databases
 components:
   - ../../components/common
+  - ../../components/kopiur/secret
 resources:
   - ./cloudnative-pg/ks.yaml
   - ./mariadb/ks.yaml

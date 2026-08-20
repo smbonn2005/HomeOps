@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://cluster-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: mysql-operator
-spec:
-  interval: 1h
-  url: https://mysql.github.io/mysql-operator/
