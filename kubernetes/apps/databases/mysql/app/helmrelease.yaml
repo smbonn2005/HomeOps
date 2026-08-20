@@ -19,6 +19,8 @@ spec:
             image:
               repository: public.ecr.aws/docker/library/mysql
               tag: 8.4.9
+            args:
+              - --skip-ssl
             envFrom:
               - secretRef:
                   name: mysql-secret
