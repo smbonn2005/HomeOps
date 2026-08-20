@@ -31,3 +31,7 @@ spec:
     substitute:
       APP: *app
       KOPIUR_CAPACITY: 20Gi
+      # mysql official image runs mysqld as uid/gid 999, not kopiur's 1000 default;
+      # mismatch fails snapshots reading mysqld's 0600 auto-generated key files (server-key.pem etc)
+      KOPIUR_PUID: "999"
+      KOPIUR_PGID: "999"
