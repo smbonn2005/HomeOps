@@ -10,4 +10,5 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./mariadb/ks.yaml
   - ./mysql/ks.yaml
+  - ./mysql-backup/ks.yaml
   - ./redis/ks.yaml
