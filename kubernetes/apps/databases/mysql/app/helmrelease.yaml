@@ -20,7 +20,7 @@ spec:
               repository: public.ecr.aws/docker/library/mysql
               tag: 8.4.9
             args:
-              - --skip-ssl
+              - --tls-version=
             envFrom:
               - secretRef:
                   name: mysql-secret
