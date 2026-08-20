@@ -8,8 +8,15 @@ spec:
   secretName: mysql-secret
   tlsUseSelfSigned: true
   instances: 3
+  # Pinned to the 8.4 LTS line, not the operator's default (26.7.0): AzerothCore's
+  # own MySQL version-compat check (DatabaseWorkerPool.cpp's DatabaseIncompatibleVersion)
+  # parses the server version string one character per component, which breaks on any
+  # double-digit major version and misreads 26.7.0 as older than its minimum (8.0.0),
+  # refusing the connection outright.
+  version: 8.4.9
   router:
     instances: 1
+    version: 8.4.9
   datadirVolumeClaimTemplate:
     accessModes:
       - ReadWriteOnce
