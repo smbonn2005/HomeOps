@@ -8,8 +8,10 @@ spec:
   secretName: mysql-secret
   tlsUseSelfSigned: true
   instances: 3
+  version: 8.4.9
   router:
     instances: 1
+    version: 8.4.9
   datadirVolumeClaimTemplate:
     accessModes:
       - ReadWriteOnce
