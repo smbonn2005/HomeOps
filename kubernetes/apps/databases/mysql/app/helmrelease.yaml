@@ -19,9 +19,6 @@ spec:
             image:
               repository: public.ecr.aws/docker/library/mysql
               tag: 8.4.9
-            args:
-              - --mysql-native-password=ON
-              - --authentication-policy=mysql_native_password
             envFrom:
               - secretRef:
                   name: mysql-secret
