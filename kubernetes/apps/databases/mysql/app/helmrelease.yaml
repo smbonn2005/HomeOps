@@ -20,6 +20,7 @@ spec:
               repository: public.ecr.aws/docker/library/mysql
               tag: 8.4.9
             args:
+              - --disable-log-bin
               - --ssl-cert=/certs/tls.crt
               - --ssl-key=/certs/tls.key
             envFrom:
