@@ -23,15 +23,20 @@ spec:
               - --disable-log-bin
               - --ssl-cert=/certs/tls.crt
               - --ssl-key=/certs/tls.key
+              - --max-connections=500
+              - --max-allowed-packet=64M
+              - --wait-timeout=28800
+              - --innodb-buffer-pool-size=2G
+              - --innodb-flush-log-at-trx-commit=2
             envFrom:
               - secretRef:
                   name: mysql-secret
             resources:
               requests:
                 cpu: 100m
-                memory: 512Mi
+                memory: 3Gi
               limits:
-                memory: 2Gi
+                memory: 4Gi
     service:
       app:
         controller: *app
