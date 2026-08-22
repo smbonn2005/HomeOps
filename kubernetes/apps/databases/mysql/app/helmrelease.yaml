@@ -28,6 +28,11 @@ spec:
               - --wait-timeout=28800
               - --innodb-buffer-pool-size=2G
               - --innodb-flush-log-at-trx-commit=2
+              - --innodb-fill-factor=80
+              - --innodb-io-capacity=500
+              - --innodb-io-capacity-max=2500
+              - --innodb-buffer-pool-instances=12
+              - --transaction-isolation=READ-COMMITTED
             envFrom:
               - secretRef:
                   name: mysql-secret
