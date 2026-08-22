@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: public.ecr.aws/docker/library/mysql
-              tag: 8.4.9
+              tag: 8.4.11
             args:
               - --disable-log-bin
               - --ssl-cert=/certs/tls.crt
