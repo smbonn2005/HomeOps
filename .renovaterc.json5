@@ -12,6 +12,11 @@
       "matchPackageNames": ["/postgresql/"],
       "allowedVersions": "<17"
     },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/mysql/"],
+      "allowedVersions": "<9"
+    },
     // Auto-merge rules
     {
       "description": "Auto-merge trusted OCI digests",
