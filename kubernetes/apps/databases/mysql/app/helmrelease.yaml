@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mysql
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      mysql:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: public.ecr.aws/docker/library/mysql
+              tag: 8.4.9
+            args:
+              - --disable-log-bin
+              - --ssl-cert=/certs/tls.crt
+              - --ssl-key=/certs/tls.key
+              - --max-connections=500
+              - --max-allowed-packet=64M
+              - --wait-timeout=28800
+              - --innodb-buffer-pool-size=2G
+              - --innodb-flush-log-at-trx-commit=2
+              - --innodb-fill-factor=80
+              - --innodb-io-capacity=500
+              - --innodb-io-capacity-max=2500
+              - --innodb-buffer-pool-instances=12
+              - --transaction-isolation=READ-COMMITTED
+            envFrom:
+              - secretRef:
+                  name: mysql-secret
+            resources:
+              requests:
+                cpu: 100m
+                memory: 3Gi
+              limits:
+                memory: 4Gi
+    service:
+      app:
+        controller: *app
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: mysql.smbonn.me
+          lbipam.cilium.io/ips: 192.168.1.12
+          gatus.home-operations.com/endpoint: |-
+            group: services
+        ports:
+          mysql:
+            enabled: true
+            port: 3306
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /var/lib/mysql
+      tls:
+        enabled: true
+        type: secret
+        name: mysql-tls
+        globalMounts:
+          - path: /certs/tls.crt
+            subPath: tls.crt
+            readOnly: true
+          - path: /certs/tls.key
+            subPath: tls.key
+            readOnly: true

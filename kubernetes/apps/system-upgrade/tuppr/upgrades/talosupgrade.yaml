@@ -7,15 +7,20 @@ metadata:
 spec:
   talos:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-    version: v1.13.4
+    version: v1.13.8
   policy:
     debug: true
     rebootMode: powercycle
   healthChecks:
-    - # No active VolSync replications
-      apiVersion: volsync.backube/v1alpha1
-      kind: ReplicationSource
-      expr: status.conditions.filter(c, c.type == "Synchronizing").all(c, c.status == "False")
+    - # No active Kopiur snapshots
+      apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: Snapshot
+      expr: status.phase != 'Running'
+    - # No active Kopiur restores
+      apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: Restore
+      expr: |-
+        !(status.phase in ['Resolving', 'Restoring'])
     - # Ceph cluster is Healthy
       apiVersion: ceph.rook.io/v1
       kind: CephCluster

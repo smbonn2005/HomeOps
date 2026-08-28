@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nas-exporter
+spec:
+  groups:
+    - name: nas-exporter.rules
+      rules:
+        - alert: ZfsPoolUnhealthy
+          annotations:
+            summary: ZFS pool {{ $labels.zpool }} on {{ $labels.instance }} is {{ $labels.state }}.
+          expr: node_zfs_zpool_state{state!="online"} == 1
+          for: 5m
+          labels:
+            severity: critical

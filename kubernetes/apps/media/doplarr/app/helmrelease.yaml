@@ -20,8 +20,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/kiranshila/doplarr
-              tag: v3.8.0@sha256:54646923c667169619c0e93c3048120f32643791ed36452066f0839e714811c9
+              repository: ghcr.io/activexray/doplarr_rs
+              tag: v4.6.0@sha256:3487e7193f14f8f7e290c69e9355a5ded548853ffa18b62178486ca33ce76820
             envFrom:
               - secretRef:
                   name: doplarr-secret

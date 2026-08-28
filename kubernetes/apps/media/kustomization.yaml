@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: media
 components:
   - ../../components/common
+  - ../../components/kopiur/secret
 resources:
   - ./plex/ks.yaml
   - ./sonarr/ks.yaml

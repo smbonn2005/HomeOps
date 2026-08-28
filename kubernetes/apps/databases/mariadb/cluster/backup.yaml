@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/k8s.mariadb.com/backup_v1alpha1.json
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: Backup
 metadata:
@@ -13,7 +15,7 @@ spec:
     s3:
       bucket: backups
       prefix: mariadb
-      endpoint: minio.minio.svc.cluster.local:9000
+      endpoint: minio.minio.svc.cluster.local:9000 # TODO: Need to configure & enable
       region:  us-east-1
       accessKeyIdSecretKeyRef:
         name: minio

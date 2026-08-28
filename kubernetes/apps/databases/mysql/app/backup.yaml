@@ -1,0 +1,53 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mysql-backup
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      mysql-backup:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/nfrastack/container-db-backup
+              tag: 4.9.0@sha256:80d3bc0524611d85fd82738b228f88a92077ad2d0a36ae32237d6a25a93e2439
+            env:
+              TIMEZONE: America/New_York
+              BACKUP_JOB_CONCURRENCY: "1"
+              DEFAULT_BACKUP_LOCATION: S3
+              DEFAULT_COMPRESSION: ZSTD
+              DEFAULT_CHECKSUM: SHA1
+              DEFAULT_BACKUP_INTERVAL: "1440" # daily
+              DEFAULT_BACKUP_BEGIN: "0300" # 3am America/New_York
+              DEFAULT_CLEANUP_TIME: "43200" # 30 days, in minutes
+              DEFAULT_S3_BUCKET: mysql
+              DEFAULT_S3_HOST: garage.storage.svc.cluster.local:3900
+              DEFAULT_S3_PROTOCOL: http
+              DEFAULT_S3_REGION: us-east-1
+              # Oracle mysqladmin's --skip-ssl is broken in 4.9.0 (nfrastack/container-db-backup#486),
+              # fixed in 4.9.1 but no image has been published for that tag yet -- stick with the
+              # default mariadb client, which dumps a real MySQL 8.4 server fine and isn't affected.
+              DB01_TYPE: mysql
+              DB01_HOST: mysql.databases.svc.cluster.local
+              DB01_NAME: ALL
+              DB01_USER: root
+              DB01_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-secret
+                    key: MYSQL_ROOT_PASSWORD
+            envFrom:
+              - secretRef:
+                  name: mysql-backup-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi

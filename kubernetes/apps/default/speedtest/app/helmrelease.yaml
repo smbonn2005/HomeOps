@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
+    - name: kopiur
       namespace: storage
   values:
     controllers:
@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: lscr.io/linuxserver/speedtest-tracker
-              tag: 1.14.6@sha256:1647a57e0c125eac6c3a5256c499aa8f580fa7d27d0842376277cdf93e137018
+              tag: 1.15.0@sha256:59518a6f2b49254b310cc2e543320dd3fbaa80381b588cd1f2bf116073698c27
             env:
               DISPLAY_TIMEZONE: America/New_York
               DB_CONNECTION: pgsql

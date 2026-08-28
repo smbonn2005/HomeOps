@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
     - ../../../../components/defaults
   path: ./kubernetes/apps/default/mealie/app
   dependsOn:
@@ -18,6 +18,8 @@ spec:
       namespace: databases
     - name: external-secrets-stores
       namespace: kube-system
+    - name: kopiur-repository
+      namespace: storage
   prune: true
   sourceRef:
     kind: GitRepository
@@ -30,4 +32,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CAPACITY: 10Gi
+      KOPIUR_PUID: "911"
+      KOPIUR_PGID: "911"

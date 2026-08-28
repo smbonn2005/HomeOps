@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
+    - name: kopiur
       namespace: storage
   values:
     controllers:
@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mealie-recipes/mealie
-              tag: v3.21.0@sha256:4e1e8d98b883009cb849851857e277109c21db1c2d857ae61e14de894f2169ff
+              tag: v3.24.0@sha256:0b08ac3a9f0a65b8298bcb3a9fcb596f870f92fbefbecd8fffe075fa9b6d2d5d
             env:
               TZ: "America/New_York"
               BASE_URL: https://mealie.smbonn.me
@@ -63,7 +63,7 @@ spec:
         hostnames:
           - mealie.smbonn.me
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: networking
     persistence:
       data:

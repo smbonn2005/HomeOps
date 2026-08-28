@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+# Convenience bundle of ../snapshot + ../populate for apps with no
+# pre-existing PVC. Apps with an already-bound PVC must not use this
+# directly — see readme.md's staged procedure (snapshot first, then swap
+# to populate once a real snapshot exists, since dataSourceRef is
+# immutable on an already-bound PVC).
+resources:
+  - ../snapshot/snapshotpolicy.yaml
+  - ../snapshot/snapshotschedule.yaml
+  - ../populate/pvc.yaml
+  - ../populate/restore.yaml

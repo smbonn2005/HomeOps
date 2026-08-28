@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
+    - name: kopiur
       namespace: storage
   values:
     controllers:
@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: 2026.7.3@sha256:7a6951bc274d802206d9ab2e76885fec8ba4f41707ae31d81207ebe5c73b84fb
+              tag: 2026.8.3@sha256:16ca445e58fa71d4f7ff287d4e9793ea690ccae932a5e200852371425cd7abb0
             env:
               TZ: America/New_York
               HASS_HTTP_TRUSTED_PROXY_1: 192.168.1.0/24
@@ -61,6 +61,7 @@ spec:
         controller: *app
         ports:
           http:
+            appProtocol: kubernetes.io/ws
             port: 8123
     route:
       app:

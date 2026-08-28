@@ -14,7 +14,7 @@ spec:
       namespace: databases
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
+    - name: kopiur
       namespace: storage
   values:
     controllers:
@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pterodactyl/panel
-              tag: v1.14.1@sha256:afe17a41162e26967c6671e855add4aba4099468faabcdf8679ee54dbec3ce12
+              tag: v1.15.1@sha256:e27a06cfcd078691ddf9805ae0dee2ee529b35ce18e427ef970de4d503602f2c
             env:
               DB_HOST: mariadb.databases.svc.cluster.local
               DB_PORT: 3306
