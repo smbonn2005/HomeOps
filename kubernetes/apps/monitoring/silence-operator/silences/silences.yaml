@@ -30,3 +30,15 @@ spec:
   matchers:
     - name: alertname
       value: CDIDefaultStorageClassDegraded
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: node-memory-high-utilization-nas
+spec:
+  matchers:
+    - name: alertname
+      value: NodeMemoryHighUtilization
+    - name: instance
+      value: 192.168.1.4:9100
