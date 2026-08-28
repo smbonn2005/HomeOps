@@ -51,7 +51,7 @@ spec:
                         values: ["frigate"]
                   topologyKey: kubernetes.io/hostname
           nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
+            node.kubernetes.io/gpu: "true"
           securityContext:
             runAsUser: 568
             runAsGroup: 568
