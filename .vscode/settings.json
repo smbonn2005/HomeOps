@@ -9,9 +9,9 @@
   ],
     "files.associations": {
         "*.json5": "jsonc",
-        "./kubernetes/**/*.sops.toml": "plaintext"
     },
     "material-icon-theme.files.associations": {
+      "*.gotmpl": "smarty",
       "*.sops.yaml": "lock",
       "helmfile.yaml": "helm",
       "kubeconfig": "kubernetes",
@@ -22,7 +22,7 @@
       "bootstrap": "seeders",
       "flux": "pipe",
       "talos": "linux",
-      ".github/renovate": "robot",
+      ".renovate": "robot",
       ".github/workflows": "ci",
       // namespaces
       "actions-runner-system": "github",

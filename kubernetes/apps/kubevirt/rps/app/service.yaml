@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rps
+  annotations:
+    lbipam.cilium.io/ips: 192.168.10.95
 spec:
   ports:
     - name: ssh
