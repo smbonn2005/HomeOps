@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/tuppr.home-operations.com/talosupgrade_v1alpha1.json
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/tuppr.home-operations.com/talosupgrade_v1alpha1.json
 apiVersion: tuppr.home-operations.com/v1alpha1
 kind: TalosUpgrade
 metadata:
@@ -25,3 +25,9 @@ spec:
       apiVersion: ceph.rook.io/v1
       kind: CephCluster
       expr: status.ceph.health in ['HEALTH_OK']
+  silences:
+    - matchers:
+        - name: alertname
+          value: ^(CephMonDown|CephOSDDown|KubeNodeUnreachable|TargetDown)$
+          matchType: "=~"
+      maxDuration: 1h
