@@ -53,20 +53,20 @@ There is a template over at [onedr0p/cluster-template](https://github.com/onedr0
 
 ### Installation
 
-My Kubernetes cluster is deployed with [Talos](https://www.talos.dev/). This is a semi hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage.
+My Kubernetes cluster is deployed with [Talos](https://www.talos.dev/). This is a semi hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage. Cluster and Kubernetes upgrades are rolled out automatically by [tuppr](https://github.com/home-operations/tuppr).
 
 ### Core Components
 
-<!-- - [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners. -->
+- [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
 - [cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
 - [cilium](https://cilium.io/): Internal Kubernetes networking plugin.
 - [cloudflared](https://github.com/cloudflare/cloudflared): Enables Cloudflare secure access to certain ingresses.
+- [envoy-gateway](https://gateway.envoyproxy.io/): Gateway API controller to expose HTTP traffic to pods over DNS.
 - [external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
 - [external-secrets](https://github.com/external-secrets/external-secrets/): Managed Kubernetes secrets using [1Password Connect](https://github.com/1Password/connect).
-- [ingress-nginx](https://github.com/kubernetes/ingress-nginx/): Ingress controller to expose HTTP traffic to pods over DNS.
+- [kopiur](https://github.com/home-operations/kopiur): Backup and recover of persistent volume claims.
 - [rook-ceph](https://github.com/rook/rook): Distributed block storage for peristent storage.
 - [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
-- [volsync](https://github.com/backube/volsync): Backup and recover of persistent volume claims.
 
 ### GitOps
 
@@ -75,6 +75,8 @@ My Kubernetes cluster is deployed with [Talos](https://www.talos.dev/). This is 
 The way Flux works for me here is it will recursively search the [kubernetes/apps](./kubernetes/apps) folder until it finds the most top level `kustomization.yaml` per directory and then apply all the resources listed in it. That aforementioned `kustomization.yaml` will generally only have a namespace resource and one or many Flux kustomizations. Those Flux kustomizations will generally have a `HelmRelease` or other resources related to the application underneath it which will be applied.
 
 [Renovate](https://github.com/renovatebot/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created. When some PRs are merged [Flux](https://github.com/fluxcd/flux2) applies the changes to my cluster.
+
+PR-time validation (rendering the diff against `main`, posting status checks) is handled by [Konflate](https://github.com/home-operations/konflate), a webhook-driven in-cluster app that replaced the old `flux-local` GitHub Action.
 
 ### Directories
 
@@ -119,21 +121,23 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 
 ---
 
-### Ingress Controller
+## 🌐 Networking
 
-External access to my cluster is done using a [Cloudflare](https://www.cloudflare.com/) tunnel. This works to prevent me from having to open ports in my router / firewall, as you would normally have to do to allow access to internal services.
+### Ingress / Gateway
+
+All in-cluster ingress goes through [envoy-gateway](https://gateway.envoyproxy.io/) using Gateway API `HTTPRoute`s — there are no classic `Ingress` resources. Two gateways exist in the `networking` namespace: `envoy-internal` (LAN only) and `envoy-external` (public). External access to `envoy-external` is served through a [Cloudflare](https://www.cloudflare.com/) Tunnel (`cloudflared`), so I never have to open ports on my router / firewall.
 
 ### Internal DNS
 
-My `pfSense` router serves as my Internal DNS server and is listening on `:53`. All DNS queries for _**my**_ domains are forwarded to [k8s_gateway](https://github.com/ori-edge/k8s_gateway) that is running in my cluster. With this setup `k8s_gateway` has direct access to my clusters ingresses and services and serves DNS for them in my internal network.
+My [UniFi](https://ui.com/) UDM SE is the LAN DNS resolver, listening on `:53`. Internal `A`/`CNAME` records for _**my**_ domain are written directly to the UDM SE by [unifi-dns](https://github.com/kashalls/external-dns-unifi-webhook) (an `external-dns` provider webhook) which watches the `envoy-internal` gateway and its `HTTPRoute`s and points them at the internal Envoy load balancer IP. In-cluster service discovery is handled by a self-managed [CoreDNS](https://coredns.io/) deployment.
 
 ### Ad Blocking
 
-My `pfSense` router is utilizing the `pfBlockerNG` plugin which allows me to filter out known ad-serving sites & domains.
+The UniFi UDM SE handles DNS-level ad / tracker filtering using its built-in Ad Blocking (content filtering) feature.
 
 ### External DNS
 
-[external-dns](https://github.com/kubernetes-sigs/external-dns) is deployed in my cluster and configure to sync DNS records to [Cloudflare](https://www.cloudflare.com/). The only ingresses `external-dns` looks at to gather DNS records to put in `Cloudflare` are ones that have an annotation of `external-dns.alpha.kubernetes.io/target`
+[external-dns](https://github.com/kubernetes-sigs/external-dns) is deployed in my cluster and configured to sync public DNS records to [Cloudflare](https://www.cloudflare.com/). It watches the `envoy-external` gateway's `HTTPRoute`s along with `DNSEndpoint` CRDs, and creates the records proxied through Cloudflare by default.
 
 ---
 
@@ -147,13 +151,13 @@ My `pfSense` router is utilizing the `pfBlockerNG` plugin which allows me to fil
 
 | Device                    | Count | OS Disk Size | Data Disk Size              | Ram  | Operating System | Purpose             |
 |---------------------------|-------|--------------|-----------------------------|------|------------------|---------------------|
-| Supermicro SuperServer 1U | 1     | 256GB NVMe   | -                           | 16GB | pfSense          | Router              |
+| Ubiquiti UDM SE           | 1     | -            | -                           | -    | UniFi OS         | Router              |
 | Intel NUC11PAHi7          | 3     | 250GB SSD    | 2TB NVMe (rook-ceph)        | 64GB | Talos            | Kubernetes Masters  |
 | Intel NUC11PAHi7          | 1     | 250GB SSD    | 1TB NVMe                    | 64GB | XCP-NG           | VM Hypervisor       |
-| Minisforum MS01           | 1     | 2x 64GB NVMe | 6x12TB ZFS (mirrored vdevs) | 64GB | TrueNas Scale    | NFS + Backup Server |
+| Minisforum MS01           | 1     | 2x 64GB NVMe | 6x12TB ZFS (mirrored vdevs) | 64GB | TrueNAS Scale    | NFS + Backup Server |
 | APC SMT3000 w/ NIC        | 1     | -            | -                           | -    | -                | UPS                 |
-| Dell 8132F Switch         | 1     | -            | -                           | -    | -                | Core 10Gb Switch    |
-| Dell X1052 Switch         | 1     | -            | -                           | -    | -                | Service Switch      |
+| Ubiquiti USW Aggregation  | 1     | -            | -                           | -    | UniFi OS         | Core 10Gb Switch    |
+| Dell X1052 Switch         | 1     | -            | -                           | -    | -                | Secondary Switch    |
 
 ---
 
