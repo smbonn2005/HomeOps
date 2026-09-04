@@ -47,6 +47,7 @@ jobs:
         with:
           reporter: local
           fail_level: error
+          filter_mode: nofilter
 
   renovate-config-validator:
     name: Lint - Renovate Config Validator
