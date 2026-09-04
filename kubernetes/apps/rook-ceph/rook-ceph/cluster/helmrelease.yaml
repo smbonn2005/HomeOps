@@ -74,13 +74,19 @@ spec:
             keyGeneration: 2
           # Talos >= 1.13.10 backports the aes256k libceph patches into the 6.18
           # kernel and rook-ceph v1.20.7 rolls cephcsi to v3.17.1, so CSI/PVC-mount
-          # keys can move to aes256k too. keepPriorKeyCountMax keeps the prior aes
-          # key alive for already-mounted PVs until a rolling node reboot migrates
-          # them; set back to 0 once every node has cycled.
+          # keys use aes256k. All nodes have been rebooted onto the gen-2 keys
+          # (mon sessions show only *.2 clients), so retire the prior aes keys.
           csi:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
-            keepPriorKeyCountMax: 1
+            keepPriorKeyCountMax: 0
+            keyType: aes256k
+          # Unused (no CephBlockPool mirroring) but Rook creates the key anyway;
+          # rotate it so every CephX key is aes256k and the cluster can later
+          # restrict allowedCiphers to [aes256k].
+          rbdMirrorPeer:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
             keyType: aes256k
       storage:
         useAllNodes: true
