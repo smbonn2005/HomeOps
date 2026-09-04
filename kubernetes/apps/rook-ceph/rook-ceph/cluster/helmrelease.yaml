@@ -57,9 +57,7 @@ spec:
             enabled: true
           - name: pg_autoscaler
             enabled: true
-          # Rook 1.20.6+ force-disables the rook mgr module on Ceph v20.2.2-v20.2.4
-          # (mgr crash/leak); keep it off so it isn't re-enabled on later Ceph builds.
-          - name: rook
+          - name: rook        # TODO: enable this once the fix is in for the memory leak in the rook mgr module
             enabled: false
       network:
         provider: host
@@ -67,26 +65,9 @@ spec:
           requireMsgr2: true
       security:
         cephx:
-          # CVE-2025-30156: rotate all CephX keys to the aes256k cipher alongside
-          # the Ceph v20.2.4 bump. Bump keyGeneration to trigger a future rotation.
-          daemon:
-            keyRotationPolicy: KeyGeneration
-            keyGeneration: 2
-          # Talos >= 1.13.10 backports the aes256k libceph patches into the 6.18
-          # kernel and rook-ceph v1.20.7 rolls cephcsi to v3.17.1, so CSI/PVC-mount
-          # keys use aes256k. All nodes have been rebooted onto the gen-2 keys
-          # (mon sessions show only *.2 clients), so retire the prior aes keys.
+          allowedCiphers:
+            - aes256k
           csi:
-            keyRotationPolicy: KeyGeneration
-            keyGeneration: 2
-            keepPriorKeyCountMax: 0
-            keyType: aes256k
-          # Unused (no CephBlockPool mirroring) but Rook creates the key anyway;
-          # rotate it so every CephX key is aes256k and the cluster can later
-          # restrict allowedCiphers to [aes256k].
-          rbdMirrorPeer:
-            keyRotationPolicy: KeyGeneration
-            keyGeneration: 2
             keyType: aes256k
       storage:
         useAllNodes: true
