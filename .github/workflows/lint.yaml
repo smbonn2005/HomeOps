@@ -43,7 +43,7 @@ jobs:
           persist-credentials: false
 
       - name: Run Actionlint
-        uses: reviewdog/action-actionlint@95df9f9287044811e4e023d40cb292e07569ac85 # v1.73.4
+        uses: reviewdog/action-actionlint@d290e336d5a743810aef4404f757dc862276d2ae # v1.73.4
         with:
           reporter: local
           fail_level: error
