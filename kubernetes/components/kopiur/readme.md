@@ -100,6 +100,6 @@ components:
 - `CLAIM`: PVC name, if different from `APP`
 - `KOPIUR_ACCESSMODES`: default `ReadWriteOnce`
 - `KOPIUR_STORAGECLASS`: default `ceph-block`
-- `KOPIUR_CACHE_CAPACITY`: default `2Gi`
+- `KOPIUR_CACHE_CAPACITY`: default `4Gi`
 - `KOPIUR_SNAPSHOTCLASS`: default `csi-ceph-blockpool`
 - `KOPIUR_PUID` / `KOPIUR_PGID`: default `1000`

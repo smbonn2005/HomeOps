@@ -9,7 +9,7 @@ spec:
     compressor: zstd
   mover:
     cache:
-      capacity: "${KOPIUR_CACHE_CAPACITY:=2Gi}"
+      capacity: "${KOPIUR_CACHE_CAPACITY:=4Gi}"
       mode: Persistent
       storageClassName: "${KOPIUR_STORAGECLASS:=ceph-block}"
     securityContext:
