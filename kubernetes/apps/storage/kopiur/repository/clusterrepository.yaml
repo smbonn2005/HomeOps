@@ -23,5 +23,8 @@ spec:
       name: kopiur-repository-secret
       namespace: storage
       key: KOPIA_PASSWORD
+  parameters:
+    epoch:
+      minDuration: 6h
   scheduleDefaults:
     timezone: America/New_York
