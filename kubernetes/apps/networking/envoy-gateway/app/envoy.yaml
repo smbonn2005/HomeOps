@@ -49,7 +49,7 @@ kind: Gateway
 metadata:
   name: envoy-external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external.smbonn.me
+    external-dns.kubernetes.io/target: &hostname external.smbonn.me
     gatus.home-operations.com/endpoint: |-
       alerts:
         - type: discord
@@ -61,7 +61,7 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+      external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: 192.168.1.221
   listeners:
     - name: http
@@ -87,7 +87,7 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal.smbonn.me
+    external-dns.kubernetes.io/target: &hostname internal.smbonn.me
     gatus.home-operations.com/endpoint: |-
       alerts:
         - type: discord
@@ -101,7 +101,7 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+      external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: 192.168.1.222
   listeners:
     - name: http
@@ -178,7 +178,7 @@ kind: HTTPRoute
 metadata:
   name: https-redirect
   annotations:
-    external-dns.alpha.kubernetes.io/controller: none
+    external-dns.kubernetes.io/controller: none
 spec:
   parentRefs:
     - name: envoy-external
