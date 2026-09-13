@@ -1,0 +1,16 @@
+---
+sonarrEnabled: true
+radarrEnabled: false
+lidarrEnabled: false
+readarrEnabled: false
+whisparrEnabled: false
+
+sonarr:
+  instance1:
+    base_url: http://sonarr.media
+    api_key: !env SONARR__API_KEY
+    custom_formats:
+      - trash_ids:
+          - 69aa1e159f97d860440b04cd6d590c4f
+        assign_scores_to:
+          - name: Any
