@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app actual-budget
+  name: &app actual
 spec:
   interval: 30m
   chartRef:
@@ -16,7 +16,7 @@ spec:
       namespace: storage
   values:
     controllers:
-      actual-budget:
+      actual:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
