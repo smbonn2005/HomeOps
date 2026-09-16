@@ -7,6 +7,7 @@ components:
   - ../../components/common
   - ../../components/kopiur/secret
 resources:
+  - ./actual-budget/ks.yaml
   - ./bookstack/ks.yaml
   - ./homepage/ks.yaml
   - ./mealie/ks.yaml
