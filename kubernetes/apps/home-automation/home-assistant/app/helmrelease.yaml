@@ -56,6 +56,23 @@ spec:
             runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: home-assistant-secret
+          template:
+            engineVersion: v2
+            data:
+              HASS_LATITUDE: "{{ .HASS_LATITUDE }}"
+              HASS_LONGITUDE: "{{ .HASS_LONGITUDE }}"
+              HASS_ELEVATION: "{{ .HASS_ELEVATION }}"
+              HASS_VSCODE_TOKEN: "{{ .HASS_VSCODE_TOKEN }}"
+        dataFrom:
+          - extract:
+              key: home-assistant
     service:
       app:
         controller: *app

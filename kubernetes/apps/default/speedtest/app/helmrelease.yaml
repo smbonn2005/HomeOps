@@ -48,6 +48,33 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 256Mi
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: speedtest-tracker-secret
+          template:
+            engineVersion: v2
+            data:
+              # App
+              APP_KEY: "{{ .SPEEDTEST_TRACKER_APP_KEY }}"
+              DB_HOST: "{{ .POSTGRES_HOST }}"
+              DB_DATABASE: "{{ .SPEEDTEST_TRACKER_POSTGRES_DBNAME }}"
+              DB_USERNAME: "{{ .SPEEDTEST_TRACKER_POSTGRES_USER }}"
+              DB_PASSWORD: "{{ .SPEEDTEST_TRACKER_POSTGRES_PASS }}"
+              # Postgres Init
+              INIT_POSTGRES_HOST: "{{ .POSTGRES_HOST }}"
+              INIT_POSTGRES_DBNAME: "{{ .SPEEDTEST_TRACKER_POSTGRES_DBNAME }}"
+              INIT_POSTGRES_USER: "{{ .SPEEDTEST_TRACKER_POSTGRES_USER }}"
+              INIT_POSTGRES_PASS: "{{ .SPEEDTEST_TRACKER_POSTGRES_PASS }}"
+              INIT_POSTGRES_SUPER_PASS: "{{ .POSTGRES_SUPER_PASS }}"
+        dataFrom:
+          - extract:
+              key: speedtest-tracker
+          - extract:
+              key: cloudnative-pg
     service:
       app:
         controller: *app

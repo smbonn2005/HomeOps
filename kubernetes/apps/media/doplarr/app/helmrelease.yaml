@@ -31,6 +31,24 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 500Mi
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: doplarr-secret
+          template:
+            engineVersion: v2
+            data:
+              SONARR__URL: "{{ .SONARR_URL }}"
+              RADARR__URL: "{{ .RADARR_URL }}"
+              SONARR__API: "{{ .SONARR_TOKEN }}"
+              RADARR__API: "{{ .RADARR_TOKEN }}"
+              DISCORD__TOKEN: "{{ .DOPLARR_TOKEN }}"
+        dataFrom:
+          - extract:
+              key: arr-stack
     service:
       app:
         controller: *app

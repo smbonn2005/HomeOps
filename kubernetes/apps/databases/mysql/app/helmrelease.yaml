@@ -42,6 +42,45 @@ spec:
                 memory: 3Gi
               limits:
                 memory: 4Gi
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      mysql:
+        target:
+          name: mysql-secret
+          template:
+            engineVersion: v2
+            data:
+              MYSQL_ROOT_HOST: "%"
+              MYSQL_ROOT_PASSWORD: "{{ .MYSQL_ROOT_PASSWORD }}"
+        dataFrom:
+          - extract:
+              key: mysql
+      tls:
+        refreshPolicy: CreatedOnce
+        target:
+          name: mysql-tls
+          creationPolicy: Orphan
+          deletionPolicy: Retain
+          template:
+            type: kubernetes.io/tls
+            metadata:
+              annotations:
+                cert-manager.io/alt-names: "*.smbonn.me,smbonn.me"
+                cert-manager.io/certificate-name: smbonn-me
+                cert-manager.io/common-name: smbonn.me
+                cert-manager.io/ip-sans: ""
+                cert-manager.io/issuer-group: ""
+                cert-manager.io/issuer-kind: ClusterIssuer
+                cert-manager.io/issuer-name: letsencrypt-production
+                cert-manager.io/uri-sans: ""
+              labels:
+                controller.cert-manager.io/fao: "true"
+        dataFrom:
+          - extract:
+              key: smbonn-me-tls
+              decodingStrategy: Base64
     service:
       app:
         controller: *app

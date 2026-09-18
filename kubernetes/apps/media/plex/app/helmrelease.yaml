@@ -58,6 +58,20 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups: [105]
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: plex-secret
+          template:
+            engineVersion: v2
+            data:
+              PLEX_CLAIM: "{{ .PLEX_CLAIM_TOKEN }}"
+        dataFrom:
+          - extract:
+              key: plex
     service:
       app:
         controller: *app

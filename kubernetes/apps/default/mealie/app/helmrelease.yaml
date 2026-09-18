@@ -43,6 +43,34 @@ spec:
                 cpu: 50m
               limits:
                 memory: 500Mi
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: mealie-secret
+          template:
+            engineVersion: v2
+            data:
+              # App
+              POSTGRES_DB: mealie
+              POSTGRES_SERVER: "{{ .POSTGRES_HOST }}"
+              POSTGRES_PORT: "5432"
+              POSTGRES_USER: "{{ .MEALIE_POSTGRES_USER }}"
+              POSTGRES_PASSWORD: "{{ .MEALIE_POSTGRES_PASS }}"
+              # Postgres Init
+              INIT_POSTGRES_DBNAME: mealie
+              INIT_POSTGRES_HOST: "{{ .POSTGRES_HOST }}"
+              INIT_POSTGRES_USER: "{{ .MEALIE_POSTGRES_USER }}"
+              INIT_POSTGRES_PASS: "{{ .MEALIE_POSTGRES_PASS }}"
+              INIT_POSTGRES_SUPER_USER: "{{ .POSTGRES_SUPER_USER }}"
+              INIT_POSTGRES_SUPER_PASS: "{{ .POSTGRES_SUPER_PASS }}"
+        dataFrom:
+          - extract:
+              key: mealie
+          - extract:
+              key: cloudnative-pg
     service:
       app:
         controller: *app

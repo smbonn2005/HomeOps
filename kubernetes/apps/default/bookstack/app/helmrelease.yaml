@@ -42,6 +42,20 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 256Mi
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: bookstack-secret
+          template:
+            engineVersion: v2
+            data:
+              DB_PASSWORD: "{{ .BOOKSTACK_MARIADB_PASSWORD }}"
+        dataFrom:
+          - extract:
+              key: bookstack
     service:
       app:
         controller: *app

@@ -48,3 +48,18 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 512Mi
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: mysql-backup-secret
+          template:
+            engineVersion: v2
+            data:
+              DEFAULT_S3_KEY_ID: "{{ .AWS_ACCESS_KEY_ID }}"
+              DEFAULT_S3_KEY_SECRET: "{{ .AWS_SECRET_ACCESS_KEY }}"
+        dataFrom:
+          - extract:
+              key: mysql

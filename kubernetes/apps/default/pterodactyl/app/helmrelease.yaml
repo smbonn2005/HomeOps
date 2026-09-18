@@ -49,6 +49,21 @@ spec:
                 memory: 300M
               limits:
                 memory: 500M
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: pterodactyl-secret
+          template:
+            engineVersion: v2
+            data:
+              APP_SERVICE_AUTHOR: "{{ .PTERODACTYL_APP_EMAIL }}"
+              DB_PASSWORD: "{{ .PTERODACTYL_MARIADB_PASSWORD }}"
+        dataFrom:
+          - extract:
+              key: pterodactyl
     service:
       app:
         controller: *app

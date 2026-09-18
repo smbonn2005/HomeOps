@@ -41,6 +41,22 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: garage-secret
+          template:
+            engineVersion: v2
+            data:
+              GARAGE_RPC_SECRET: "{{ .GARAGE_RPC_SECRET }}"
+              GARAGE_ADMIN_TOKEN: "{{ .GARAGE_ADMIN_TOKEN }}"
+              GARAGE_METRICS_TOKEN: "{{ .GARAGE_METRICS_TOKEN }}"
+        dataFrom:
+          - extract:
+              key: garage
     service:
       app:
         ports:

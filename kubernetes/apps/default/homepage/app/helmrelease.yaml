@@ -35,6 +35,63 @@ spec:
                 memory: 2G
         pod:
           automountServiceAccountToken: true
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: homepage-secret
+          template:
+            engineVersion: v2
+            data:
+              HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID: "{{ .CLOUDFLARE_ACCOUNT_TAG }}"
+              HOMEPAGE_VAR_CLOUDFLARED_TUNNELID: "{{ .CLOUDFLARE_TUNNEL_ID }}"
+              HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN: "{{ .CLOUDFLARE_API_TOKEN }}"
+              HOMEPAGE_VAR_GRAFANA_USERNAME: "{{ .GRAFANA_USER }}"
+              HOMEPAGE_VAR_GRAFANA_PASSWORD: "{{ .GRAFANA_PASS }}"
+              HOMEPAGE_VAR_PTERODACTYL_KEY: "{{ .PTERODACTYL_API_TOKEN }}"
+              HOMEPAGE_VAR_QBITTORRENT_USERNAME: "{{ .QBITTORRENT_USER }}"
+              HOMEPAGE_VAR_QBITTORRENT_PASSWORD: "{{ .QBITTORRENT_PASS }}"
+              HOMEPAGE_VAR_PLEX_KEY: "{{ .PLEX_API_TOKEN }}"
+              HOMEPAGE_VAR_PROWLARR_KEY: "{{ .PROWLARR_TOKEN }}"
+              HOMEPAGE_VAR_RADARR_KEY: "{{ .RADARR_TOKEN }}"
+              HOMEPAGE_VAR_READARR_KEY: "{{ .READARR_TOKEN }}"
+              HOMEPAGE_VAR_SONARR_KEY: "{{ .SONARR_TOKEN }}"
+              HOMEPAGE_VAR_TAUTULLI_KEY: "{{ .TAUTULLI_TOKEN }}"
+              HOMEPAGE_VAR_FS01_KEY: "{{ .FS01_TOKEN }}"
+              HOMEPAGE_VAR_PFSENSE_USERNAME: "{{ .PFSENSE_USER }}"
+              HOMEPAGE_VAR_PFSENSE_PASSWORD: "{{ .PFSENSE_PASS }}"
+              HOMEPAGE_VAR_HASS_TOKEN: "{{ .HASS_TOKEN }}"
+              HOMEPAGE_VAR_HASS_LATITUDE: "{{ .HASS_LATITUDE }}"
+              HOMEPAGE_VAR_HASS_LONGITUDE: "{{ .HASS_LONGITUDE }}"
+              HOMEPAGE_VAR_MEALIE_KEY: "{{ .MEALIE_TOKEN }}"
+              HOMEPAGE_VAR_UNIFI_KEY: "{{ .UNIFI_API_KEY2 }}"
+        dataFrom:
+          - extract:
+              key: cloudflare
+          - extract:
+              key: grafana
+          - extract:
+              key: pterodactyl
+          - extract:
+              key: qbittorrent
+          - extract:
+              key: plex
+          - extract:
+              key: arr-stack
+          - extract:
+              key: tautulli
+          - extract:
+              key: pfsense
+          - extract:
+              key: fs01
+          - extract:
+              key: home-assistant
+          - extract:
+              key: mealie
+          - extract:
+              key: unifi
     service:
       app:
         controller: *app

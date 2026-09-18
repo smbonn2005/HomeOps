@@ -67,6 +67,20 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups: [10000]
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: sonarr-secret
+          template:
+            engineVersion: v2
+            data:
+              SONARR__API_KEY: "{{ .SONARR_TOKEN }}"
+        dataFrom:
+          - extract:
+              key: arr-stack
     service:
       app:
         controller: *app

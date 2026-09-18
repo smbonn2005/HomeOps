@@ -64,6 +64,20 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: prowlarr-secret
+          template:
+            engineVersion: v2
+            data:
+              PROWLARR__API_KEY: "{{ .PROWLARR_TOKEN }}"
+        dataFrom:
+          - extract:
+              key: arr-stack
     service:
       app:
         controller: *app

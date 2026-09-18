@@ -47,6 +47,23 @@ spec:
             runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: mosquitto-secret
+          template:
+            engineVersion: v2
+            data:
+              username: "{{ .MQTT_USER }}"
+              password: "{{ .MQTT_PASS }}"
+              mosquitto_pwd: |
+                {{ .MQTT_USER }}:{{ .MQTT_PASS }}
+        dataFrom:
+          - extract:
+              key: mosquitto
     service:
       app:
         controller: *app

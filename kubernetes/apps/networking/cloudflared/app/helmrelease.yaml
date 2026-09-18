@@ -64,6 +64,25 @@ spec:
             runAsUser: 568
             runAsGroup: 568
             runAsNonRoot: true
+    defaultExternalSecretStoreRef:
+      kind: ClusterSecretStore
+      name: onepassword-connect
+    externalSecrets:
+      main:
+        target:
+          name: cloudflared-tunnel-secret
+          template:
+            engineVersion: v2
+            data:
+              credentials.json: |
+                {
+                  "AccountTag": "{{ .CLOUDFLARE_ACCOUNT_TAG }}",
+                  "TunnelSecret": "{{ .CLOUDFLARE_TUNNEL_SECRET }}",
+                  "TunnelID": "{{ .CLOUDFLARE_TUNNEL_ID}}"
+                }
+        dataFrom:
+          - extract:
+              key: cloudflare
     service:
       app:
         controller: *app
