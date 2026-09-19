@@ -31,7 +31,6 @@
       "external-secrets": "secure",
       "flux-system": "pipe",
       "home-automation": "home",
-      "hacks": "scripts",
       "kube-system": "kubernetes",
       "monitoring": "event",
       "networking": "connection",
