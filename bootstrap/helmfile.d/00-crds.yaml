@@ -33,3 +33,8 @@ releases:
     namespace: monitoring
     chart: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
     version: 91.4.0
+
+  - name: kopiur
+    namespace: storage
+    chart: oci://ghcr.io/home-operations/charts/kopiur
+    version: 0.10.9
