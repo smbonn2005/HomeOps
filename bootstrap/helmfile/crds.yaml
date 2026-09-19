@@ -8,33 +8,24 @@ helmDefaults:
   args:
     - --include-crds
     - --no-hooks
-  postRenderer: bash
-  postRendererArgs:
-    - -c
-    - yq ea -e 'select(.kind == "CustomResourceDefinition")'
+
+bases:
+  - default.yaml
+
+defaultInherit: default
 
 releases:
   - name: external-dns
     namespace: networking
-    chart: oci://ghcr.io/home-operations/charts-mirror/external-dns
-    version: 1.22.0
 
   - name: envoy-gateway
     namespace: networking
-    chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: 1.9.1
 
   - name: grafana-operator
     namespace: monitoring
-    chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
-    version: 5.25.0
 
   - name: kube-prometheus-stack
     namespace: monitoring
-    chart: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
-    version: 91.4.0
 
   - name: kopiur
     namespace: storage
-    chart: oci://ghcr.io/home-operations/charts/kopiur
-    version: 0.10.9
