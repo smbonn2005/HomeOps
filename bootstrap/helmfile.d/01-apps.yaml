@@ -19,7 +19,7 @@ releases:
         command: bash
         args:
           - -c
-          - until kubectl get crd ciliuml2announcementpolicies.cilium.io ciliumloadbalancerippools.cilium.io &>/dev/null; do sleep 10; done
+          - until kubectl get crd ciliumloadbalancerippools.cilium.io ciliumbgpclusterconfigs.cilium.io ciliumbgppeerconfigs.cilium.io ciliumbgpadvertisements.cilium.io &>/dev/null; do sleep 10; done
         events:
           - postsync
         showlogs: true
@@ -30,7 +30,7 @@ releases:
           - --namespace=kube-system
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename=../../kubernetes/apps/kube-system/cilium/app/networks.yaml
+          - --filename=../../kubernetes/apps/kube-system/cilium/app/networking.yaml
         events:
           - postsync
         showlogs: true
