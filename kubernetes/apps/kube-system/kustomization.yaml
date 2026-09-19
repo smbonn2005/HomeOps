@@ -11,6 +11,7 @@ resources:
   - ./etcd/etcd-defrag/etcd-defrag.yaml
   - ./etcd/etcd-defrag/serviceaccount.yaml
   - ./external-secrets/ks.yaml
+  - ./intel-gpu-resource-driver/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml
