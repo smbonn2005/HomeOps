@@ -25,7 +25,7 @@ Cluster/Talos operations (require live cluster access via `kubeconfig`/`taloscon
 - `just kube sync-es` — force-reconcile all `ExternalSecret`s.
 - `just kube prune-pods` — delete pods stuck in Failed/Pending/Succeeded.
 
-No traditional lint/test/build step exists for this repo; `kubeconform`/`flate` (above) are the correctness gate, and `.editorconfig`/`.yamlfmt.yaml` govern formatting.
+No traditional lint/test/build step exists for this repo; `kubeconform`/`flate` (above) are the correctness gate, and `.editorconfig` governs formatting.
 
 ## Architecture
 
