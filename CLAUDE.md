@@ -20,7 +20,7 @@ Validating manifest changes (do this before considering a `kubernetes/` change d
 PR-time rendering (diffs against `main`, status checks) is handled by Konflate (`kubernetes/apps/flux-system/konflate`), a webhook-driven in-cluster app that replaced the old `flux-local` GitHub Action — there's nothing to invoke manually for that part.
 
 Cluster/Talos operations (require live cluster access via `kubeconfig`/`talosconfig`, so only relevant when explicitly asked to operate on the live cluster, not for manifest-only changes):
-- `just bootstrap cluster` — bootstrap Talos nodes + cluster apps (destructive, first-install only).
+- `just bootstrap cluster [disk]` — bootstrap Talos nodes + cluster apps (destructive, first-install only). Wipes the disks Rook consumes on every node before Flux starts; `disk` defaults to `nvme0n1` and matches either a device id or a disk model.
 - `just talos apply-node <node>` / `just talos upgrade-node <node>` / `just talos upgrade-k8s <version>` — Talos node config/upgrades.
 - `just kube sync-es` — force-reconcile all `ExternalSecret`s.
 - `just kube prune-pods` — delete pods stuck in Failed/Pending/Succeeded.

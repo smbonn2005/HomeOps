@@ -10,7 +10,7 @@ nodes := `talosctl config info -o yaml | yq -r -e '.nodes | join (" ")'`
 
 [confirm('Bootstrap cluster? [y|N]')]
 [doc('Bootstrap a Talos & Kubernetes cluster end-to-end')]
-cluster: nodes k8s (kubeconfig "node") base apps kubeconfig
+cluster disk="nvme0n1": nodes k8s (kubeconfig "node") base (wipe disk) apps kubeconfig
 
 [private]
 nodes:
@@ -54,6 +54,29 @@ base: api-ready nodes-ready
     if ! helmfile -f "{{ source_directory() }}/helmfile/crds.yaml" template -q | yq ea -r -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --force-conflicts -f -; then
         just log fatal "Failed to apply base crds" "stage" "{{ recipe_name() }}"
     fi
+
+# Rook refuses to create an OSD on a disk that still carries partitions or a filesystem
+# signature, so the disks it consumes are wiped while nothing is using them.
+[private]
+wipe disk:
+    just log info "Running stage..." "stage" "{{ recipe_name() }}"
+    if kubectl --namespace rook-ceph get kustomization rook-ceph &>/dev/null; then
+        just log warn "Rook is running in the cluster, skipping disk wipe" "stage" "{{ recipe_name() }}"
+        exit 0
+    fi
+    for n in {{ nodes }}; do
+        disks=$(talosctl -n "$n" get disk -o json \
+            | jq -r --slurp --arg disk "{{ disk }}" 'map(select(.metadata.id == $disk or .spec.model == $disk) | .metadata.id) | join(" ")')
+        if [[ -z "$disks" ]]; then
+            just log fatal "No disks found" "stage" "{{ recipe_name() }}" "node" "$n" "disk" "{{ disk }}"
+        fi
+        for d in $disks; do
+            if ! talosctl -n "$n" wipe disk "$d" --drop-partition; then
+                just log fatal "Failed to wipe disk" "stage" "{{ recipe_name() }}" "node" "$n" "disk" "$d"
+            fi
+            just log info "Disk wiped" "stage" "{{ recipe_name() }}" "node" "$n" "disk" "$d"
+        done
+    done
 
 [private]
 apps:
