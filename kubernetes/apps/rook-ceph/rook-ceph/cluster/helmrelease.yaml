@@ -57,19 +57,31 @@ spec:
             enabled: true
           - name: pg_autoscaler
             enabled: true
-          - name: rook
-            enabled: true
+          - name: rook        # TODO: enable this once the fix is in for the memory leak in the rook mgr module
+            enabled: false
       network:
         provider: host
         connections:
           requireMsgr2: true
-      resources: # TODO: remove this when Ceph fixes the memory leak in the mgr module
-        mgr:
-          requests:
-            cpu: 500m
-            memory: 1Gi
-          limits:
-            memory: 4Gi
+      security:
+        cephx:
+          # keyGeneration is immutable once set (CRD: "keyGeneration cannot be
+          # removed once set") -- these three sub-blocks must keep it forever,
+          # even though the rotation they triggered is long complete.
+          daemon:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+          csi:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            keepPriorKeyCountMax: 0
+            keyType: aes256k
+          rbdMirrorPeer:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            keyType: aes256k
+          allowedCiphers:
+            - aes256k
       storage:
         useAllNodes: true
         useAllDevices: true

@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: public.ecr.aws/docker/library/mysql
-              tag: 8.4.9
+              tag: 8.4.11
             args:
               - --disable-log-bin
               - --ssl-cert=/certs/tls.crt
@@ -47,7 +47,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mysql.smbonn.me
+          external-dns.kubernetes.io/hostname: mysql.smbonn.me
           lbipam.cilium.io/ips: 192.168.1.12
           gatus.home-operations.com/endpoint: |-
             group: services

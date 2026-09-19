@@ -15,12 +15,12 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/nfrastack/container-db-backup
-              tag: 4.9.0@sha256:80d3bc0524611d85fd82738b228f88a92077ad2d0a36ae32237d6a25a93e2439
+              repository: ghcr.io/nfrastack/db-backup
+              tag: 5.0.1@sha256:1ef42eacf6377d91b7af1563ee30ba4adfc56c4045f8484870033b1ddba1aa41
             env:
               TIMEZONE: America/New_York
               BACKUP_JOB_CONCURRENCY: "1"
-              DEFAULT_BACKUP_LOCATION: S3
+              DEFAULT_BACKUP_LOCATION: s3
               DEFAULT_COMPRESSION: ZSTD
               DEFAULT_CHECKSUM: SHA1
               DEFAULT_BACKUP_INTERVAL: "1440" # daily
@@ -30,12 +30,9 @@ spec:
               DEFAULT_S3_HOST: garage.storage.svc.cluster.local:3900
               DEFAULT_S3_PROTOCOL: http
               DEFAULT_S3_REGION: us-east-1
-              # Oracle mysqladmin's --skip-ssl is broken in 4.9.0 (nfrastack/container-db-backup#486),
-              # fixed in 4.9.1 but no image has been published for that tag yet -- stick with the
-              # default mariadb client, which dumps a real MySQL 8.4 server fine and isn't affected.
               DB01_TYPE: mysql
               DB01_HOST: mysql.databases.svc.cluster.local
-              DB01_NAME: ALL
+              DB01_NAME: ALL,mysql
               DB01_USER: root
               DB01_PASS:
                 valueFrom:
