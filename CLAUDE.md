@@ -10,7 +10,7 @@ This is a personal home infrastructure monorepo, not an application codebase. It
 
 `just` is the primary interface; run `just` (or `just -l`) for the full list. Recipes are namespaced by the modules in `.justfile`: `just bootstrap ...`, `just kube ...`, `just talos ...`.
 
-Local environment expects `KUBECONFIG=./kubeconfig`, `TALOSCONFIG=./talosconfig`, and `MINIJINJA_CONFIG_FILE=./.minijinja.toml` (set automatically by `mise` from `.mise.toml`).
+Local environment expects `KUBECONFIG=./kubeconfig`, `TALOSCONFIG=./talosconfig`, and `MINIJINJA_CONFIG_FILE=./.minijinja.toml` (set automatically by `mise` from `.mise/config.toml`, which also pins every CLI the recipes use).
 
 Validating manifest changes (do this before considering a `kubernetes/` change done):
 - `kustomize build --load-restrictor=LoadRestrictionsNone <dir> | kubeconform -strict -ignore-missing-schemas -schema-location default -schema-location 'https://cluster-schemas.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'` per kustomization — validates rendered output against Kubernetes/CRD schemas. CI does not run this; `flate` (below) is the workflow gate.
@@ -20,7 +20,7 @@ Validating manifest changes (do this before considering a `kubernetes/` change d
 PR-time rendering (diffs against `main`, status checks) is handled by Konflate (`kubernetes/apps/flux-system/konflate`), a webhook-driven in-cluster app that replaced the old `flux-local` GitHub Action — there's nothing to invoke manually for that part.
 
 Cluster/Talos operations (require live cluster access via `kubeconfig`/`talosconfig`, so only relevant when explicitly asked to operate on the live cluster, not for manifest-only changes):
-- `just bootstrap` — bootstrap Talos nodes + cluster apps (destructive, first-install only).
+- `just bootstrap cluster` — bootstrap Talos nodes + cluster apps (destructive, first-install only).
 - `just talos apply-node <node>` / `just talos upgrade-node <node>` / `just talos upgrade-k8s <version>` — Talos node config/upgrades.
 - `just kube sync-es` — force-reconcile all `ExternalSecret`s.
 - `just kube prune-pods` — delete pods stuck in Failed/Pending/Succeeded.
