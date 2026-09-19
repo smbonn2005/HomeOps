@@ -10,7 +10,7 @@ This is a personal home infrastructure monorepo, not an application codebase. It
 
 `just` is the primary interface; run `just` (or `just -l`) for the full list. Recipes are namespaced by the modules in `.justfile`: `just bootstrap ...`, `just kube ...`, `just talos ...`.
 
-Local environment expects `KUBECONFIG=./kubeconfig`, `TALOSCONFIG=./talosconfig`, and `MINIJINJA_CONFIG_FILE=./.minijinja.toml` (set automatically via `.envrc`/`direnv` or `.mise.toml`).
+Local environment expects `KUBECONFIG=./kubeconfig`, `TALOSCONFIG=./talosconfig`, and `MINIJINJA_CONFIG_FILE=./.minijinja.toml` (set automatically by `mise` from `.mise.toml`).
 
 Validating manifest changes (do this before considering a `kubernetes/` change done):
 - `kustomize build --load-restrictor=LoadRestrictionsNone <dir> | kubeconform -strict -ignore-missing-schemas -schema-location default -schema-location 'https://cluster-schemas.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'` per kustomization — validates rendered output against Kubernetes/CRD schemas. CI does not run this; `flate` (below) is the workflow gate.

@@ -3,11 +3,4 @@
 KUBECONFIG = "{{config_root}}/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 TALOSCONFIG = "{{config_root}}/talosconfig"
-JUST_UNSTABLE = "1"
 LEFTHOOK_OUTPUT = "false"
-
-# Directory paths
-ROOT_DIR = '{{config_root}}'
-BOOTSTRAP_DIR = '{{config_root}}/bootstrap'
-KUBERNETES_DIR = '{{config_root}}/kubernetes'
-TALOS_DIR = '{{config_root}}/talos'

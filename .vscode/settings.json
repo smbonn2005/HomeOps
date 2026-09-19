@@ -12,8 +12,6 @@
     },
     "material-icon-theme.files.associations": {
       "*.gotmpl": "smarty",
-      "*.sops.yaml": "lock",
-      "helmfile.yaml": "helm",
       "kubeconfig": "kubernetes",
       "talosconfig": "kubernetes"
     },
@@ -22,7 +20,6 @@
       "bootstrap": "seeders",
       "flux": "pipe",
       "talos": "linux",
-      ".renovate": "robot",
       ".github/workflows": "ci",
       // namespaces
       "actions-runner-system": "github",
@@ -39,7 +36,6 @@
       "storage": "aws",
       "system-upgrade": "update",
     },
-    "sops.defaults.ageKeyFile": "age.key",
     "vs-kubernetes": {
         "vs-kubernetes.kubeconfig": "./kubeconfig",
         "vs-kubernetes.knownKubeconfigs": [
