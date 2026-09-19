@@ -1,15 +1,25 @@
 #!/usr/bin/env -S just --justfile
 
-set quiet := true
+set minimum-version := '1.55.0'
+
+set default-list
+set default-script
+set lazy
+set quiet
+set script-interpreter := ['bash', '-euo', 'pipefail']
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
+# Bootstrap Recipes
+[group('Bootstrap')]
 mod bootstrap "bootstrap"
-mod kube "kubernetes"
-mod talos "talos"
 
-[private]
-default:
-    just -l
+# Kube Recipes
+[group('Kube')]
+mod kube "kubernetes"
+
+# Talos Recipes
+[group('Talos')]
+mod talos "talos"
 
 [private]
 log lvl msg *args:
