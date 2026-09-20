@@ -36,6 +36,10 @@ Two conventions keep the layers honest:
 - **Directory placement is the single source of truth for a node's role.** The role patch is chosen
   by which `nodes/<role>/` directory contains the node file, and `machine.type` is set by the role
   patch, not the node file.
+- **`<node>` is the address `talosctl` targets**, i.e. the node IP as it appears in `talosconfig`.
+  `apply-node`/`render-config` use the same value for `-n` and for the per-node file lookup, and
+  `just bootstrap cluster` iterates the `talosconfig` node list, so a file named after the hostname
+  is never found. The hostname is set *inside* the file via `HostnameConfig`.
 - **Secrets never live in this repo.** All sensitive values are `op://HomeLab/talos/...` references
   resolved at render time.
 
