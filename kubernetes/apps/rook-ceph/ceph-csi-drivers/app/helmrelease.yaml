@@ -10,6 +10,67 @@ spec:
     name: ceph-csi-drivers
   interval: 1h
   values:
+    operatorConfig:
+      namespace: rook-ceph
+      driverSpecDefaults:
+        imageSet:
+          name: rook-csi-operator-image-set-configmap
+        log:
+          rotation:
+            enabled: false
+        nodePlugin:
+          priorityClassName: system-node-critical
+          resources:
+            plugin:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 250m
+                memory: 512Mi
+            registrar:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+        controllerPlugin:
+          priorityClassName: system-cluster-critical
+          resources:
+            attacher:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
+            omapGenerator:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 250m
+                memory: 512Mi
+            plugin:
+              limits:
+                memory: 1Gi
+              requests:
+                memory: 512Mi
+            provisioner:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
+            resizer:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
+            snapshotter:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
     drivers:
       cephfs:
         enabled: false
@@ -20,4 +81,10 @@ spec:
       rbd:
         enabled: true
         name: rook-ceph.rbd.csi.ceph.com
+        grpcTimeout: 150
         snapshotPolicy: volumeSnapshot
+        log:
+          rotation:
+            enabled: false
+        controllerPlugin:
+          replicas: 2
