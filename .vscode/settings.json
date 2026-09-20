@@ -9,11 +9,9 @@
   ],
     "files.associations": {
         "*.json5": "jsonc",
-        "./kubernetes/**/*.sops.toml": "plaintext"
     },
     "material-icon-theme.files.associations": {
-      "*.sops.yaml": "lock",
-      "helmfile.yaml": "helm",
+      "*.gotmpl": "smarty",
       "kubeconfig": "kubernetes",
       "talosconfig": "kubernetes"
     },
@@ -22,7 +20,6 @@
       "bootstrap": "seeders",
       "flux": "pipe",
       "talos": "linux",
-      ".github/renovate": "robot",
       ".github/workflows": "ci",
       // namespaces
       "actions-runner-system": "github",
@@ -31,7 +28,6 @@
       "external-secrets": "secure",
       "flux-system": "pipe",
       "home-automation": "home",
-      "hacks": "scripts",
       "kube-system": "kubernetes",
       "monitoring": "event",
       "networking": "connection",
@@ -40,7 +36,6 @@
       "storage": "aws",
       "system-upgrade": "update",
     },
-    "sops.defaults.ageKeyFile": "age.key",
     "vs-kubernetes": {
         "vs-kubernetes.kubeconfig": "./kubeconfig",
         "vs-kubernetes.knownKubeconfigs": [

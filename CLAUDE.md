@@ -8,24 +8,24 @@ This is a personal home infrastructure monorepo, not an application codebase. It
 
 ## Common commands
 
-Task (`go-task`) is the primary interface; run `task` (or `task --list`) for the full list. Tasks are namespaced by the includes in `Taskfile.yaml`: `bootstrap:*`, `kubernetes:*`, `talos:*`, `workstation:*`.
+`just` is the primary interface; run `just` (or `just -l`) for the full list. Recipes are namespaced by the modules in `.justfile`: `just bootstrap ...`, `just kube ...`, `just talos ...`.
 
-Local environment expects `KUBECONFIG=./kubeconfig`, `TALOSCONFIG=./talosconfig`, and `MINIJINJA_CONFIG_FILE=./.minijinja.toml` (set automatically via `.envrc`/`direnv` or `.mise.toml`).
+Local environment expects `KUBECONFIG=./kubeconfig`, `TALOSCONFIG=./talosconfig`, and `MINIJINJA_CONFIG_FILE=./.minijinja.toml` (set automatically by `mise` from `.mise/config.toml`, which also pins every CLI the recipes use).
 
 Validating manifest changes (do this before considering a `kubernetes/` change done):
-- `bash scripts/kubeconform.sh ./kubernetes` — builds every kustomization with `kustomize build` and validates the output against Kubernetes/CRD schemas via `kubeconform`.
+- `kustomize build --load-restrictor=LoadRestrictionsNone <dir> | kubeconform -strict -ignore-missing-schemas -schema-location default -schema-location 'https://cluster-schemas.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'` per kustomization — validates rendered output against Kubernetes/CRD schemas. CI does not run this; `flate` (below) is the workflow gate.
 - `docker run --rm -v "$PWD:/workspace" -w /workspace ghcr.io/home-operations/flate:latest test all --path ./kubernetes/flux/cluster` — offline Flux reconcile (no cluster, no `helm`/`kustomize`/`flux` CLIs) with pytest-style `PASS`/`FAIL`/`SKIPPED` per `Kustomization`/`HelmRelease`, non-zero exit on any failure; run this locally before pushing. `flate` is the Go rewrite of `flux-local`.
 - To sanity-check a single app's rendered manifests: `kustomize build --load-restrictor=LoadRestrictionsNone kubernetes/apps/<namespace>/<app>/app`.
 
 PR-time rendering (diffs against `main`, status checks) is handled by Konflate (`kubernetes/apps/flux-system/konflate`), a webhook-driven in-cluster app that replaced the old `flux-local` GitHub Action — there's nothing to invoke manually for that part.
 
 Cluster/Talos operations (require live cluster access via `kubeconfig`/`talosconfig`, so only relevant when explicitly asked to operate on the live cluster, not for manifest-only changes):
-- `task bootstrap ROOK_DISK=<disk-model>` — bootstrap Talos nodes + cluster apps (destructive, first-install only).
-- `task talos:apply-node IP=<ip>` / `task talos:upgrade-node IP=<ip>` / `task talos:upgrade-k8s` — Talos node config/upgrades.
-- `task kubernetes:sync-secrets` — force-reconcile all `ExternalSecret`s.
-- `task kubernetes:cleanse-pods` — delete pods stuck in Failed/Pending/Succeeded.
+- `just bootstrap cluster [disk]` — bootstrap Talos nodes + cluster apps (destructive, first-install only). Wipes the disks Rook consumes on every node before Flux starts; `disk` defaults to `nvme0n1` and matches either a device id or a disk model.
+- `just talos apply-node <node>` / `just talos upgrade-node <node>` / `just talos upgrade-k8s <version>` — Talos node config/upgrades.
+- `just kube sync-es` — force-reconcile all `ExternalSecret`s.
+- `just kube prune-pods` — delete pods stuck in Failed/Pending/Succeeded.
 
-No traditional lint/test/build step exists for this repo; `kubeconform`/`flate` (above) are the correctness gate, and `.editorconfig`/`.shellcheckrc` govern formatting/shell scripts under `scripts/`.
+No traditional lint/test/build step exists for this repo; `kubeconform`/`flate` (above) are the correctness gate, and `.editorconfig` governs formatting.
 
 ## Architecture
 
@@ -37,9 +37,8 @@ kubernetes/
 ├── components/    # Reusable kustomize components shared across apps
 └── flux/cluster/  # Single top-level Flux Kustomization that Flux actually watches
 bootstrap/         # helmfile used for one-time cluster bootstrap (installs Flux itself, etc.)
-talos/             # Talos machine config templates (minijinja .yaml.j2), rendered per-node
-scripts/           # bootstrap-cluster.sh, kubeconform.sh, render-machine-config.sh
-.taskfiles/        # Task definitions included by the root Taskfile.yaml
+talos/             # Talos machine config templates (minijinja .yaml.j2), rendered per-node; see talos/README.md
+.justfile          # Root just modules (bootstrap/mod.just, kubernetes/mod.just, talos/mod.just)
 ```
 
 ### Flux reconciliation model

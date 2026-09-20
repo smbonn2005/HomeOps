@@ -1,8 +1,6 @@
 {
     "recommendations": [
-        "signageos.signageos-vscode-sops",
         "samuelcolvin.jinjahtml",
-        "IronGeek.vscode-env",
         "GitHub.vscode-pull-request-github",
         "oderwat.indent-rainbow",
         "albert.TabOut",

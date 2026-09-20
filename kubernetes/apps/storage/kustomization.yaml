@@ -6,7 +6,6 @@ namespace: storage
 components:
   - ../../components/common
 resources:
-  - ./fstrim/ks.yaml
   - ./garage/ks.yaml
   - ./kopiur/ks.yaml
   - ./snapshot-controller/ks.yaml

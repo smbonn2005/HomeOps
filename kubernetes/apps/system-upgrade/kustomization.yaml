@@ -7,8 +7,3 @@ components:
   - ../../components/common
 resources:
   - ./tuppr/ks.yaml
-configMapGenerator:
-  - name: versions
-    env: ./versions.env
-configurations:
-  - ./kustomizeconfig.yaml
