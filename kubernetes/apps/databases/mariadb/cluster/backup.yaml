@@ -8,23 +8,29 @@ spec:
   mariaDbRef:
     name: mariadb
   schedule:
-    cron: "*/1 * * * *"
+    cron: "0 2 * * *"
     suspend: false
+  timeZone: America/New_York
+  compression: zstd
   maxRetention: 720h # 30 days
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
   storage:
     s3:
-      bucket: backups
-      prefix: mariadb
-      endpoint: minio.minio.svc.cluster.local:9000 # TODO: Need to configure & enable
-      region:  us-east-1
+      bucket: mariadb
+      endpoint: garage.storage.svc.cluster.local:3900
+      region: us-east-1
       accessKeyIdSecretKeyRef:
-        name: minio
-        key: access-key-id
+        name: mariadb-backup-secret
+        key: AWS_ACCESS_KEY_ID
       secretAccessKeySecretKeyRef:
-        name: minio
-        key: secret-access-key
+        name: mariadb-backup-secret
+        key: AWS_SECRET_ACCESS_KEY
       tls:
-        enabled: true
-        caSecretKeyRef:
-          name: minio-ca
-          key: tls.crt
+        enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
