@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://cluster-schemas.pages.dev/cdi.kubevirt.io/cdi_v1beta1.json
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/cdi.kubevirt.io/cdi_v1beta1.json
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: CDI
 metadata:

@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://cluster-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
@@ -17,7 +17,7 @@ spec:
     name: loki-dashboard
     key: loki.json
 ---
-# yaml-language-server: $schema=https://cluster-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
