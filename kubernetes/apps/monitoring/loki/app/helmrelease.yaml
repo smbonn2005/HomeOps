@@ -96,3 +96,6 @@ spec:
     monitoring:
       serviceMonitor:
         enabled: true
+    sidecar:
+      rules:
+        enabled: false
