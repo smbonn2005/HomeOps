@@ -126,6 +126,14 @@ loki.source.syslog "syslog" {
     labels                          = { job = "syslog", protocol = "tcp" }
   }
 
+  listener {
+    address                = "0.0.0.0:1515"
+    protocol               = "udp"
+    syslog_format          = "rfc5424"
+    use_incoming_timestamp = true
+    labels                 = { job = "syslog", protocol = "udp" }
+  }
+
   relabel_rules = loki.relabel.syslog.rules
   forward_to    = [loki.write.loki.receiver]
 }
