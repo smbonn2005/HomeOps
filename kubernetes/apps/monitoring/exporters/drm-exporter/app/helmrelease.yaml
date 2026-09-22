@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app drm-exporter
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: drm-exporter
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: monitoring
+  values:
+    fullnameOverride: *app
+    dra:
+      enabled: true
+      deviceClassName: gpu.intel.com
+    securityContext:
+      capabilities:
+        drop: ["ALL"]
+        add: ["PERFMON"]
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+    monitoring:
+      serviceMonitor:
+        enabled: true
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          folder: monitoring
+          matchLabels:
+            dashboards: grafana
