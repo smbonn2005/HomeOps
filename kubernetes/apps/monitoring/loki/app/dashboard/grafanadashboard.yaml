@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: loki
+spec:
+  allowCrossNamespaceImport: true
+  folder: monitoring
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: loki-dashboard
+    key: loki.json
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: loki-logs
+spec:
+  allowCrossNamespaceImport: true
+  folder: monitoring
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: loki
+      inputName: DS_LOKI
+  url: https://grafana.com/api/dashboards/13639/revisions/2/download

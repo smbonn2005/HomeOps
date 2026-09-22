@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: loki
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: loki
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    deploymentMode: SingleBinary
+    loki:
+      analytics:
+        reporting_enabled: false
+      auth_enabled: false
+      commonConfig:
+        replication_factor: 1
+      compactor:
+        delete_request_store: s3
+        retention_enabled: true
+      limits_config:
+        ingestion_burst_size_mb: 20
+        ingestion_rate_mb: 10
+        max_cache_freshness_per_query: 10m
+        reject_old_samples: true
+        reject_old_samples_max_age: 168h
+        retention_period: 30d
+        split_queries_by_interval: 15m
+        volume_enabled: true
+      podAnnotations:
+        reloader.stakater.com/auto: "true"
+      rulerConfig:
+        storage:
+          type: local
+      schemaConfig:
+        configs:
+          - from: "2026-09-01"
+            store: tsdb
+            object_store: s3
+            schema: v13
+            index:
+              prefix: loki_index_
+              period: 24h
+      storage:
+        type: s3
+        bucketNames:
+          chunks: loki
+          ruler: loki
+        s3:
+          endpoint: garage.storage.svc.cluster.local:3900
+          region: us-east-1
+          accessKeyId: ${AWS_ACCESS_KEY_ID}
+          secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
+          s3ForcePathStyle: true
+          insecure: true
+      tracing:
+        enabled: false
+    singleBinary:
+      replicas: 1
+      extraArgs:
+        - -config.expand-env=true
+      extraEnvFrom:
+        - secretRef:
+            name: loki-secret
+      persistence:
+        enabled: true
+        size: 20Gi
+        storageClass: ceph-block
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
+    gateway:
+      enabled: false
+    lokiCanary:
+      enabled: false
+    test:
+      enabled: false
+    monitoring:
+      serviceMonitor:
+        enabled: true
