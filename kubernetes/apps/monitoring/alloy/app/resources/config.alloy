@@ -113,7 +113,7 @@ loki.source.syslog "syslog" {
     protocol                        = "udp"
     syslog_format                   = "rfc3164"
     rfc3164_default_to_current_year = true
-    use_incoming_timestamp          = true
+    use_incoming_timestamp          = false
     labels                          = { job = "syslog", protocol = "udp" }
   }
 
@@ -122,7 +122,7 @@ loki.source.syslog "syslog" {
     protocol                        = "tcp"
     syslog_format                   = "rfc3164"
     rfc3164_default_to_current_year = true
-    use_incoming_timestamp          = true
+    use_incoming_timestamp          = false
     labels                          = { job = "syslog", protocol = "tcp" }
   }
 
