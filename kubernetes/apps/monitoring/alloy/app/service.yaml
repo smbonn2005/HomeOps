@@ -8,8 +8,8 @@ metadata:
     lbipam.cilium.io/ips: 192.168.10.97
     gatus.home-operations.com/endpoint: |-
       group: services
-      url: tcp://alloy-syslog.monitoring.svc.cluster.local:514
-      conditions: ["[CONNECTED] == true"]
+      url: http://alloy.monitoring.svc.cluster.local:12345/-/ready
+      conditions: ["[STATUS] == 200"]
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
