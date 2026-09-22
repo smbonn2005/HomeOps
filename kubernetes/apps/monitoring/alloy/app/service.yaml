@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alloy-syslog
+  annotations:
+    external-dns.kubernetes.io/hostname: syslog.smbonn.me
+    lbipam.cilium.io/ips: 192.168.10.97
+    gatus.home-operations.com/endpoint: |-
+      group: services
+      url: tcp://alloy-syslog.monitoring.svc.cluster.local:514
+      conditions: ["[CONNECTED] == true"]
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app.kubernetes.io/name: alloy
+    app.kubernetes.io/instance: alloy
+  ports:
+    - name: syslog-tcp
+      port: 514
+      targetPort: 1514
+      protocol: TCP
+    - name: syslog-udp
+      port: 514
+      targetPort: 1514
+      protocol: UDP

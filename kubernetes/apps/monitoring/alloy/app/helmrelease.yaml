@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: alloy
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: alloy
+  dependsOn:
+    - name: loki
+  values:
+    crds:
+      create: false
+    alloy:
+      enableReporting: false
+      storagePath: /var/lib/alloy
+      mounts:
+        varlog: true
+        extra:
+          - name: positions
+            mountPath: /var/lib/alloy
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 1Gi
+      configMap:
+        create: false
+        name: alloy-config
+        key: config.alloy
+    controller:
+      type: daemonset
+      volumes:
+        extra:
+          - name: positions
+            hostPath:
+              path: /var/lib/alloy
+              type: DirectoryOrCreate
+    serviceMonitor:
+      enabled: true
