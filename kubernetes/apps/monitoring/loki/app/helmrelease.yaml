@@ -34,9 +34,6 @@ spec:
         volume_enabled: true
       podAnnotations:
         reloader.stakater.com/auto: "true"
-      rulerConfig:
-        storage:
-          type: local
       schemaConfig:
         configs:
           - from: "2026-09-01"
