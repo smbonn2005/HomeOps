@@ -6,6 +6,7 @@ namespace: monitoring
 resources:
   - ./alertmanagerconfig.yaml
   - ./externalsecret.yaml
+  - ./grafanadashboard.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./scrapeconfigs
