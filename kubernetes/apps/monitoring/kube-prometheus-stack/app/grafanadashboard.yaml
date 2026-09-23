@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: etcd-v2
+spec:
+  allowCrossNamespaceImport: true
+  folder: monitoring
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://grafana.com/api/dashboards/22236/revisions/5/download
