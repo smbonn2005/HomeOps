@@ -8,7 +8,7 @@ TALOSCONFIG = "{{config_root}}/talosconfig"
 [tools]
 "github:home-operations/flate" = "0.6.5"
 "github:mitsuhiko/minijinja" = "2.24.0"
-gum = "2.0.1"
+gum = "2.0.2"
 helm = "4.3.0"
 helmfile = "1.8.0"
 jq = "1.8.2"
