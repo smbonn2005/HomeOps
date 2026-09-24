@@ -26,6 +26,19 @@ endpoints:
     conditions:
       - "[CONNECTED] == true"
 
+  - name: NAS SMB
+    group: services
+    url: https://192.168.1.4/api/v2.0/service?service=cifs
+    interval: 1m
+    client:
+      insecure: true
+    headers:
+      Authorization: Bearer ${FS01_TOKEN}
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY][0].state == RUNNING"
+      - "[BODY][0].enable == true"
+
 metrics: true
 
 storage:
