@@ -6,7 +6,35 @@
     "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#8.1.0",
     "github>home-operations/renovate-presets//apps/talosFactory.json5#8.1.0"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Process annotated kustomize release assets, whose URLs the bundled annotation manager cannot match",
+      "managerFilePatterns": ["/(^|/)kustomization\\.ya?ml$/"],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)[^\\n]*\\n[^\\n]*?/releases/download/(?<currentValue>v?[^/]+)/"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": "Track the crd-extractor commit the schemas workflow pulls",
+      "managerFilePatterns": ["/^\\.github/workflows/schemas\\.yaml$/"],
+      "matchStrings": ["datreeio/CRDs-catalog/(?<currentDigest>[0-9a-f]{40})/"],
+      "currentValueTemplate": "main",
+      "depNameTemplate": "datreeio/CRDs-catalog",
+      "packageNameTemplate": "https://github.com/datreeio/CRDs-catalog",
+      "datasourceTemplate": "git-refs"
+    }
+  ],
   "packageRules": [
+    // Versioning rules
+    {
+      "description": "LinuxServer.io tags carry a per-build -lsNNN suffix that docker versioning reads as an incompatible variant",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/linuxserver/bookstack"],
+      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)(?:\\.(?<patch>\\d+))?-ls(?<build>\\d+)$"
+    },
     // Allowed version rules
     {
       "matchDatasources": ["docker"],
