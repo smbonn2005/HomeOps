@@ -49,7 +49,7 @@ jobs:
         run: uv pip install pyyaml
 
       - name: Run crd-extractor
-        run: curl -fsSL https://raw.githubusercontent.com/datreeio/CRDs-catalog/43e4407642d4c37683c88711f37caa6c9c20ca40/Utilities/crd-extractor.sh | bash
+        run: curl -fsSL https://raw.githubusercontent.com/datreeio/CRDs-catalog/ad3b08c5045129d7bb1eeffd8e61719b2c8dd1e2/Utilities/crd-extractor.sh | bash
 
       - name: Generate index.html
         run: |
