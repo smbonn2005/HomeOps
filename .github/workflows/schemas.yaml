@@ -49,7 +49,14 @@ jobs:
         run: uv pip install pyyaml
 
       - name: Run crd-extractor
-        run: curl -fsSL https://raw.githubusercontent.com/datreeio/CRDs-catalog/ad3b08c5045129d7bb1eeffd8e61719b2c8dd1e2/Utilities/crd-extractor.sh | bash
+        env:
+          OUTPUT_DIR: /home/runner/.datree/crdSchemas
+        run: |
+          base="https://raw.githubusercontent.com/datreeio/CRDs-catalog/ad3b08c5045129d7bb1eeffd8e61719b2c8dd1e2/Utilities"
+          dir="$(mktemp -d)"
+          curl -fsSL -o "$dir/crd-extractor.sh" "$base/crd-extractor.sh"
+          curl -fsSL -o "$dir/openapi2jsonschema.py" "$base/openapi2jsonschema.py"
+          bash "$dir/crd-extractor.sh"
 
       - name: Generate index.html
         run: |
