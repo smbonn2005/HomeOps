@@ -39,6 +39,13 @@ endpoints:
       - "[BODY][0].state == RUNNING"
       - "[BODY][0].enable == true"
 
+  - name: Backup VPN
+    group: services
+    url: icmp://10.0.0.2
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+
 metrics: true
 
 storage:
