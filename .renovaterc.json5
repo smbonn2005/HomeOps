@@ -86,6 +86,14 @@
       "ignoreTests": true
     },
     {
+      "description": "Auto-merge mise tools",
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true
+    },
+    {
       "description": "Auto-merge Grafana dashboards",
       "matchDatasources": ["custom.grafana-dashboards"],
       "matchUpdateTypes": ["major"],
