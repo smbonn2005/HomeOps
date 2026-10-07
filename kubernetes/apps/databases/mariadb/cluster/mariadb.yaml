@@ -14,6 +14,8 @@ spec:
     size: 5Gi
     storageClassName: openebs-hostpath
   replicas: 3
+  affinity:
+    antiAffinityEnabled: true
   galera:
     enabled: true
     recovery:
