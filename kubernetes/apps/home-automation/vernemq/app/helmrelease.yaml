@@ -70,6 +70,7 @@ spec:
               DOCKER_VERNEMQ_ALLOW_PUBLISH_DURING_NETSPLIT: "on"
               DOCKER_VERNEMQ_ALLOW_SUBSCRIBE_DURING_NETSPLIT: "on"
               DOCKER_VERNEMQ_ALLOW_UNSUBSCRIBE_DURING_NETSPLIT: "on"
+              DOCKER_VERNEMQ_COORDINATE_REGISTRATIONS: "off"
               DOCKER_VERNEMQ_LOG__CONSOLE: console
               DOCKER_VERNEMQ_VMQ_PASSWD__PASSWORD_FILE: /vernemq/etc/vmq.passwd
             probes:
