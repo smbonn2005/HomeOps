@@ -8,5 +8,5 @@ components:
   - ../../components/kopiur/secret
 resources:
   - ./home-assistant/ks.yaml
-  - ./mosquitto/ks.yaml
+  - ./vernemq/ks.yaml
   - ./zigbee2mqtt/ks.yaml

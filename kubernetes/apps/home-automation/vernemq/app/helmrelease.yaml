@@ -1,0 +1,179 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app vernemq
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
+  values:
+    controllers:
+      vernemq:
+        type: statefulset
+        replicas: 3
+        annotations:
+          reloader.stakater.com/auto: "true"
+        serviceAccount:
+          identifier: *app
+        podDisruptionBudget:
+          maxUnavailable: 1
+        statefulset:
+          podManagementPolicy: Parallel
+          serviceName:
+            identifier: headless
+          volumeClaimTemplates:
+            - name: data
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: openebs-hostpath
+              globalMounts:
+                - path: /vernemq/data
+        initContainers:
+          init-config:
+            image: &image
+              repository: docker.io/vernemq/vernemq
+              tag: 2.2.1@sha256:2f077ca22895001af687ac5fb6faa840a62ff407cfc3d253a2c3f181254fd0b2
+            command: ["/bin/sh", "-c"]
+            args:
+              - >-
+                cp -r /vernemq/etc/. /work/ &&
+                sed -i "s/^-setcookie .*/-setcookie ${VERNEMQ_COOKIE}/" /work/vm.args &&
+                printf '%s\n%s\n' "${MQTT_PASS}" "${MQTT_PASS}" | /vernemq/bin/vmq-passwd -c /work/vmq.passwd "${MQTT_USER}" > /dev/null
+            envFrom:
+              - secretRef:
+                  name: vernemq-secret
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+        containers:
+          app:
+            image: *image
+            env:
+              TZ: America/New_York
+              HOME: /tmp
+              MY_POD_NAME:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              DOCKER_VERNEMQ_ACCEPT_EULA: "yes"
+              DOCKER_VERNEMQ_DISCOVERY_KUBERNETES: "1"
+              DOCKER_VERNEMQ_KUBERNETES_LABEL_SELECTOR: app.kubernetes.io/name=vernemq
+              DOCKER_VERNEMQ_ALLOW_ANONYMOUS: "off"
+              DOCKER_VERNEMQ_ALLOW_REGISTER_DURING_NETSPLIT: "on"
+              DOCKER_VERNEMQ_ALLOW_PUBLISH_DURING_NETSPLIT: "on"
+              DOCKER_VERNEMQ_ALLOW_SUBSCRIBE_DURING_NETSPLIT: "on"
+              DOCKER_VERNEMQ_ALLOW_UNSUBSCRIBE_DURING_NETSPLIT: "on"
+              DOCKER_VERNEMQ_LOG__CONSOLE: console
+              DOCKER_VERNEMQ_VMQ_PASSWD__PASSWORD_FILE: /vernemq/etc/vmq.passwd
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &http 8888
+                  periodSeconds: 10
+                  failureThreshold: 3
+              readiness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *http
+                  periodSeconds: 5
+                  failureThreshold: 30
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
+        pod:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: *app
+                  topologyKey: kubernetes.io/hostname
+          securityContext:
+            runAsUser: 10000
+            runAsGroup: 10000
+            runAsNonRoot: true
+            fsGroup: 10000
+            fsGroupChangePolicy: OnRootMismatch
+    serviceAccount:
+      vernemq: {}
+    rbac:
+      roles:
+        vernemq:
+          type: Role
+          rules:
+            - apiGroups: [""]
+              resources: ["pods"]
+              verbs: ["get", "list"]
+            - apiGroups: ["apps"]
+              resources: ["statefulsets"]
+              verbs: ["get"]
+      bindings:
+        vernemq:
+          type: RoleBinding
+          roleRef:
+            identifier: *app
+          subjects:
+            - identifier: *app
+    service:
+      app:
+        forceRename: *app
+        controller: *app
+        type: LoadBalancer
+        annotations:
+          external-dns.kubernetes.io/hostname: mosquitto.smbonn.me
+          lbipam.cilium.io/ips: 192.168.10.96
+          gatus.home-operations.com/endpoint: |-
+            group: services
+        externalTrafficPolicy: Local
+        ports:
+          mqtt:
+            port: 1883
+      headless:
+        controller: *app
+        type: ClusterIP
+        clusterIP: None
+        publishNotReadyAddresses: true
+        ports:
+          http:
+            port: *http
+          epmd:
+            port: 4369
+          clustering:
+            port: 44053
+    persistence:
+      etc:
+        type: emptyDir
+        advancedMounts:
+          vernemq:
+            init-config:
+              - path: /work
+            app:
+              - path: /vernemq/etc
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          vernemq:
+            app:
+              - path: /tmp
+              - path: /vernemq/log
+                subPath: log
+              - path: /var/log/vernemq
+                subPath: varlog
