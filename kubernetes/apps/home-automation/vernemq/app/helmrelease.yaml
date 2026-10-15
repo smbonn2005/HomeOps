@@ -44,7 +44,7 @@ spec:
               - >-
                 cp -r /vernemq/etc/. /work/ &&
                 sed -i "s/^-setcookie .*/-setcookie ${VERNEMQ_COOKIE}/" /work/vm.args &&
-                printf '%s\n%s\n' "${MQTT_PASS}" "${MQTT_PASS}" | /vernemq/bin/vmq-passwd -c /work/vmq.passwd "${MQTT_USER}" > /dev/null
+                printf '%s\n%s\n' "${MQTT_PASS}" "${MQTT_PASS}" | /vernemq/bin/vmq-passwd -cf /work/vmq.passwd "${MQTT_USER}" > /dev/null
             envFrom:
               - secretRef:
                   name: vernemq-secret
@@ -99,6 +99,7 @@ spec:
               limits:
                 memory: 512Mi
         pod:
+          automountServiceAccountToken: true
           affinity:
             podAntiAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
