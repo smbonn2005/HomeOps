@@ -1,0 +1,25 @@
+module.exports = {
+  torznab: [8, 9, 11, 12, 13].map(
+    (id) => `http://prowlarr.media/${id}/api?apikey=${process.env.PROWLARR_API_KEY}`,
+  ),
+  sonarr: [`http://sonarr.media/?apikey=${process.env.SONARR_API_KEY}`],
+  radarr: [`http://radarr.media/?apikey=${process.env.RADARR_API_KEY}`],
+  torrentClients: [
+    `qbittorrent:http://${encodeURIComponent(process.env.QBITTORRENT_USER)}:${encodeURIComponent(process.env.QBITTORRENT_PASS)}@qbittorrent.default`,
+  ],
+  useClientTorrents: true,
+  host: "0.0.0.0",
+  port: 2468,
+  action: "inject",
+  linkDirs: ["/media/downloads/cross-seed"],
+  linkType: "hardlink",
+  linkCategory: "cross-seed",
+  matchMode: "partial",
+  skipRecheck: true,
+  duplicateCategories: false,
+  delay: 30,
+  rssCadence: "15 minutes",
+  searchCadence: "1 day",
+  excludeRecentSearch: "3 days",
+  excludeOlder: "2 weeks",
+};
