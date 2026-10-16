@@ -9,8 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/defaults
   healthCheckExprs:
     - apiVersion: cert-manager.io/v1
       kind: ClusterIssuer

@@ -10,7 +10,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/kopiur/backup
-    - ../../../../components/defaults
   dependsOn:
     - name: external-secrets-stores
       namespace: kube-system

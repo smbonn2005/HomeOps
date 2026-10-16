@@ -9,8 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/defaults
   path: ./kubernetes/apps/networking/external-dns/app
   prune: true
   sourceRef:
