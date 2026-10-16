@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
+  deletionPolicy: orphan
   interval: 30m
   path: ./kubernetes/apps
   prune: true
