@@ -3,13 +3,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kube-system
-components:
-  - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
-  - ./etcd/etcd-defrag/etcd-defrag.yaml
-  - ./etcd/etcd-defrag/serviceaccount.yaml
+  - ./etcd-defrag/ks.yaml
   - ./external-secrets/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
   - ./metrics-server/ks.yaml

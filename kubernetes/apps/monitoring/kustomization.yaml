@@ -3,9 +3,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
-components:
-  - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./alloy/ks.yaml
   - ./exporters
   - ./gatus/ks.yaml
@@ -14,11 +13,3 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./silence-operator/ks.yaml
-patches:
-  - target:
-      kind: Namespace
-    patch: |-
-      - op: add
-        path: /metadata/labels
-        value:
-          resource.kubernetes.io/admin-access: "true"

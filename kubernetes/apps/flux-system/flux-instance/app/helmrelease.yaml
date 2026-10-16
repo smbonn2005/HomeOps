@@ -5,15 +5,14 @@ kind: HelmRelease
 metadata:
   name: flux-instance
 spec:
-  interval: 30m
   chartRef:
     kind: OCIRepository
     name: flux-instance
+  interval: 1h
   values:
+    commonAnnotations:
+      fluxcd.controlplane.io/reconcileArtifactEvery: 1h
     instance:
-      distribution:
-        # renovate: datasource=github-releases depName=controlplaneio-fluxcd/distribution
-        version: 2.9.6
       cluster:
         networkPolicy: false
       components:
@@ -25,10 +24,50 @@ spec:
         kind: GitRepository
         url: https://github.com/smbonn2005/HomeOps.git
         ref: refs/heads/main
-        path: kubernetes/flux/cluster
+        path: kubernetes/apps
         interval: 1h
       kustomize:
         patches:
+          - # Add Kustomization defaults for all child Kustomizations
+            patch: |-
+              - op: add
+                path: /spec/patches
+                value:
+                  - patch: |-
+                      apiVersion: kustomize.toolkit.fluxcd.io/v1
+                      kind: Kustomization
+                      metadata:
+                        name: _
+                      spec:
+                        patches:
+                          - patch: |-
+                              apiVersion: helm.toolkit.fluxcd.io/v2
+                              kind: HelmRelease
+                              metadata:
+                                name: _
+                              spec:
+                                install:
+                                  crds: CreateReplace
+                                rollback:
+                                  cleanupOnFail: true
+                                upgrade:
+                                  cleanupOnFail: true
+                                  crds: CreateReplace
+                                  strategy:
+                                    name: RemediateOnFailure
+                                  remediation:
+                                    remediateLastFailure: true
+                                    retries: 2
+                            target:
+                              group: helm.toolkit.fluxcd.io
+                              kind: HelmRelease
+                    target:
+                      group: kustomize.toolkit.fluxcd.io
+                      kind: Kustomization
+            target:
+              group: kustomize.toolkit.fluxcd.io
+              kind: Kustomization
+              name: flux-system
           - # Increase the number of workers
             patch: |
               - op: add
@@ -85,6 +124,14 @@ spec:
             target:
               kind: Deployment
               name: source-controller
+          - # Cache Secrets and ConfigMaps
+            patch: |-
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --feature-gates=CacheSecretsAndConfigMaps=true
+            target:
+              kind: Deployment
+              name: source-controller
           - # Flux near OOM detection for Helm
             patch: |
               - op: add
@@ -99,11 +146,27 @@ spec:
             target:
               kind: Deployment
               name: helm-controller
-          - # Disable chart digest tracking
-            patch: |
+          - # Default to retry on failure and disable chart digest tracking
+            patch: |-
               - op: add
                 path: /spec/template/spec/containers/0/args/-
-                value: --feature-gates=DisableChartDigestTracking=true
+                value: --feature-gates=DefaultToRetryOnFailure=true,DisableChartDigestTracking=true
             target:
               kind: Deployment
               name: helm-controller
+          - # Watch configmaps and secrets attached to HelmReleases and Kustomizations
+            patch: |-
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --watch-configs-label-selector=owner!=helm
+            target:
+              kind: Deployment
+              name: (helm-controller|kustomize-controller)
+          - # Cancel health checks on new Kustomizations revisions
+            patch: |-
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --feature-gates=CancelHealthCheckOnNewRevision=true
+            target:
+              kind: Deployment
+              name: kustomize-controller

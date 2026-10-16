@@ -6,3 +6,4 @@ resources:
   - ./backup.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
