@@ -11,7 +11,7 @@ module.exports = {
   host: "0.0.0.0",
   port: 2468,
   action: "inject",
-  linkDirs: ["/media/downloads/cross-seed"],
+  linkDirs: ["/media/Downloads/cross-seed"],
   linkType: "hardlink",
   linkCategory: "cross-seed",
   matchMode: "partial",
