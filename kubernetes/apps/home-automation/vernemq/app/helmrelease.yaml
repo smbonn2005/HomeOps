@@ -38,7 +38,7 @@ spec:
           init-config:
             image: &image
               repository: docker.io/vernemq/vernemq
-              tag: 2.2.1@sha256:2f077ca22895001af687ac5fb6faa840a62ff407cfc3d253a2c3f181254fd0b2
+              tag: 2.2.1@sha256:d6333975f7c887cfd8943074b084114c033425d61017e1f985e1ef6887610d9f
             command: ["/bin/sh", "-c"]
             args:
               - >-
