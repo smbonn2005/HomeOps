@@ -19,5 +19,3 @@ spec:
         topologyAwareHintsEnabled: false
     serviceMonitor:
       enabled: true
-    grafanaDashboard:
-      enabled: true
