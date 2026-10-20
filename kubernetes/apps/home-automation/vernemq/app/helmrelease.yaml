@@ -44,6 +44,7 @@ spec:
               - >-
                 cp -r /vernemq/etc/. /work/ &&
                 sed -i "s/^-setcookie .*/-setcookie ${VERNEMQ_COOKIE}/" /work/vm.args &&
+                cp /work/vm.args /work/vm.args.orig &&
                 printf '%s\n%s\n' "${MQTT_PASS}" "${MQTT_PASS}" | /vernemq/bin/vmq-passwd -cf /work/vmq.passwd "${MQTT_USER}" > /dev/null
             envFrom:
               - secretRef:
@@ -55,6 +56,9 @@ spec:
         containers:
           app:
             image: *image
+            command: ["/bin/sh", "-c"]
+            args:
+              - cp /vernemq/etc/vm.args.orig /vernemq/etc/vm.args && exec start_vernemq
             env:
               TZ: America/New_York
               HOME: /tmp
