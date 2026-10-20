@@ -44,6 +44,7 @@ spec:
               - >-
                 cp -r /vernemq/etc/. /work/ &&
                 sed -i "s/^-setcookie .*/-setcookie ${VERNEMQ_COOKIE}/" /work/vm.args &&
+                cp /work/vm.args /work/vm.args.orig &&
                 printf '%s\n%s\n' "${MQTT_PASS}" "${MQTT_PASS}" | /vernemq/bin/vmq-passwd -cf /work/vmq.passwd "${MQTT_USER}" > /dev/null
             envFrom:
               - secretRef:
@@ -55,6 +56,9 @@ spec:
         containers:
           app:
             image: *image
+            command: ["/bin/sh", "-c"]
+            args:
+              - cp /vernemq/etc/vm.args.orig /vernemq/etc/vm.args && exec start_vernemq
             env:
               TZ: America/New_York
               HOME: /tmp
@@ -71,6 +75,8 @@ spec:
               DOCKER_VERNEMQ_ALLOW_SUBSCRIBE_DURING_NETSPLIT: "on"
               DOCKER_VERNEMQ_ALLOW_UNSUBSCRIBE_DURING_NETSPLIT: "on"
               DOCKER_VERNEMQ_COORDINATE_REGISTRATIONS: "off"
+              DOCKER_VERNEMQ_LEVELDB__WRITE_BUFFER_SIZE_MIN: 4MB
+              DOCKER_VERNEMQ_LEVELDB__WRITE_BUFFER_SIZE_MAX: 8MB
               DOCKER_VERNEMQ_LOG__CONSOLE: console
               DOCKER_VERNEMQ_VMQ_PASSWD__PASSWORD_FILE: /vernemq/etc/vmq.passwd
             probes:
