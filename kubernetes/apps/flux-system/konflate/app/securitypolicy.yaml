@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: konflate
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: konflate
+  authorization:
+    defaultAction: Deny
+    rules:
+      - name: forge-webhook
+        action: Allow
+        principal:
+          clientCIDRs:
+            - 0.0.0.0/0
+            - ::/0
+        operation:
+          methods: ["POST"]
+          path:
+            type: Exact
+            value: /hooks
+      - name: lan
+        action: Allow
+        principal:
+          clientCIDRs:
+            - 192.168.0.0/16
