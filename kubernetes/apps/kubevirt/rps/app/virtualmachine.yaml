@@ -5,7 +5,7 @@ kind: VirtualMachine
 metadata:
   name: &app rps
 spec:
-  runStrategy: Always
+  runStrategy: Halted
   template:
     metadata:
       labels:
