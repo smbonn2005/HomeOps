@@ -19,6 +19,7 @@ spec:
   values:
     controllers:
       pterodactyl:
+        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
