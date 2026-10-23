@@ -11,10 +11,15 @@ spec:
     name: cilium
   values:
     autoDirectNodeRoutes: true
+    bandwidthManager:
+      enabled: true
+      bbr: true
     bgpControlPlane:
       enabled: true
     bpf:
-      masquerade: false
+      masquerade: true
+      preallocateMaps: true
+    bpfClockProbe: true
     cgroup:
       automount:
         enabled: false
