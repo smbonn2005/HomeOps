@@ -61,4 +61,9 @@ spec:
             key: DISCORD_WEBHOOK
           sendResolved: true
           title: >-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            {{ if eq .Status "resolved" }}✅{{ else if eq .CommonLabels.severity "critical" }}🔴{{ else }}🟠{{ end }} {{ .CommonLabels.alertname }}{{ with .CommonLabels.namespace }} ({{ . }}){{ end }}
+          message: |-
+            {{ range .Alerts.Firing }}• {{ or .Annotations.summary .Annotations.description .Labels.alertname }}
+            {{ end }}{{ if and .Alerts.Firing .Alerts.Resolved }}**Resolved**
+            {{ end }}{{ range .Alerts.Resolved }}✅ {{ or .Annotations.summary .Annotations.description .Labels.alertname }}
+            {{ end }}
