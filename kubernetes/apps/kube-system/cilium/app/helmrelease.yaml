@@ -43,6 +43,7 @@ spec:
     loadBalancer:
       algorithm: maglev
       mode: dsr
+      serviceTopology: true # spegel-registry relies on trafficDistribution: PreferSameNode
     localRedirectPolicy: true
     operator:
       dashboards:
@@ -84,3 +85,5 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
+    socketLB:
+      hostNamespaceOnly: true
