@@ -22,4 +22,4 @@ kind: ServiceAccount
 metadata:
   name: home-ops-runner
 spec:
-  roles: ["os:admin"]
+  roles: ["os:operator"]
