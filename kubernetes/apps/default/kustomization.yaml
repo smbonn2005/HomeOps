@@ -9,6 +9,7 @@ resources:
   - ./namespace.yaml
   - ./actual/ks.yaml
   - ./bookstack/ks.yaml
+  - ./bookstack-agl/ks.yaml
   - ./cross-seed/ks.yaml
   - ./homepage/ks.yaml
   - ./mealie/ks.yaml

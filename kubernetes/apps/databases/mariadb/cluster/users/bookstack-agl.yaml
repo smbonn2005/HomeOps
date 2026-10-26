@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/k8s.mariadb.com/user_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: bookstack-agl
+spec:
+  mariaDbRef:
+    name: mariadb
+  name: bookstack_agl
+  passwordSecretKeyRef:
+    name: bookstack-agl-secret
+    key: bookstack-agl-mariadb-password
+  maxUserConnections: 20

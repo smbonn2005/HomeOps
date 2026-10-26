@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/k8s.mariadb.com/database_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Database
+metadata:
+  name: bookstack-agl
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  name: bookstack_agl
+  characterSet: utf8mb4
+  collate: utf8mb4_unicode_ci
