@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/k8s.mariadb.com/grant_v1alpha1.json
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: bookstack-agl
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  privileges:
+    - "ALL PRIVILEGES"
+  database: bookstack_agl
+  table: "*"
+  username: bookstack_agl

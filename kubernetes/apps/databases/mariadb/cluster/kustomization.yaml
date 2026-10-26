@@ -18,3 +18,8 @@ resources:
   - ./users/bookstack.yaml
   - ./databases/bookstack.yaml
   - ./grants/bookstack.yaml
+
+  # Bookstack AGL
+  - ./users/bookstack-agl.yaml
+  - ./databases/bookstack-agl.yaml
+  - ./grants/bookstack-agl.yaml
