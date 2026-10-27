@@ -6,7 +6,7 @@ metadata:
   name: postgres16
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.15-standard-trixie@sha256:1ec419e997a8bde5263b6951f4c5ebc4aa2e1937927001f2561025c0a816e174
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-standard-trixie@sha256:39add80f5b1e573e2f6b641c66fd1a2f8dede67ca0330e870285bc1078551390
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -36,12 +36,12 @@ spec:
         barmanObjectName: garage
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: postgres16-v7
+        serverName: postgres18-v1
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster postgres16-v6
+      source: &previousCluster postgres16-v7
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster

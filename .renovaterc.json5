@@ -39,7 +39,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["/postgresql/"],
-      "allowedVersions": "<17"
+      "allowedVersions": "<19"
     },
     {
       "matchDatasources": ["docker"],
