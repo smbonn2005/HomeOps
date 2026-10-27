@@ -10,6 +10,7 @@ resources:
   - ./etcd-defrag/ks.yaml
   - ./external-secrets/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
+  - ./kguardian/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml
