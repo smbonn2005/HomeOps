@@ -12,6 +12,19 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: kguardian-llm-bridge
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: kguardian-llm-bridge
+                annotations:
+                  secret.reloader.stakater.com/reload: kguardian-mcp-secret
   values:
     telemetry:
       enabled: false
