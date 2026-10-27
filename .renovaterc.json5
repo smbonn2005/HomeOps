@@ -18,6 +18,14 @@
     },
     {
       "customType": "regex",
+      "description": "Keep the KubeVirt launcher/exporter images restated in the virt-controller args patch on the operator release",
+      "managerFilePatterns": ["/^kubernetes/apps/kubevirt/operator/app/cr\\.yaml$/"],
+      "matchStrings": ["quay\\.io/kubevirt/virt-(?:launcher|exportserver):(?<currentValue>v[^\"\\s]+)"],
+      "depNameTemplate": "kubevirt/kubevirt",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
       "description": "Process annotated kustomize release assets, whose URLs the bundled annotation manager cannot match",
       "managerFilePatterns": ["/(^|/)kustomization\\.ya?ml$/"],
       "matchStrings": [
