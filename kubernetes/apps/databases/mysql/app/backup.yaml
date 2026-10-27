@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/nfrastack/db-backup
-              tag: 5.0.5@sha256:012122061dc0851030207f70b3d6187ba7d1ef60cc58180507d157b80646f5fb
+              tag: 5.0.6@sha256:c6521d941a56cd0681869a5ebbc0a3677f08d1807e7221b31c4d78b1411e9651
             env:
               TIMEZONE: America/New_York
               BACKUP_JOB_CONCURRENCY: "1"
