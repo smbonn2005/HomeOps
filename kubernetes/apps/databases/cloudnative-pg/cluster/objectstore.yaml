@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/barmancloud.cnpg.io/objectstore_v1.json
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: garage
+spec:
+  retentionPolicy: 30d
+  configuration:
+    data:
+      compression: bzip2
+    wal:
+      compression: bzip2
+      maxParallel: 8
+    destinationPath: s3://postgresql/
+    endpointURL: http://garage.storage.svc.cluster.local:3900
+    s3Credentials:
+      accessKeyId:
+        name: cloudnative-pg-secret
+        key: aws-access-key-id
+      secretAccessKey:
+        name: cloudnative-pg-secret
+        key: aws-secret-access-key
