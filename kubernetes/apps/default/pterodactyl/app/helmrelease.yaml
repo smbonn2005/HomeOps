@@ -39,7 +39,7 @@ spec:
               APP_ENV: "production"
               APP_ENVIRONMENT_ONLY: "false"
               APP_TIMEZONE: America/New_York
-              TRUSTED_PROXIES: "*"
+              TRUSTED_PROXIES: "10.42.0.0/16"
             envFrom:
               - secretRef:
                   name: pterodactyl-secret
