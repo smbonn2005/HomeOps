@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kguardian
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: kguardian
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    telemetry:
+      enabled: false
+    broker:
+      metrics:
+        serviceMonitor:
+          enabled: true
+    evaluator:
+      metrics:
+        serviceMonitor:
+          enabled: true
+    frontend:
+      allowedHosts:
+        - kguardian.smbonn.me
