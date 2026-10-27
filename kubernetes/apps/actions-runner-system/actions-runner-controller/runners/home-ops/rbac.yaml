@@ -5,13 +5,22 @@ metadata:
   name: home-ops-runner
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: home-ops-runner-crd-reader
+rules:
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: home-ops-runner
+  name: home-ops-runner-crd-reader
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-admin
+  name: home-ops-runner-crd-reader
 subjects:
   - kind: ServiceAccount
     name: home-ops-runner
@@ -22,4 +31,4 @@ kind: ServiceAccount
 metadata:
   name: home-ops-runner
 spec:
-  roles: ["os:admin"]
+  roles: ["os:operator"]

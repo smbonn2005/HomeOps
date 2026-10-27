@@ -17,7 +17,7 @@ spec:
   values:
     githubConfigUrl: https://github.com/smbonn2005/HomeOps
     githubConfigSecret: home-ops-runner-secret
-    minRunners: 1
+    minRunners: 0
     maxRunners: 3
     containerMode:
       type: kubernetes
