@@ -9,6 +9,15 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "Process CloudNativePG Cluster operand images, which live in spec.imageName rather than an image key",
+      "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "imageName:\\s*(?<depName>[^\\s:@]+):(?<currentValue>[^\\s@]+)(?:@(?<currentDigest>sha256:[a-f0-9]{64}))?"
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
       "description": "Process annotated kustomize release assets, whose URLs the bundled annotation manager cannot match",
       "managerFilePatterns": ["/(^|/)kustomization\\.ya?ml$/"],
       "matchStrings": [
