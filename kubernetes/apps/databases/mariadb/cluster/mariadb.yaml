@@ -19,6 +19,7 @@ spec:
   galera:
     enabled: true
     recovery:
+      enabled: true
       podSyncTimeout: 30m0s
       clusterBootstrapTimeout: 40m0s
   metrics:
