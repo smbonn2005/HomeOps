@@ -34,6 +34,8 @@ spec:
               DB_PORT: 3306
               DB_DATABASE: "bookstack_agl"
               DB_USERNAME: "bookstack_agl"
+              DISCORD_AUTO_REGISTER: "true"
+              DISCORD_AUTO_CONFIRM_EMAIL: "true"
             envFrom:
               - secretRef:
                   name: bookstack-agl-secret
