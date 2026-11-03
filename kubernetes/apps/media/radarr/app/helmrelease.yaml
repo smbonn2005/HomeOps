@@ -38,7 +38,7 @@ spec:
               RADARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
-                  name: prowlarr-secret
+                  name: radarr-secret
             resources:
               requests:
                 cpu: 10m
