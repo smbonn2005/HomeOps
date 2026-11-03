@@ -8,7 +8,7 @@ whisparrEnabled: false
 sonarr:
   instance1:
     base_url: http://sonarr.media
-    api_key: !env SONARR__API_KEY
+    api_key: !env SONARR__AUTH__APIKEY
 
     delete_unmanaged_quality_profiles:
       enabled: true
