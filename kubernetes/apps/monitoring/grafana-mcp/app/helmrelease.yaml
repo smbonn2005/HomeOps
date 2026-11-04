@@ -29,6 +29,7 @@ spec:
             env:
               GRAFANA_URL: http://grafana-service.monitoring.svc.cluster.local:3000
               GRAFANA_ORG_ID: "1"
+              GRAFANA_USAGE_STATS: disabled
               GRAFANA_SERVICE_ACCOUNT_TOKEN:
                 valueFrom:
                   secretKeyRef:
