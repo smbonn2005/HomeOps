@@ -8,6 +8,7 @@ resources:
   - ./alloy/ks.yaml
   - ./exporters
   - ./gatus/ks.yaml
+  - ./grafana-mcp/ks.yaml
   - ./grafana-operator/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
