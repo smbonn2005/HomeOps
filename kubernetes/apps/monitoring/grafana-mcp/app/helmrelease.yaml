@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app grafana-mcp
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: grafana-mcp
+  values:
+    controllers:
+      grafana-mcp:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/grafana/mcp-grafana
+              tag: 2.2.0@sha256:697336440e34878f8e0b26a69675db8d7e97b4d0daec25ec5441c85ac6c60e81
+            command: ["/app/mcp-grafana"]
+            args:
+              - --transport=streamable-http
+              - --address=0.0.0.0:8000
+              - --healthz-address=0.0.0.0:8080
+              - --allowed-hosts=grafana-mcp.smbonn.me
+              - --disable-write
+            env:
+              GRAFANA_URL: http://grafana-service.monitoring.svc.cluster.local:3000
+              GRAFANA_ORG_ID: "1"
+              GRAFANA_SERVICE_ACCOUNT_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: grafana-mcp-token
+                    key: token
+            envFrom:
+              - secretRef:
+                  name: grafana-mcp-secret
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &healthPort 8080
+              readiness: *probe
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: [ALL] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+    service:
+      app:
+        ports:
+          http:
+            port: &port 8000
+          health:
+            port: *healthPort
+    route:
+      app:
+        hostnames: ["grafana-mcp.smbonn.me"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /mcp
+            backendRefs:
+              - name: *app
+                port: *port
