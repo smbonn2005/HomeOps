@@ -58,6 +58,7 @@ spec:
               UNIFI_MCP_HOST: 0.0.0.0
               UNIFI_MCP_PORT: &protectPort 3001
               UNIFI_MCP_ALLOWED_HOSTS: &protectHost unifi-protect-mcp.smbonn.me
+              HOME: /tmp
             envFrom: *envFrom
             probes: *probes
             securityContext: *securityContext
@@ -67,6 +68,13 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+    persistence:
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          protect:
+            app:
+              - path: /tmp
     service:
       network:
         controller: network
