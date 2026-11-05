@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app unifi-mcp
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: unifi-mcp
+  values:
+    controllers:
+      network:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sirkirby/unifi-network-mcp
+              tag: 0.44.0@sha256:de690e741b5713f45c811defd443964bdb6f02ba3c44e6777dbc5fe093e28a92
+            env:
+              UNIFI_HOST: &unifiHost 192.168.10.1
+              UNIFI_MCP_HTTP_ENABLED: "true"
+              UNIFI_MCP_HTTP_TRANSPORT: streamable-http
+              UNIFI_MCP_HOST: 0.0.0.0
+              UNIFI_MCP_PORT: &networkPort 3000
+              UNIFI_MCP_ALLOWED_HOSTS: &networkHost unifi-network-mcp.smbonn.me
+            envFrom: &envFrom
+              - secretRef:
+                  name: unifi-mcp-secret
+            probes: &probes
+              liveness: &probe
+                enabled: true
+                type: TCP
+              readiness: *probe
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: [ALL] }
+            resources: &resources
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
+      protect:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sirkirby/unifi-protect-mcp
+              tag: 0.12.0@sha256:72021e44447416f348553c54230242ec6cb39df4e97a393179701882d5dc35a3
+            env:
+              UNIFI_HOST: *unifiHost
+              UNIFI_MCP_HTTP_ENABLED: "true"
+              UNIFI_MCP_HTTP_TRANSPORT: streamable-http
+              UNIFI_MCP_HOST: 0.0.0.0
+              UNIFI_MCP_PORT: &protectPort 3001
+              UNIFI_MCP_ALLOWED_HOSTS: &protectHost unifi-protect-mcp.smbonn.me
+            envFrom: *envFrom
+            probes: *probes
+            securityContext: *securityContext
+            resources: *resources
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+    service:
+      network:
+        controller: network
+        ports:
+          http:
+            port: *networkPort
+      protect:
+        controller: protect
+        ports:
+          http:
+            port: *protectPort
+    route:
+      network:
+        hostnames: [*networkHost]
+        parentRefs: &parentRefs
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - matches: &matches
+              - path:
+                  type: PathPrefix
+                  value: /mcp
+            backendRefs:
+              - identifier: network
+                port: *networkPort
+      protect:
+        hostnames: [*protectHost]
+        parentRefs: *parentRefs
+        rules:
+          - matches: *matches
+            backendRefs:
+              - identifier: protect
+                port: *protectPort
