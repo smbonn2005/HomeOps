@@ -1,0 +1,21 @@
+---
+api:
+  listen: 127.0.0.1:1984
+rtsp:
+  listen: :8554
+  username: ${RTSP_USERNAME}
+  password: ${RTSP_PASSWORD}
+webrtc:
+  listen: ""
+streams:
+  living_room:
+    - rtsp://${REOLINK_USERNAME}:${REOLINK_PASSWORD}@192.168.1.119:554/h264Preview_01_main
+  living_room_sub:
+    - rtsp://${REOLINK_USERNAME}:${REOLINK_PASSWORD}@192.168.1.119:554/h264Preview_01_sub
+onvif:
+  profiles:
+    - name: Living Room
+      port: 8081
+      streams:
+        - living_room#res=2880x1616#codec=H264#framerate=20#kbps=3072
+        - living_room_sub#res=896x512#codec=H264#framerate=10#kbps=1024
