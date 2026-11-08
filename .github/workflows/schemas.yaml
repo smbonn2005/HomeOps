@@ -52,7 +52,7 @@ jobs:
         env:
           OUTPUT_DIR: /home/runner/.datree/crdSchemas
         run: |
-          base="https://raw.githubusercontent.com/datreeio/CRDs-catalog/c86448cbf1a840ca62d119259864863897c8748a/Utilities"
+          base="https://raw.githubusercontent.com/datreeio/CRDs-catalog/49729e49e8f062933e3716a26540d41b0cd0856c/Utilities"
           dir="$(mktemp -d)"
           curl -fsSL -o "$dir/crd-extractor.sh" "$base/crd-extractor.sh"
           curl -fsSL -o "$dir/openapi2jsonschema.py" "$base/openapi2jsonschema.py"
