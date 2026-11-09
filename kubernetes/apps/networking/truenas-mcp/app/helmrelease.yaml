@@ -1,0 +1,67 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app truenas-mcp
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: truenas-mcp
+  values:
+    controllers:
+      truenas-mcp:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/cedricziel/truenas-mcp
+              tag: 0.4.2@sha256:1a165c9b3831b8cf546c78231857896431c27a4465d2fcb16260c7d578bbee55
+            env:
+              TRUENAS_MCP_TARGET: 192.168.1.4
+              TRUENAS_MCP_TARGET_INSECURE: "true"
+              TRUENAS_MCP_LISTEN: ":8080"
+              TRUENAS_MCP_ALLOW_PLAINTEXT: "true"
+              TRUENAS_MCP_ENABLE_WRITES: "true"
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &port 8080
+              readiness: *probe
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: [ALL] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames: ["truenas-mcp.smbonn.me"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: networking
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /mcp
+            backendRefs:
+              - identifier: app
+                port: *port

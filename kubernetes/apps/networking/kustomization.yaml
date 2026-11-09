@@ -11,4 +11,5 @@ resources:
   - ./external-dns/ks.yaml
   - ./external-services/ks.yaml
   - ./unifi-dns/ks.yaml
+  - ./truenas-mcp/ks.yaml
   - ./unifi-mcp/ks.yaml
