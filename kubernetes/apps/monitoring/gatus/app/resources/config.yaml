@@ -39,12 +39,12 @@ endpoints:
       - "[BODY][0].state == RUNNING"
       - "[BODY][0].enable == true"
 
+external-endpoints:
   - name: Backup VPN
     group: services
-    url: icmp://10.0.0.2
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
+    token: ${BACKUP_VPN_TOKEN}
+    heartbeat:
+      interval: 5m
 
 metrics: true
 
