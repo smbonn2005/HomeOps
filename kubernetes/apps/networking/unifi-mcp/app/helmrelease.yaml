@@ -50,7 +50,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sirkirby/unifi-protect-mcp
-              tag: 0.13.1@sha256:b1ed5a0df46d25950e9cdecf11628d23d230f050ff5879704871e5b616119516
+              tag: 0.13.2@sha256:ae692d3c1d4ba98a32529e87dd51139b1aa82ce32cff6283f36a0287ba288566
             env:
               UNIFI_HOST: *unifiHost
               UNIFI_MCP_HTTP_ENABLED: "true"
