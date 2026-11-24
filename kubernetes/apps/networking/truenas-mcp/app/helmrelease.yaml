@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cedricziel/truenas-mcp
-              tag: 0.4.2@sha256:1a165c9b3831b8cf546c78231857896431c27a4465d2fcb16260c7d578bbee55
+              tag: 0.6.0@sha256:32e2c3c029fe724411b27705a005b2de3d5184de1aff92f965912194c629fde8
             env:
               TRUENAS_MCP_TARGET: 192.168.1.4
               TRUENAS_MCP_TARGET_INSECURE: "true"
