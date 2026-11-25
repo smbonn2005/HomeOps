@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://cluster-schemas.smbonn.me/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: xcp-exporter
+spec:
+  groups:
+    - name: xcp-exporter.rules
+      rules:
+        - alert: XcpSmartExporterDown
+          annotations:
+            summary: smartctl-exporter on XCP-ng host {{ $labels.instance }} is unreachable.
+          expr: up{job="smartctl-exporter",instance="192.168.1.9:9633"} == 0
+          for: 10m
+          labels:
+            severity: critical
+        - alert: XcpSmartDeviceMissing
+          annotations:
+            summary: XCP-ng host {{ $labels.instance }} reports {{ $value }} SMART devices, expected 2.
+          expr: smartctl_devices{instance="192.168.1.9:9633"} < 2
+          for: 15m
+          labels:
+            severity: critical
