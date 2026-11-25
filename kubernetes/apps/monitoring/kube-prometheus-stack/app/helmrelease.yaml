@@ -66,7 +66,7 @@ spec:
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         retention: 30d
-        retentionSize: 50GB
+        retentionSize: 65GB
         resources:
           requests:
             cpu: 100m
@@ -78,7 +78,7 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 75Gi
     prometheus-node-exporter:
       fullnameOverride: node-exporter
     kube-state-metrics:
