@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/activexray/doplarr_rs
-              tag: v4.6.0@sha256:3487e7193f14f8f7e290c69e9355a5ded548853ffa18b62178486ca33ce76820
+              tag: v4.7.0@sha256:982c1782c751d5c71829d9b94a12fb283ab9e74072791d2b15789ef6ff83bdda
             envFrom:
               - secretRef:
                   name: doplarr-secret
